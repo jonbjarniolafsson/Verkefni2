@@ -1,0 +1,128 @@
+header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: transparent;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+header.not-on-top{
+    background: #0067BC;
+}
+
+header.on-top{
+    border-color: #fff;
+}
+
+body.subpage header{
+    background: #0067BC;
+}
+
+.navigation{
+    height: 100%;
+}
+
+.navigation .container{
+}
+
+.navigation .navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.navigation .navbar .navbar-brand{
+    padding: 0;
+    margin: 0;
+}
+
+.navigation .navbar .navbar-brand a{
+    color: #fff;
+}
+
+.navigation .navbar .navbar-brand a img{
+    width: 100px;
+    height: auto;
+}
+
+.navigation .navbar .navbar-brand a:hover{
+    text-decoration: none;
+    color: #fff;
+}
+
+.navigation .navbar .navbar-right{
+    position: relative;
+}
+
+.navigation .navbar .nav-links{
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation .navbar .nav-links li{
+}
+
+.navigation .navbar .nav-links li a{
+    display: block;
+    padding: 30px 15px;
+    position: relative;
+    color: #fff;
+}
+
+.navigation .navbar .nav-links li a::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0px;
+    height: 3px;
+    background: #fff;
+    transition: 0.3s ease;
+}
+
+.navigation .navbar .nav-links li a:hover{
+    text-decoration: none;
+    color: #fff;
+}
+
+.navigation .navbar .nav-links li a:hover::after{
+    width: 100%;
+}
+
+header.not-on-top .navigation .navbar .navbar-brand a{
+    color: #fff;
+}
+
+header.not-on-top .navigation .navbar .nav-links li a{
+    color: #fff;
+}
+
+header.not-on-top .navigation .navbar .nav-links li a::after{
+    background: #fff;
+}
+
+
+
+.navbar-right .loggin-toggle{
+    position: absolute;
+    top: 50%;
+    right: -50px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+}
+
+.navbar-right .loggin-toggle:hover{
+    cursor: pointer;
+}
+
+
+.navbar-right .loggin-toggle svg path{
+    fill: #fff;
+}

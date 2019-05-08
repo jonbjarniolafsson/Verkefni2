@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+{% endblock css %}
+{% block banner %}
+{% endblock %}
+{% block content %}
+<div class="apartments">
+    <div class="container">
+        <div class="apartments-wrapper flexed">
+            {% for apartment in apartments %}
+            <div class="apartment">
+                <div class="image">
+                    <a href="/apartment/{{apartment.aid}}">
+                        <img src="{{ apartment.image }}" alt="" srcset="">
+                    </a>
+                </div>
+                <div class="meta">
+                    <div class="address">
+                        {{apartment.address}}
+                    </div>
+                    <div class="postdata">
+                        {{apartment.zip}}, {{apartment.city}}
+                    </div>
+                    <div class="size">
+                        {{apartment.size}} fm.
+                    </div>
+                    <div class="price">
+                        {{apartment.price}} isk.
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+{% endblock%}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+{% endblock css %}
+{% block content%}
+<div class="container">
+    <div class="apartment single">
+        <div class="image">
+            <img src="{{apartment.image}}" alt="">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="location">
+                    <h2>{{apartment.address}}</h2>
+                    <p>{{apartment.zip}}</p>
+                    <p>{{apartment.city}}</p>
+                    <p>{{apartment.country}}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="meta">
+                    <p>Size: {{apartment.size}}</p>
+                    <p>Rooms: {{apartment.size}}</p>
+                    <p>Price: {{apartment.size}}</p>
+                    <p>Type: {{apartment.size}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
