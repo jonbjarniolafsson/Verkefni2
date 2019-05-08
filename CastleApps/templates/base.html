@@ -1,0 +1,122 @@
+{% load static %}
+{% url 'frontpage' as home_url %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/css/template.css' %}">
+    {% block css %} {% endblock %}
+    <title>Luxury apartments</title>
+</head>
+{% url 'frontpage' as pageurl %}
+
+<body class="{% if request.path == pageurl or request.path == '/'  %} frontpage {% else %} subpage {% endif %}">
+
+    <div class="site-overlay"></div>
+    <div class="contact-toggle">
+        <span>Contact Us</span>
+    </div>
+    <div class="contact-form">
+        <h2>Contact us</h2>
+        <form action="">
+            <div class="form-group">
+                <label for="name">Name: </label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="message">Message: </label>
+                <textarea name="message" id="message" cols="30" rows="10"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="login-form">
+        <h2>Sign in</h2>
+        <form action="/sign-in">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input name="email" type="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="pw" id="login-pw">
+            </div>
+            <span class="sign-up">Dont have an account? <a href="/sign-up">Sign up here</a></span>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <header>
+        <div class="navigation">
+            <div class="container">
+                <div class="navbar">
+                    <div class="navbar-brand">
+                        <div class="title">
+                            <a href="{% url 'frontpage' %}"><img src="/static/img/logo.png" /></a>
+                        </div>
+                    </div>
+                    <div class="navbar-right">
+                        <ul class="nav-links">
+                            <li><a href="{% url 'frontpage' %}">Home</a></li>
+                            <li><a href="{% url 'about' %}">About us</a></li>
+                            <li><a href="{% url 'apartment-list' %}">Our apartments</a></li>
+                        </ul>
+
+                        <div class="loggin-toggle">
+                            <img src="/static/img/user.svg" class="svg user" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block banner %} {% endblock %}
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="meta">
+                            <h3>About us</h3>
+                            <p>Luxury Apartments</p>
+                            <p>101 Reykjavík, Iceland</p>
+                            <p>Menntavegur 1</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="meta">
+
+                            <h3>Contact</h3>
+                            <p>Phone: <a href="tel:444-3214">+354 444-3214</a></p>
+                            <p>Email: <a href="mailto:castle@castleapartments.com">castle@castleapartments.com</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="meta">
+                            <h3>Office hours</h3>
+                            <p>Monday - Friday: 8am - 6pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block script %} {% endblock %}
+    <script src="{% static 'js/scripts.js'%}"></script>
+</body>
+
+</html>
