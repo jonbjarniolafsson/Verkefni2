@@ -2,8 +2,8 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
-<link rel="stylesheet" href="{% static 'css/banner.css' %}">
+<link rel="stylesheet" href="{% static '/css/apartments.css' %}">
+<link rel="stylesheet" href="{% static '/css/banner.css' %}">
 {% endblock css %}
 {% block banner %}
 <div class="frontpage-banner">
@@ -26,9 +26,9 @@
             {% for apartment in apartments %}
             <div class="apartment">
                 <div class="image">
-                    <a href="/apartment/{{apartment.aid}}">
+                    <a href="/apartments/{{apartment.id}}">
 
-                        <img src="{{ apartments.image }}" alt="" srcset="">
+                        <img src="{{ apartment.displayImage }}" alt="Image here" srcset="">
                     </a>
                 </div>
                 <div class="meta">
@@ -55,4 +55,4 @@
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="{% static '/js/sliders.js' %}"></script>
-{% endblock %}
+{% endblock%}

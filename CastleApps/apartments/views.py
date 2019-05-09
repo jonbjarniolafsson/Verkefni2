@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect
+#from django.shortcuts import render
+from .forms.apartmentform import CastleAppsCreateForm
+#from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
+
+
 
 
 apartments = [
@@ -55,32 +59,7 @@ apartments = [
     }
 ]
 
-
-
-#for x in apartments:
-#    if apartments['aID'] == apartImages['aID']:
-#        print()
-
-
-# Apartments voru Objects vs
-
-
-
-
-#apartmentImages = ApartmentImages.objects.all() #An object containting aID = 2
-
-#print("Printing querySet first: ",apartmentImages.first()) #This gives you the first row
-#print("Printing querySet first image path: ",apartmentImages.first().imagePath)
-
-
-#print(dbApartments.first())
-
-#print("printing path: ", apartmentImages.first().imagePath)
-
-
-#print("pritning db: ",dbApartments)
-
-
+# This is the main home page
 def home(request):
     context = {
         'apartments': Apartments.objects.all(),
@@ -88,6 +67,7 @@ def home(request):
     return render(request, 'apartments/home.html', context)
 
 
+# This is
 def about(request):
     dbEmployees = Employees.objects.all()
     context = {
@@ -95,16 +75,16 @@ def about(request):
     }
     return render(request, 'apartments/about.html', context)
 
-
-def apartment(request, apartmentid):
-
+# This is the page you are led to when an apartment is clicked on
+def singleApartment(request, apartmentid): # Need t oadd error handling
     context = {}
-    for item in apartments:
-        if item['aid'] == str(apartmentid):
-
-            context = {
-                'apartment': item
-            }
+    print("ERROR HANDLING" ,apartmentid)
+    if Apartments.objects.get(id=apartmentid).id == apartmentid:
+        print("HEre we are", apartmentid)
+        apartments = Apartments.objects.get(id = apartmentid)
+        context = {
+            'apartment': apartments
+        }
     return render(request, 'apartments/single-apartment.html', context)
 
 
@@ -112,6 +92,18 @@ def all_apartments(request):
     context = {
         'apartments': apartments
     }
-
     return render(request, 'apartments/apartments-list.html', context)
 
+
+
+def create_apartment(request):
+    if request.method == 'POST':
+        form = CastleAppsCreateForm(data=request.POST['image'],)
+        if form.is_valid():
+            apartment = form.save()
+            apartment_image = ApartmentImage(image=request.POST)
+    else:
+        form = CastleAppsCreateForm()
+        return render(request, 'apartments/create-apartment.html', {
+            'form' : form
+})

@@ -6,7 +6,8 @@ urlpatterns = [
     path('about/',views.about, name='about'),
     path('all-apartments/',
          views.all_apartments, name="apartment-list"),
-    path('apartment/<int:apartmentid>/',
-         views.apartment, name="apartment")
+    path('apartments/<int:apartmentid>/',
+         views.singleApartment, name="apartment"),
+    path('create_apartments', views.create_apartment, name="create-apartment"),
 
 ]
