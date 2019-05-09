@@ -76,14 +76,14 @@ def about(request):
 
 
 def singleApartment(request, apartmentid):
-
     context = {}
-    for item in apartments:
-        if item['aid'] == str(apartmentid):
-
-            context = {
-                'apartment': item
-            }
+    print("ERROR HANDLING" ,apartmentid)
+    if Apartments.objects.get(id=apartmentid).id == 2:
+        print("HEre we are", apartmentid)
+        apartments = Apartments.objects.get(id = apartmentid)
+        context = {
+            'apartment': apartments
+        }
     return render(request, 'apartments/single-apartment.html', context)
 
 
