@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="306a5232-9edb-433c-a078-71675342431f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/apartments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/apartments/single-apartment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/single-apartment.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -164,8 +163,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apartments/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+            <state relative-caret-position="198">
+              <caret line="80" column="44" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="44" />
               <folding>
                 <element signature="e#146#182#0" expanded="true" />
               </folding>
@@ -278,8 +277,8 @@
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/apartments/home.html" />
         <option value="$PROJECT_DIR$/apartments/urls.py" />
-        <option value="$PROJECT_DIR$/apartments/views.py" />
         <option value="$PROJECT_DIR$/templates/apartments/single-apartment.html" />
+        <option value="$PROJECT_DIR$/apartments/views.py" />
       </list>
     </option>
   </component>
@@ -407,12 +406,12 @@
       <option name="presentableId" value="Default" />
       <updated>1557330156631</updated>
       <workItem from="1557330189662" duration="9758000" />
-      <workItem from="1557407222838" duration="1919000" />
+      <workItem from="1557407222838" duration="2048000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11677000" />
+    <option name="totallyTimeSpent" value="11806000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -703,8 +702,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apartments/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        <state relative-caret-position="198">
+          <caret line="80" column="44" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="44" />
           <folding>
             <element signature="e#146#182#0" expanded="true" />
           </folding>
