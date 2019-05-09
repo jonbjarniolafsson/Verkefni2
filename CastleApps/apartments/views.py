@@ -75,16 +75,16 @@ def about(request):
     }
     return render(request, 'apartments/about.html', context)
 
-
-def singleApartment(request, apartmentid):
-
+# This is the page you are led to when an apartment is clicked on
+def singleApartment(request, apartmentid): # Need t oadd error handling
     context = {}
-    for item in apartments:
-        if item['aid'] == str(apartmentid):
-
-            context = {
-                'apartment': item
-            }
+    print("ERROR HANDLING" ,apartmentid)
+    if Apartments.objects.get(id=apartmentid).id == apartmentid:
+        print("HEre we are", apartmentid)
+        apartments = Apartments.objects.get(id = apartmentid)
+        context = {
+            'apartment': apartments
+        }
     return render(request, 'apartments/single-apartment.html', context)
 
 
@@ -92,7 +92,6 @@ def all_apartments(request):
     context = {
         'apartments': apartments
     }
-
     return render(request, 'apartments/apartments-list.html', context)
 
 
