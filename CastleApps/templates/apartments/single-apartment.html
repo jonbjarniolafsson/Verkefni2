@@ -20,13 +20,21 @@
             </div>
             <div class="col-md-6">
                 <div class="meta">
-                    <p>Price: {{apartment.price}}</p>
+                    <p>{{apartment.type}} in {{apartment.location.region}}, {{apartment.location.city}}  </p>
+                    <p>price: {{listings.price}}</p>
+                    <p>Sold on the date: {{listings.soldOnDate}}</p>
+
+                 Agent: Friðrik: <img src="{{ listings.employee.user.profileImagePath}}" alt="Image here" srcset="">
                     <p>Size: {{apartment.size}}</p>
                     <p>Rooms: {{apartment.rooms}}</p>
                     <p>Bathrooms: {{apartment.bathrooms}}</p>
-                    <p>Type: {{apartment.type}}</p>
                     <p>Constructed: {{apartment.timeOfConstruction}}</p>
                     <p>Registered: {{apartment.timeOfRegistration}}</p>
+                    <p>Country: {{apartment.location.country}}</p>
+                    <p>Zip: {{apartment.location.zip}}</p>
+                    {%  for image in images %}
+                        <img src="{{ image }}" alt="Image here" srcset="">
+                    {%  endfor %}
 
                 </div>
             </div>
