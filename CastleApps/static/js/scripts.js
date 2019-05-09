@@ -17,7 +17,7 @@ $(document).ready(function () {
     $(".contact-toggle").on("click", function () {
         $(".site-overlay").addClass('active');
         $(".contact-form").addClass('active');
-        $(".body").addClass('no-scroll')
+        $("body").addClass('no-scroll');
     })
 
 
