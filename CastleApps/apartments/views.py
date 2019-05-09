@@ -1,40 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 # Create your views here.
-employees = [
-    {
-        'name': 'Jón Bjarni Ólafsson',
-        'age': '23',
-        'gender': 'male',
-        'description': 'Jón is learning computer science at Háskólinn í Reykjavík and is pursuing a career in web developement.'
-    },
-
-    {
-        'name': 'Haraldur Björnsson',
-        'age': '23',
-        'gender': 'male',
-        'description': 'Haraladur is learning Mechatronical engineering with computer science, Haraldur is great with robots.'
-    },
-
-    {
-        'name': 'Þorgeir Björnsson',
-        'age': '23',
-        'gender': 'male',
-        'description': 'Þorgeir is learning computer science at Háskólinn í Reykjavík and wants to work at a bank someday'
-    },
-    {
-        'name': 'Friðrik Örn Gunnarson',
-        'age': '22',
-        'gender': 'male',
-        'description': 'Friðrik is studying business with computer science and his passion selling real estate'
-    },
-    {
-        'name': 'Fjölnir Þrastarson',
-        'age': '22',
-        'gender': 'male',
-        'description': 'Fjölnir is is studying business with computer science and he plays a lot of basketball'
-    }
-]
+from apartments.models import *
 
 
 apartments = [
@@ -89,20 +56,45 @@ apartments = [
 ]
 
 
+
+#for x in apartments:
+#    if apartments['aID'] == apartImages['aID']:
+#        print()
+
+
+# Apartments voru Objects vs
+
+
+
+
+#apartmentImages = ApartmentImages.objects.all() #An object containting aID = 2
+
+#print("Printing querySet first: ",apartmentImages.first()) #This gives you the first row
+#print("Printing querySet first image path: ",apartmentImages.first().imagePath)
+
+
+#print(dbApartments.first())
+
+#print("printing path: ", apartmentImages.first().imagePath)
+
+
+#print("pritning db: ",dbApartments)
+
+
 def home(request):
     context = {
-        'apartments':apartments
-
+        'apartments': Apartments.objects.all(),
     }
-    return render(request, '../templates/apartments/home.html',context)
+    return render(request, 'apartments/home.html', context)
+
 
 def about(request):
-
+    dbEmployees = Employees.objects.all()
     context = {
-        'employees': employees
+        'employees': dbEmployees
     }
+    return render(request, 'apartments/about.html', context)
 
-    return render(request, '../templates/apartments/about.html', context)
 
 def apartment(request, apartmentid):
 
@@ -113,12 +105,13 @@ def apartment(request, apartmentid):
             context = {
                 'apartment': item
             }
-    return render(request, '../templates/apartments/single-apartment.html', context)
+    return render(request, 'apartments/single-apartment.html', context)
 
 
 def all_apartments(request):
     context = {
         'apartments': apartments
     }
-    return render(request, '../templates/apartments/apartments-list.html', context)
+
+    return render(request, 'apartments/apartments-list.html', context)
 

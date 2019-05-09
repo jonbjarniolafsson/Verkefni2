@@ -6,12 +6,15 @@
 {% block content %}
 <div class="employees">
     <div class="container">
+    {{ employees.startDate }}
         {% for employee in employees %}
         <div class="item">
-            <h3>{{employee.name}}</h3>
-            <div class="meta">{{employee.age}} year old {{employee.gender}}</div>
+            <div class = employeeDescriptions> {{ employee.user.firstName }}</div>
+            <h3>{{employee.description}} {{employee.startDate}}</h3>
+            <div class="meta">{{employee.user.firstName}} {{employee.user.lastName}}</div>
             <div class="desc">
-                <p>{{employee.description}}</p>
+                <img class = employeePicture src =  " {{ employee.user.profileImagePath }}"/>
+                <p>{{users.phone}}</p>
             </div>
         </div>
         {% endfor %}

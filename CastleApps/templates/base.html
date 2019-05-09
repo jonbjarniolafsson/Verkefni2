@@ -2,7 +2,6 @@
 {% url 'frontpage' as home_url %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +14,7 @@
     <title>Luxury apartments</title>
 </head>
 {% url 'frontpage' as pageurl %}
-
 <body class="{% if request.path == pageurl or request.path == '/'  %} frontpage {% else %} subpage {% endif %}">
-
     <div class="site-overlay"></div>
     <div class="contact-toggle">
         <span>Contact Us</span>
@@ -113,5 +110,4 @@
     {% block script %} {% endblock %}
     <script src="{% static 'js/scripts.js'%}"></script>
 </body>
-
 </html>
