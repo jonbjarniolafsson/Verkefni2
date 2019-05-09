@@ -58,6 +58,7 @@ apartments = [
     }
 ]
 
+# This is the main home page
 def home(request):
     context = {
         'apartments': Apartments.objects.all(),
@@ -65,6 +66,7 @@ def home(request):
     return render(request, 'apartments/home.html', context)
 
 
+# This is
 def about(request):
     dbEmployees = Employees.objects.all()
     context = {
@@ -73,7 +75,7 @@ def about(request):
     return render(request, 'apartments/about.html', context)
 
 
-def apartment(request, apartmentid):
+def singleApartment(request, apartmentid):
 
     context = {}
     for item in apartments:
