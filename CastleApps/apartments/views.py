@@ -94,7 +94,7 @@ def home(request):
         'apartments':apartments
 
     }
-    return render(request, '../templates/home.html',context)
+    return render(request, '../templates/apartments/home.html',context)
 
 def about(request):
 
@@ -102,7 +102,7 @@ def about(request):
         'employees': employees
     }
 
-    return render(request, '../templates/about.html', context)
+    return render(request, '../templates/apartments/about.html', context)
 
 def apartment(request, apartmentid):
 
@@ -113,12 +113,12 @@ def apartment(request, apartmentid):
             context = {
                 'apartment': item
             }
-    return render(request, '../templates/single-apartment.html', context)
+    return render(request, '../templates/apartments/single-apartment.html', context)
 
 
 def all_apartments(request):
     context = {
         'apartments': apartments
     }
-    return render(request, '../templates/apartments-list.html', context)
+    return render(request, '../templates/apartments/apartments-list.html', context)
 

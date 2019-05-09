@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user.apps.UserConfig'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'CastleApps.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fstfyiru',
+        'USER': 'fstfyiru',
+        'PASSWORD': 'Sc9AkVu0YIu99fRWUKbOUFNv4KJ2hRp4',
+        'HOST': 'manny.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
 
@@ -120,4 +125,7 @@ USE_TZ = True
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'),)
+
+LOGIN_URL = '/user/login'
+LOGIN_REDIRECT_URL = '/'
 

@@ -40,20 +40,16 @@
         </form>
     </div>
     <div class="login-form">
-        <h2>Sign in</h2>
-        <form action="/sign-in">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input name="email" type="email">
+       {% if user.is_authenticated %}
+            <div class="logout">
+                <a href="{% url 'logout' %}" >Logout</a>
             </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="pw" id="login-pw">
+       {% else %}
+            <div class="sign-in">
+                <a href="{% url 'login' %}">Login here</a>
             </div>
-            <span class="sign-up">Dont have an account? <a href="/sign-up">Sign up here</a></span>
-            <button type="submit">Login</button>
-        </form>
+            <div class="register"><a href="{% url 'register' %}">Register here</a></div>
+       {% endif %}
     </div>
     <header>
         <div class="navigation">
@@ -70,7 +66,6 @@
                             <li><a href="{% url 'about' %}">About us</a></li>
                             <li><a href="{% url 'apartment-list' %}">Our apartments</a></li>
                         </ul>
-
                         <div class="loggin-toggle">
                             <img src="/static/img/user.svg" class="svg user" />
                         </div>

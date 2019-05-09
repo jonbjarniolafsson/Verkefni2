@@ -169,6 +169,27 @@ form button:hover{
     font-style: italic;
 }
 
+.login-form{
+    color: #fff;
+}
+
+.login-form .sign-in{
+    margin-bottom: 15px;
+}
+
+.login-form .register{
+
+}
+
+.login-form .sign-in a{
+    font-size: 16px;
+    color: #fff;
+}
+
+.login-form .register a{
+    font-size: 14px;
+    color: #fff;
+}
 
 
 .contact-toggle{
