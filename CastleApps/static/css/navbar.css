@@ -25,9 +25,6 @@ body.subpage header{
     height: 100%;
 }
 
-.navigation .container{
-}
-
 .navigation .navbar{
     display: flex;
     flex-direction: row;

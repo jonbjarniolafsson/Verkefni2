@@ -16,6 +16,7 @@
 
 .apartments .apartment .image img{
     transition: 3s linear;
+    height: 250px;
 }
 
 .apartments .apartment .image img:hover{
@@ -48,7 +49,6 @@
     width: 25px;
     height: 25px;
     top: 50%;
-    transform: translateY(-50%);
     border: none;
 }
 
@@ -63,14 +63,14 @@
 .apartments .apartments-wrapper.slider .owl-nav .owl-next{
     border-bottom: 2px solid #0067BC;
     border-right: 2px solid #0067BC;
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) translateY(-50%);
     right: -45px;
 }
 
 .apartments .apartments-wrapper.slider .owl-nav .owl-prev{
     border-top: 2px solid #0067BC;
     border-left: 2px solid #0067BC;
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) translateY(-50%);
     left: -45px;
 }
 
