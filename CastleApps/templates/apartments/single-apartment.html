@@ -31,7 +31,9 @@
                     <p>City: {{apartment.location.city}}</p>
                     <p>Region: {{apartment.location.region}}</p>
                     <p>Zip: {{apartment.location.zip}}</p>
-
+                    {%  for x in images %}  
+                        <img src="{{ x }}" alt="Image here" srcset="">
+                    {%  endfor %}
                 </div>
             </div>
         </div>
