@@ -7,6 +7,7 @@ urlpatterns = [
     path('all-apartments/',
          views.all_apartments, name="apartment-list"),
     path('apartments/<int:apartmentid>/',
-         views.singleApartment, name="apartment")
+         views.singleApartment, name="apartment"),
+    path('create_apartments', views.create_apartment, name="create-apartment"),
 
 ]

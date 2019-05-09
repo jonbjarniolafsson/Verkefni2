@@ -1,9 +1,10 @@
 #from django.shortcuts import render
-#from .forms.apartment_form import CastleAppsCreateForm
+from .forms.apartmentform import CastleAppsCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
+
 
 
 
@@ -94,3 +95,16 @@ def all_apartments(request):
 
     return render(request, 'apartments/apartments-list.html', context)
 
+
+
+def create_apartment(request):
+    if request.method == 'POST':
+        form = CastleAppsCreateForm(data=request.POST['image'],)
+        if form.is_valid():
+            apartment = form.save()
+            apartment_image = ApartmentImage(image=request.POST)
+    else:
+        form = CastleAppsCreateForm()
+        return render(request, 'apartments/create-apartment.html', {
+            'form' : form
+})
