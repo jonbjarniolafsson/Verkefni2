@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+#from django.shortcuts import render
+#from .forms.apartment_form import CastleAppsCreateForm
+#from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
+
 
 
 apartments = [
@@ -54,32 +57,6 @@ apartments = [
         'image': '/static/img/b70.jpeg'
     }
 ]
-
-
-
-#for x in apartments:
-#    if apartments['aID'] == apartImages['aID']:
-#        print()
-
-
-# Apartments voru Objects vs
-
-
-
-
-#apartmentImages = ApartmentImages.objects.all() #An object containting aID = 2
-
-#print("Printing querySet first: ",apartmentImages.first()) #This gives you the first row
-#print("Printing querySet first image path: ",apartmentImages.first().imagePath)
-
-
-#print(dbApartments.first())
-
-#print("printing path: ", apartmentImages.first().imagePath)
-
-
-#print("pritning db: ",dbApartments)
-
 
 def home(request):
     context = {
