@@ -82,8 +82,15 @@ def singleApartment(request, apartmentid): # Need t oadd error handling
     if Apartments.objects.get(id=apartmentid).id == apartmentid:
         print("HEre we are", apartmentid)
         apartments = Apartments.objects.get(id = apartmentid)
+        apartmentImages = Apartments.objects.get(pk=2).apartmentimages_set.all()
+        print("image print: ",apartmentImages.first())
+        apartmentImages = apartmentImages.all()
+        listings = Listings.objects.get(apartment =apartmentid)
+
         context = {
-            'apartment': apartments
+            'apartment': apartments,
+            'images' : apartmentImages,
+            'listings': listings
         }
     return render(request, 'apartments/single-apartment.html', context)
 
