@@ -4,12 +4,6 @@
     <div class="container">
         <form action="{% url 'create-apartment' %}" class="background-white" method="POST">
             {% csrf_token %}
-            {% for item in address_form %}
-                <div class="form-group">
-                    <label>{{item.name}}</label>
-                    {{item}}
-                </div>
-            {% endfor %}
              {% for item in app_form %}
                 <div class="form-group">
                     <label>{{item.name}}</label>

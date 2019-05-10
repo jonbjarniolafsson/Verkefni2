@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
-from .forms.apartmentform import CastleAppsCreateForm, AddressCreateForm
+from .forms.apartmentform import CastleAppsCreateForm
+from .forms.locationform import AddressCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
 from users.models import *
+
 
 
 
@@ -103,26 +105,32 @@ def all_apartments(request):
     }
     return render(request, 'apartments/apartments-list.html', context)
 
-
+def create_location(request):
+    if request.method == 'POST':
+        address_form = AddressCreateForm(data=request.POST, prefix='location')
+        if address_form.is_valid():
+            address_form.save()
+            return redirect('create-apartment')
+        context = {'address_form': address_form}
+        return render(request, 'apartments/create-location.html', context)
+    else:
+        address_form = AddressCreateForm(data=request.GET)
+        return render(request, 'apartments/create-location.html', {
+            'address_form': address_form
+        })
 
 def create_apartment(request):
     if request.method == 'POST':
         # Read data from apartments form, and from address form.
         app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
-        address_form = AddressCreateForm(data=request.POST, prefix='address')
-
-        if app_form.is_valid() and address_form.is_valid():
-            address_form.save()
-            app_form.save()
+        if app_form.is_valid():
+            app_form = app_form.save()
             return redirect('frontpage')
 
-        context = {'app_form': app_form, 'address_form': address_form}
+        context = {'app_form': app_form}
         return render(request, 'apartments/create-apartment.html', context)
-
     else:
         app_form = CastleAppsCreateForm(data=request.GET)
-        address_form = AddressCreateForm(data=request.GET)
         return render(request, 'apartments/create-apartment.html', {
-            'app_form': app_form,
-            'address_form': address_form
+            'app_form': app_form
         })

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+         <form action="{% url 'create-location' %}" class="background-white" method="POST">
+             {% csrf_token %}
+                {% for item in address_form %}
+                 <div class="form-group">
+                     <label>{{item.name}}</label>
+                    {{item}}
+                </div>
+            {% endfor %}
+          <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+        </form>
+    </div>
+
+
+{% endblock %}
