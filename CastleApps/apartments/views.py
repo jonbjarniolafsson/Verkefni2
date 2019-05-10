@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms.apartmentform import CastleAppsCreateForm, AddressCreateForm
+from .forms.apartmentform import CastleAppsCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -69,11 +69,12 @@ def home(request):
 
 # This is
 def agents(request):
-    dbEmployees = Employees.objects.all()
-    context = {
-        'employees': dbEmployees
-    }
-    return render(request, 'apartments/agents.html', context)
+    pass
+    #dbEmployees = Employees.objects.all()
+#    context = {
+#        'employees': Employees
+#    }
+#    return render(request, 'apartments/agents.html', context)
 
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentid): # Need t oadd error handling
@@ -102,27 +103,24 @@ def all_apartments(request):
     return render(request, 'apartments/apartments-list.html', context)
 
 
+
 def create_apartment(request):
-
     if request.method == 'POST':
-
-        #Read data from apartments form, and from address form.
-        app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
-        address_form = AddressCreateForm(data=request.POST, prefix='address')
-
-        if app_form.is_valid() and address_form.is_valid():
-            address_form.save()
-            app_form.save()
+        form = CastleAppsCreateForm(data=request.POST)
+        print("POST")
+        if form.is_valid():
+            print("IS VALID")
+            Apartments = form.save()
+            apartments_image = ApartmentImages(image=request.POST['image'], Apartments=Apartments)
+            apartments_image.save()
             return redirect('frontpage')
+        else:
+            response_data = {
+                'SType' : 'error',
+                'message' : form.errors
+            }
 
-        context = {'app_form': app_form, 'address_form': address_form}
-        return render(request, 'apartments/create-apartment.html', context)
-
-    else:
-        app_form = CastleAppsCreateForm(data=request.GET)
-        address_form = AddressCreateForm(data=request.GET)
-        return render(request, 'apartments/create-apartment.html', {
-            'app_form' : app_form,
-            'address_form':address_form
-        })
-
+    form = CastleAppsCreateForm(data=request.GET)
+    return render(request, 'apartments/create-apartment.html', {
+        'form' : form
+})

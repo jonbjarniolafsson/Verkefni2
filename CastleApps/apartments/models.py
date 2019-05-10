@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models #Tells it to map to database
 from django.utils import timezone
+from django.conf import settings
 from datetime import datetime
 
 from django.shortcuts import  render
@@ -24,8 +25,6 @@ class Locations(models.Model):
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.CharField(max_length=100)
-    def __str__(self):
-        return self.country
 
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
@@ -33,39 +32,17 @@ class Apartments(models.Model):
     size = models.IntegerField()
     rooms = models.IntegerField()
     bathrooms = models.IntegerField()
-    type = models.CharField(max_length = 50)
-    timeOfConstruction = models.IntegerField()
+    timeOfConstruction = models.IntegerField( default = 2000)
     displayImage = models.CharField(max_length = 5000)
     location = models.ForeignKey(Locations, on_delete=models.CASCADE) # Foreign keys are singular. While the table
-    # they belong to are multi
-    def __str__(self):
-        self.displayImage , self.location
+    userID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
     aID = models.ForeignKey(Apartments, on_delete=models.CASCADE)
     def __str__(self):
         return self.image
-
-
-class roles(models.Model):
-    description = models.CharField(max_length = 500)
-
-# Employees are the people that work for the company.
-# If employees want to be buyers/sellers then they can make their own User account
-class Users(models.Model):
-    email = models.CharField(unique = True, max_length = 40)
-    firstName = models.CharField(max_length = 50)
-    lastName = models.CharField(max_length = 50)
-    phone = models.CharField(max_length = 20)
-    profileImagePath = models.CharField(default = None, max_length = 50000)
-    role = models.ForeignKey(roles, on_delete = models.CASCADE)
-
-class Employees(models.Model):
-    description = models.CharField(max_length = 500)
-    startDate = models.DateField(null = True, blank = True, default = None)
-    endDate = models.DateField(null = True, blank = True, default = None)
-    user = models.ForeignKey(Users, on_delete = models.CASCADE)
 
 
 # Each apartments has a listing. It can have many listings.
@@ -76,9 +53,9 @@ class Listings(models.Model):
     registered = models.DateTimeField(default=timezone.now)
     soldOnDate = models.DateTimeField(default = None)
     openHouse = models.CharField(default = None, max_length = 75)
-    employee = models.ForeignKey(Employees, default = None, on_delete = models.CASCADE)
-    User = models.ForeignKey(Users, on_delete = models.CASCADE)
-    apartment = models.ForeignKey(Apartments, on_delete = models.CASCADE)
+    agentID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    apartment = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+
 
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
 class listingDocs(models.Model):
@@ -102,4 +79,4 @@ class PaymentInfos(models.Model):
     expYear = models.IntegerField()
     address = models.CharField(max_length=80)
     aptSuite = models.CharField(max_length=20, default = None)
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    userID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)

@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig',
-    'apartments.apps.ApartmentsConfig'
+
+    'apartments.apps.ApartmentsConfig',
+
+    'users.apps.UserConfig',
+
+    #'django.contrib.sites', # new
+
+
 ]
 
 MIDDLEWARE = [
@@ -79,9 +85,9 @@ WSGI_APPLICATION = 'CastleApps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fstfyiru',
-        'USER': 'fstfyiru',
-        'PASSWORD': 'Sc9AkVu0YIu99fRWUKbOUFNv4KJ2hRp4',
+        'NAME': 'xesdsqny',
+        'USER': 'xesdsqny',
+        'PASSWORD': '3r40qlmcxA-9CEPNAqVOmOHE7VSfGVE1',
         'HOST': 'manny.db.elephantsql.com',
         'PORT': '5432',
     }
@@ -127,6 +133,17 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join('static'),)
 
-LOGIN_URL = '/user/login'
+LOGIN_URL = '/users/login'
+
+
+# myproject/settings.py
+#AUTHENTICATION_BACKENDS = (
+#    "django.contrib.auth.backends.ModelBackend",
+#    "allauth.account.auth_backends.AuthenticationBackend",
+#)
+
+#SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
+AUTH_USER_MODEL = 'users.Users' # new
+#AUTH_USER_MODEL = 'user.user'
