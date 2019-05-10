@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from ..models import Apartments
+from ..models import Apartments, Locations
 from django import forms
 
 
@@ -15,11 +15,23 @@ class CastleAppsCreateForm(ModelForm):
             'Rooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
             'Bathrooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
             'Description': widgets.TextInput(attrs={'class': 'form-control'}),
-            'timeOfConstruction': widgets.TextInput(attrs={'class': 'form-control'})
+            'timeOfConstruction': widgets.TextInput(attrs={'class': 'form-control'}),
+            'type': widgets.TextInput(attrs={'class':'form-control'})
 
 
 
 }
+
+class AddressCreateForm(ModelForm):
+        class Meta:
+            model = Locations
+            exclude = ['id']
+            widgets = {
+                'zip': widgets.TextInput(attrs={'class': 'form-control'}),
+                'region': widgets.TextInput(attrs={'class': 'form-control'}),
+                'city': widgets.TextInput(attrs={'class': 'form-control'}),
+                'country': widgets.TextInput(attrs={'class': 'form-control'})
+                }
         #address = models.CharField(max_length = 50)
         #size = models.IntegerField()
         #rooms = models.IntegerField()

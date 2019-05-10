@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms.apartmentform import CastleAppsCreateForm
+from .forms.apartmentform import CastleAppsCreateForm, AddressCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -101,9 +101,10 @@ def singleApartment(request, apartmentID): # Need to add error handling
     return render(request, 'apartments/single-apartment.html', context)
 
 
-# DISPLAY SINGLE Agent
+# DISPLAY SINGLE Agent NExt implmentation Fridrik
 
-def singleAgent(request, agentID)
+def singleAgent(request, agentID):
+    pass
 
 
 def all_apartments(request):
@@ -116,21 +117,22 @@ def all_apartments(request):
 
 def create_apartment(request):
     if request.method == 'POST':
-        form = CastleAppsCreateForm(data=request.POST)
-        print("POST")
-        if form.is_valid():
-            print("IS VALID")
-            Apartments = form.save()
-            apartments_image = ApartmentImages(image=request.POST['image'], Apartments=Apartments)
-            apartments_image.save()
-            return redirect('frontpage')
-        else:
-            response_data = {
-                'SType' : 'error',
-                'message' : form.errors
-            }
+        # Read data from apartments form, and from address form.
+        app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+        address_form = AddressCreateForm(data=request.POST, prefix='address')
 
-    form = CastleAppsCreateForm(data=request.GET)
-    return render(request, 'apartments/create-apartment.html', {
-        'form' : form
-})
+        if app_form.is_valid() and address_form.is_valid():
+            address_form.save()
+            app_form.save()
+            return redirect('frontpage')
+
+        context = {'app_form': app_form, 'address_form': address_form}
+        return render(request, 'apartments/create-apartment.html', context)
+
+    else:
+        app_form = CastleAppsCreateForm(data=request.GET)
+        address_form = AddressCreateForm(data=request.GET)
+        return render(request, 'apartments/create-apartment.html', {
+            'app_form': app_form,
+            'address_form': address_form
+        })

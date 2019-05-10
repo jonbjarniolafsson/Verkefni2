@@ -25,6 +25,8 @@ class Locations(models.Model):
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.CharField(max_length=100)
+    def __str__(self):
+        return self.country
 
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
@@ -34,9 +36,12 @@ class Apartments(models.Model):
     bathrooms = models.IntegerField()
     type = models.CharField(max_length=50)
     timeOfConstruction = models.IntegerField( default = 2000)
+    type = models.CharField(max_length = 50)
     displayImage = models.CharField(max_length = 5000)
-    location = models.ForeignKey(Locations, on_delete=models.CASCADE) # Foreign keys are singular. While the table
+    location = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
     userID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+    def __str__(self):
+        self.displayImage, self.location
 
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
