@@ -5,6 +5,7 @@ from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
 from users.models import *
+from django.db.models import Max
 
 
 
@@ -78,23 +79,31 @@ def agents(request):
     return render(request, 'apartments/agents.html', context)
 
 # This is the page you are led to when an apartment is clicked on
-def singleApartment(request, apartmentid): # Need to add error handling
+def singleApartment(request, apartmentID): # Need to add error handling
     context = {}
-    print("ERROR HANDLING" ,apartmentid)
-    if Apartments.objects.get(id=apartmentid).id == apartmentid:
-        print("HEre we are", apartmentid)
-        apartments = Apartments.objects.get(id = apartmentid)
-        apartmentImages = Apartments.objects.get(pk=2).apartmentimages_set.all()
-        print("image print: ",apartmentImages.first())
+    print("ERROR HANDLING" ,apartmentID)
+    if Apartments.objects.get(id=apartmentID).id == apartmentID:
+        #print("HEre we are", apartmentid)
+        apartments = Apartments.objects.get(id = apartmentID)
+        apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
-        listings = Listings.objects.get(apartment =apartmentid)
-
+        listings = Listings.objects.filter(apartment=apartmentID)
+        print("LISTING OBJECT: ", listings)
+        idOfActiveListing = listings.aggregate(Max('id'))
+        listing = Listings.objects.get(id = idOfActiveListing['id__max'])
+        print("PRINTING agentID: ", listing.agentID_id)
+        listingAgent = Users.objects.get(id = listing.agentID_id)
         context = {
             'apartment': apartments,
             'images' : apartmentImages,
-            'listings': listings
+            'agent': listingAgent
         }
     return render(request, 'apartments/single-apartment.html', context)
+
+
+# DISPLAY SINGLE Agent
+
+def singleAgent(request, agentID)
 
 
 def all_apartments(request):
