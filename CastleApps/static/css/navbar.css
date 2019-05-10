@@ -25,9 +25,6 @@ body.subpage header{
     height: 100%;
 }
 
-.navigation .container{
-}
-
 .navigation .navbar{
     display: flex;
     flex-direction: row;
@@ -65,8 +62,77 @@ body.subpage header{
     margin: 0;
 }
 
-.navigation .navbar .nav-links li{
+.navigation .navbar .nav-links li.user{
+    position: relative;
+    padding: 30px 15px;
+    color: #fff;
 }
+
+.navigation .navbar .nav-links li .submenu{
+    display: none;
+    position: absolute;
+    top: 84px;
+    left: -1px;
+    padding: 30px 15px;
+    border: 1px solid #0067BC;
+    border-top: none;
+    background: #fff;
+    list-style-type: none;
+}
+
+.navigation .navbar .nav-links li .submenu li{
+    width: 150px;
+}
+
+.navigation .navbar .nav-links li .submenu li a{
+    position: relative;
+    display: block;
+    color: #4c4c4c !important;
+    padding: 5px;
+}
+
+.navigation .navbar .nav-links li .submenu li a::before{
+    content: '';
+    position: relative;
+    display: inline-block;
+    top: -3px;
+    left: 0;
+    width: 0px;
+    height: 3px;
+    background: #0067BC;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.navigation .navbar .nav-links li .submenu li a:hover::before{
+    width: 20px;
+}
+
+.submenu li a::after{
+    content: unset;
+}
+
+
+.navigation .navbar .nav-links li.user::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0px;
+    height: 3px;
+    background: #fff;
+    transition: 0.3s ease;
+}
+
+.navigation .navbar .nav-links li.user:hover::after{
+    width: 100%;
+}
+
+.navigation .navbar .nav-links li.user:hover .submenu{
+    display: block;
+}
+
+
 
 .navigation .navbar .nav-links li a{
     display: block;

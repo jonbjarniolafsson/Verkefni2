@@ -36,7 +36,7 @@
             </div>
         </form>
     </div>
-    <div class="login-form">
+    <!-- div class="login-form">
        {% if user.is_authenticated %}
             <div class="logout">
                 <a href="{% url 'logout' %}" >Logout</a>
@@ -47,7 +47,7 @@
             </div>
             <div class="register"><a href="{% url 'register' %}">Register here</a></div>
        {% endif %}
-    </div>
+    </div -->
     <header>
         <div class="navigation">
             <div class="container">
@@ -60,12 +60,31 @@
                     <div class="navbar-right">
                         <ul class="nav-links">
                             <li><a href="{% url 'frontpage' %}">Home</a></li>
-                            <li><a href="{% url 'about' %}">About us</a></li>
-                            <li><a href="{% url 'apartment-list' %}">Our apartments</a></li>
+                            <li><a href="{% url 'agents' %}">Agents</a></li>
+                            <li class="user">
+                                Settings
+                                <ul class="submenu">
+                                    {% if user.is_authenticated %}
+                                        <li class="profile">
+                                            <a href="#">Profile</a>
+                                        </li>
+                                        <li class="logout">
+                                            <a href="{% url 'logout' %}" >Logout</a>
+                                        </li>
+                                    {% else %}
+                                            <li class="sign-in">
+                                                <a href="{% url 'login' %}">Login</a>
+                                            </li>
+                                            <li class="register">
+                                                <a href="{% url 'register' %}">Register</a>
+                                            </li>
+                                    {% endif %}
+                                </ul>
+                            </li>
                         </ul>
-                        <div class="loggin-toggle">
+                        <!-- div class="loggin-toggle">
                             <img src="/static/img/user.svg" class="svg user" />
-                        </div>
+                        </div -->
                     </div>
                 </div>
             </div>

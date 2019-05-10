@@ -33,14 +33,16 @@ class Apartments(models.Model):
     bathrooms = models.IntegerField()
     timeOfConstruction = models.IntegerField()
     displayImage = models.CharField(max_length = 5000)
-    type = models.CharField(max_length=100)
-    location = models.ForeignKey(Locations, on_delete=models.CASCADE)
+    location = models.ForeignKey(Locations, on_delete=models.CASCADE) # Foreign keys are singular. While the table
+    # they belong to are multi
     def __str__(self):
         self.displayImage
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
     aID = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.image
 
 
 class roles(models.Model):
@@ -78,8 +80,8 @@ class Listings(models.Model):
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
 class listingDocs(models.Model):
     listing = models.ForeignKey(Listings, on_delete = models.CASCADE)
-    attachment = models.CharField(max_length = 75, default = None)
-    description = models.CharField(max_length = 50, default = None)
+    attachment = models.CharField(max_length = 500, default = None)
+    description = models.CharField(max_length = 500, default = None)
 
 # Used to calculate the final price and used to display the list on our website
 class PriceLists(models.Model):

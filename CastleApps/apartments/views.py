@@ -68,12 +68,12 @@ def home(request):
 
 
 # This is
-def about(request):
+def agents(request):
     dbEmployees = Employees.objects.all()
     context = {
         'employees': dbEmployees
     }
-    return render(request, 'apartments/about.html', context)
+    return render(request, 'apartments/agents.html', context)
 
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentid): # Need t oadd error handling
@@ -82,8 +82,15 @@ def singleApartment(request, apartmentid): # Need t oadd error handling
     if Apartments.objects.get(id=apartmentid).id == apartmentid:
         print("HEre we are", apartmentid)
         apartments = Apartments.objects.get(id = apartmentid)
+        apartmentImages = Apartments.objects.get(pk=2).apartmentimages_set.all()
+        print("image print: ",apartmentImages.first())
+        apartmentImages = apartmentImages.all()
+        listings = Listings.objects.get(apartment =apartmentid)
+
         context = {
-            'apartment': apartments
+            'apartment': apartments,
+            'images' : apartmentImages,
+            'listings': listings
         }
     return render(request, 'apartments/single-apartment.html', context)
 
