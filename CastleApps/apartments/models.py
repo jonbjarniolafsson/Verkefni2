@@ -31,18 +31,17 @@ class Apartments(models.Model):
     size = models.IntegerField()
     rooms = models.IntegerField()
     bathrooms = models.IntegerField()
-    type = models.CharField(max_length=200)
     timeOfConstruction = models.IntegerField()
-    timeOfRegistration= models.DateTimeField(default=datetime.now)
-    price = models.IntegerField()
     displayImage = models.CharField(max_length = 5000)
+    type = models.CharField(max_length=100)
     location = models.ForeignKey(Locations, on_delete=models.CASCADE)
     def __str__(self):
-        return self.displayImage
+        self.displayImage
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
     aID = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+
 
 class roles(models.Model):
     description = models.CharField(max_length = 500)
@@ -98,4 +97,4 @@ class PaymentInfos(models.Model):
     expYear = models.IntegerField()
     address = models.CharField(max_length=80)
     aptSuite = models.CharField(max_length=20, default = None)
-user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)

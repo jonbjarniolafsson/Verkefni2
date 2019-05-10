@@ -1,4 +1,4 @@
-#from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .forms.apartmentform import CastleAppsCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
@@ -98,12 +98,21 @@ def all_apartments(request):
 
 def create_apartment(request):
     if request.method == 'POST':
-        form = CastleAppsCreateForm(data=request.POST['image'],)
+        form = CastleAppsCreateForm(data=request.POST)
+        print("POST")
         if form.is_valid():
-            apartment = form.save()
-            apartment_image = ApartmentImage(image=request.POST)
-    else:
-        form = CastleAppsCreateForm()
-        return render(request, 'apartments/create-apartment.html', {
-            'form' : form
+            print("IS VALID")
+            Apartments = form.save()
+            apartments_image = ApartmentImages(image=request.POST['image'], Apartments=Apartments)
+            apartments_image.save()
+            return redirect('frontpage')
+        else:
+            response_data = {
+                'SType' : 'error',
+                'message' : form.errors
+            }
+
+    form = CastleAppsCreateForm(data=request.GET)
+    return render(request, 'apartments/create-apartment.html', {
+        'form' : form
 })
