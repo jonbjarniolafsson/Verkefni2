@@ -85,9 +85,9 @@ WSGI_APPLICATION = 'CastleApps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'xesdsqny',
-        'USER': 'xesdsqny',
-        'PASSWORD': '3r40qlmcxA-9CEPNAqVOmOHE7VSfGVE1',
+        'NAME': 'fstfyiru',
+        'USER': 'fstfyiru',
+        'PASSWORD': 'Sc9AkVu0YIu99fRWUKbOUFNv4KJ2hRp4',
         'HOST': 'manny.db.elephantsql.com',
         'PORT': '5432',
     }

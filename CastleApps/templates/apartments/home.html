@@ -36,14 +36,15 @@
                         {{apartment.address}}
                     </div>
                     <div class="postdata">
-                        {{apartment.zip}}
-                        {{apartment.city}}
+                        {{apartment.location.zip}}
+                        {{apartment.location.city}} <br>
+                        {{apartment.location.country}}
                     </div>
                     <div class="size">
-                        {{apartment.size}} fm.
+                        {{apartment.size}} m2.
                     </div>
                     <div class="price">
-                        {{apartment.price}} isk.
+                        $ {{apartment.listings_set.price}} .
                     </div>
                 </div>
             </div>

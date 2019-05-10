@@ -4,7 +4,7 @@ from .forms.apartmentform import CastleAppsCreateForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
-
+from users.models import *
 
 
 
@@ -69,15 +69,16 @@ def home(request):
 
 # This is
 def agents(request):
-    pass
-    #dbEmployees = Employees.objects.all()
-#    context = {
-#        'employees': Employees
-#    }
-#    return render(request, 'apartments/agents.html', context)
+
+    users = Users.objects.filter(is_superuser = True)
+    #print("PRINTING ALL THE USERS : ", users.profileImagePath)
+    context = {
+       'agents': users
+    }
+    return render(request, 'apartments/agents.html', context)
 
 # This is the page you are led to when an apartment is clicked on
-def singleApartment(request, apartmentid): # Need t oadd error handling
+def singleApartment(request, apartmentid): # Need to add error handling
     context = {}
     print("ERROR HANDLING" ,apartmentid)
     if Apartments.objects.get(id=apartmentid).id == apartmentid:

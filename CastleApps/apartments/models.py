@@ -32,6 +32,7 @@ class Apartments(models.Model):
     size = models.IntegerField()
     rooms = models.IntegerField()
     bathrooms = models.IntegerField()
+    type = models.CharField(max_length=50)
     timeOfConstruction = models.IntegerField( default = 2000)
     displayImage = models.CharField(max_length = 5000)
     location = models.ForeignKey(Locations, on_delete=models.CASCADE) # Foreign keys are singular. While the table
