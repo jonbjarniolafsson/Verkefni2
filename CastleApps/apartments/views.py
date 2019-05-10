@@ -69,11 +69,12 @@ def home(request):
 
 # This is
 def agents(request):
-    dbEmployees = Employees.objects.all()
-    context = {
-        'employees': dbEmployees
-    }
-    return render(request, 'apartments/agents.html', context)
+    pass
+    #dbEmployees = Employees.objects.all()
+#    context = {
+#        'employees': Employees
+#    }
+#    return render(request, 'apartments/agents.html', context)
 
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentid): # Need t oadd error handling

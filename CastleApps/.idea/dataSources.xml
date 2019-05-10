@@ -7,5 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://manny.db.elephantsql.com:5432/fstfyiru</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="TurtleDB" uuid="878bd450-4f30-4974-865d-7faac6b507cc">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://manny.db.elephantsql.com:5432/xesdsqny</jdbc-url>
+    </data-source>
   </component>
 </project>

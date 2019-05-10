@@ -10,5 +10,14 @@
       <user-name>fstfyiru</user-name>
       <introspection-schemas>@:@</introspection-schemas>
     </data-source>
+    <data-source name="TurtleDB" uuid="878bd450-4f30-4974-865d-7faac6b507cc">
+      <database-info product="PostgreSQL" version="10.5 (Ubuntu 10.5-2.pgdg14.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="10.5" exact-driver-version="42.2">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>xesdsqny</user-name>
+      <introspection-schemas>@:@</introspection-schemas>
+    </data-source>
   </component>
 </project>
