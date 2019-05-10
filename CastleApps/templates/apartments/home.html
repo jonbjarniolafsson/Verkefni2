@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="{% static '/css/apartments.css' %}">
+<link rel="stylesheet" href="{% static '/css/banner.css' %}">
+{% endblock css %}
+{% block banner %}
+<div class="frontpage-banner">
+    <div class="search-form">
+        <form action="/">
+            <div class="form-group">
+                <label for="search">Search here</label>
+                <input type="search" name="search" id="search">
+            </div>
+            <button type="submit">search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="apartments">
+    <div class="container">
+        <h2>Open houses</h2>
+        <div class="apartments-wrapper slider owl-carousel">
+            {% for apartment in apartments %}
+            <div class="apartment">
+                <div class="image">
+                    <a href="/apartments/{{apartment.id}}">
+
+                        <img src="{{ apartment.displayImage }}" alt="Image here" srcset="">
+                    </a>
+                </div>
+                <div class="meta">
+                    <div class="address">
+                        {{apartment.address}}
+                    </div>
+                    <div class="postdata">
+                        {{apartment.zip}}
+                        {{apartment.city}}
+                    </div>
+                    <div class="size">
+                        {{apartment.size}} fm.
+                    </div>
+                    <div class="price">
+                        {{apartment.price}} isk.
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static '/js/sliders.js' %}"></script>
+{% endblock%}

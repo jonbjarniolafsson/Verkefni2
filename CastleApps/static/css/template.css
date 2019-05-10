@@ -1,0 +1,259 @@
+@import "navbar.css";
+@import "footer.css";
+body{
+    padding: 0;
+    margin: 0;
+    background: #f8f8f8;
+    font-family: 'Open Sans'
+}
+
+body.subpage{
+    padding-top: 170px;
+}
+
+body.no-scroll{
+    overflow: hidden;
+}
+
+main{
+    margin-bottom: 50px;
+    min-height: calc(100vh - 291px);
+}
+
+h1{
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+h2{
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3{
+    font-size: 18px;
+}
+
+h4{
+    font-size: 14px;
+}
+
+.site-overlay{
+    position: fixed;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.3s ease, z-index 0s;
+}
+
+a{
+    color: #0067BC;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.site-overlay.active{
+    opacity: 0.75;
+    z-index: 110;
+}
+
+.site-overlay.active:hover{
+    cursor: pointer;
+}
+
+
+.login-form{
+    padding: 50px 100px 65px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: #0067BC;
+    transition: all 0.3s ease, z-index 0s;
+    opacity: 0;
+    z-index: -1;
+}
+
+.login-form h2{
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.login-form.open{
+    opacity: 1;
+    z-index: 200;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+form{
+    position: relative;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+form textarea{
+    width: 100%;
+}
+
+form button{
+    border: none;
+    background: #fff;
+    border: 2px solid #0067BC;
+    color: #0067BC;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+}
+
+form button:hover{
+    background: #0067BC;
+    border-color: #fff;
+    color: #fff;
+}
+
+.form-group{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 0px;
+    margin-bottom: 30px;
+}
+
+.form-group label{
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    margin-right: 15px;
+    margin-bottom: 0px;
+    display: block;
+    font-size: 15px;
+    color: #4c4c4c;
+    transition: all 0.3s ease;
+    font-style: italic;
+    z-index: 10;
+}
+
+.form-group label::first-letter{
+    text-transform: capitalize;
+}
+
+.form-group input{
+    border-radius: 0px;
+    border: 1px solid transparent;
+    padding-left: 20px;
+    width: 100%;
+    height: 45px;
+}
+
+.form-group input:focus, .form-group input:active{
+    outline: none;
+    box-shadow: none;
+}
+
+.form-group.focused input{
+    border-color: #0067BC;
+}
+
+.form-group.focused label{
+    top: -25px;
+    left: 0px;
+    color: #fff;
+}
+
+form.white-background .form-group.focused label{
+    color: #0067BC;
+}
+
+.login-form form .sign-up{
+    color: #fff;
+    font-size: 15px;
+    position: absolute;
+    left: 0;
+    bottom: -48px;
+}
+
+.login-form form .sign-up a{
+    color: #fff;
+    font-style: italic;
+}
+
+.login-form{
+    color: #fff;
+}
+
+.login-form .sign-in{
+    margin-bottom: 15px;
+}
+
+.login-form .register{
+
+}
+
+.login-form .sign-in a{
+    font-size: 16px;
+    color: #fff;
+}
+
+.login-form .register a{
+    font-size: 14px;
+    color: #fff;
+}
+
+
+.contact-toggle{
+    position: fixed;
+    bottom: -35px;
+    padding: 20px 60px;
+    background: #0067BC;
+    right: 100px;
+    z-index: 90;
+    transition: all 0.3s ease;
+}
+
+.contact-toggle.full{
+    bottom: 0;
+}
+
+.contact-toggle span{
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.contact-toggle:hover{
+    cursor: pointer;
+    bottom: 0;
+}
+
+.contact-form{
+    position: fixed;
+    right: -400px;
+    top: 0;
+    padding: 50px 30px;
+    max-width: 400px;
+    height: 100vh;
+    background: #0067BC;
+    z-index: 120;
+    transition: all 0.3s ease;
+    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.35)
+}
+
+.contact-form h2{
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.contact-form.active{
+    right: 0;
+}
