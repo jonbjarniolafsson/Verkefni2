@@ -34,6 +34,7 @@ class Apartments(models.Model):
     size = models.IntegerField()
     rooms = models.IntegerField()
     bathrooms = models.IntegerField()
+    type = models.CharField(max_length=50)
     timeOfConstruction = models.IntegerField( default = 2000)
     type = models.CharField(max_length = 50)
     displayImage = models.CharField(max_length = 5000)
