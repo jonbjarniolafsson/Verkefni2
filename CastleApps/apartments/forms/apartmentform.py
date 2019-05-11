@@ -9,12 +9,14 @@ class CastleAppsCreateForm(ModelForm):
         model = Apartments
         exclude = [ 'pkid' ]
         widgets = {
-            'RegNumber': widgets.TextInput(attrs={'class' : 'form-control'}),
-            'Address': widgets.TextInput(attrs={'class': 'form-control'}),
-            'Size': widgets.NumberInput(attrs={'class' : 'form-control'}),
-            'Rooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
-            'Bathrooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
-            'Description': widgets.TextInput(attrs={'class': 'form-control'}),
-            'timeOfConstruction': widgets.TextInput(attrs={'class': 'form-control'}),
+
+            'registration': widgets.TextInput(attrs={'class' : 'form-control'}),
+            'address': widgets.TextInput(attrs={'class': 'form-control'}),
+            'aptsuite': widgets.TextInput(attrs={'class': 'form-control'}),
+            'size': widgets.NumberInput(attrs={'class' : 'form-control'}),
+            'rooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
+            'bathrooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
+            'timeofconstruction': widgets.TextInput(attrs={'class': 'form-control'}),
             'type': widgets.TextInput(attrs={'class':'form-control'})
+
 }

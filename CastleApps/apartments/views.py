@@ -126,10 +126,13 @@ def create_location(request):
     if request.method == 'POST':
         address_form = AddressCreateForm(data=request.POST, prefix='location')
         if address_form.is_valid():
+            print("VALID")
             address_form.save()
             return redirect('create-apartment')
         context = {'address_form': address_form}
-
+        f = AddressCreateForm(data)
+        f.non_field_errors()
+        field_errors = [(field.label, field.errors) for field in f]
         return render(request, 'apartments/create-location.html', context)
     else:
         address_form = AddressCreateForm(data=request.GET)
@@ -142,11 +145,12 @@ def create_apartment(request):
         # Read data from apartments form, and from address form.
         app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
         if app_form.is_valid():
-            app_form = app_form.save()
+            print("VALID")
+            app_form.save()
             return redirect('frontpage')
 
         context = {'app_form': app_form}
-        
+        print("INVALID")
         return render(request, 'apartments/create-apartment.html', context)
     else:
         app_form = CastleAppsCreateForm(data=request.GET)
