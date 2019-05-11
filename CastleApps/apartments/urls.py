@@ -7,6 +7,8 @@ urlpatterns = [
     # Here we have a list of employees page -> Should lead to their profile if clicked on
     path('agents/',views.agents, name='agents'),
 
+    path('aboutus/',views.aboutus, name='aboutus'),
+
     #Page below has to be revamped
     path('all-apartments/',
          views.all_apartments, name="apartment-list"),

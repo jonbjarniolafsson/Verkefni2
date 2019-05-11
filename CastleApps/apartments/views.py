@@ -73,12 +73,18 @@ def home(request):
 # This is
 def agents(request):
 
-    users = Users.objects.filter(is_superuser = True)
+    users = Users.objects.filter(is_staff = True)
     #print("PRINTING ALL THE USERS : ", users.profileImagePath)
     context = {
        'agents': users
     }
     return render(request, 'apartments/agents.html', context)
+
+def aboutus(request):
+    context = {
+        'oliver':'oliver'
+    }
+    return render(request, 'apartments/about_us.html', context)
 
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID): # Need to add error handling
