@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-
+from django.shortcuts import get_object_or_404
 
 
 
@@ -103,17 +103,16 @@ def singleApartment(request, apartmentID): # Need to add error handling
     return render(request, 'apartments/single-apartment.html', context)
 
 
-# DISPLAY SINGLE Agent NExt implmentation Fridrik
 
+#Here you can display a single user
 def singleUser(request, userID):
-
-    allUsers = Users.object.all()
-    print("Printing all users: ", allUsers)
-
+    #user = Users.objects.get(id = userID)
+    #print("Printing all users: ", user)
+    user = get_object_or_404(Users, pk=userID)
     context = {
-        'apartments': apartments
+        'user': user
     }
-    return render(request, 'apartments/apartments-list.html', context)
+    return render(request, 'apartments/single_user.html', context)
 
 
 
