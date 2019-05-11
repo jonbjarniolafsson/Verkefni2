@@ -13,7 +13,7 @@ def register(request):
         form = UsersCreationForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('/')
     
     return render(request, 'user/register.html', {
         'form': UserCreationForm()
