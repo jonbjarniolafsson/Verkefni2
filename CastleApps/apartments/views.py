@@ -105,8 +105,16 @@ def singleApartment(request, apartmentID): # Need to add error handling
 
 # DISPLAY SINGLE Agent NExt implmentation Fridrik
 
-def singleAgent(request, agentID):
-    pass
+def singleUser(request, userID):
+
+    allUsers = Users.object.all()
+    print("Printing all users: ", allUsers)
+
+    context = {
+        'apartments': apartments
+    }
+    return render(request, 'apartments/apartments-list.html', context)
+
 
 
 def all_apartments(request):

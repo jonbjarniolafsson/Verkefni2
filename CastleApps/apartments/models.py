@@ -20,33 +20,42 @@ from django.shortcuts import  render
 # Our model.py was designed with the ID being auto generated in mind.
 
 # Location is a general place to be able to better normalize the data.
+
+class Country(models.Model):
+    country = models.CharField(primary_key = True, max_length = 40)
+
 class Locations(models.Model):
-    city = models.CharField(max_length=100, default=None)
+    city = models.CharField(max_length=100, blank=True,null=True)
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
-    country = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     def __str__(self):
         return self.country
 
+
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
+    registration = models.CharField(max_length = 100, unique = True)
     address = models.CharField(max_length = 50)
     size = models.IntegerField()
     rooms = models.IntegerField()
     bathrooms = models.IntegerField()
+    aptsuite = models.CharField(blank=True,null=True, max_length = 30)
     type = models.CharField(max_length=50)
-    timeOfConstruction = models.IntegerField( default = 2000)
+    timeofconstruction = models.IntegerField( default = 2000)
     type = models.CharField(max_length = 50)
-    displayImage = models.CharField(max_length = 5000)
-    location = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
-    userID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+    displayimage = models.CharField(max_length = 5000)
+    locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
     def __str__(self):
         self.displayImage, self.location
+
+
 
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
-    aID = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    aid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
     def __str__(self):
         return self.image
 
@@ -55,34 +64,48 @@ class ApartmentImages(models.Model):
 # Same apartment can only have one listing up at a time though!
 class Listings(models.Model):
     price = models.BigIntegerField()
-    desc = models.TextField()
+    description = models.TextField()
     registered = models.DateTimeField(default=timezone.now)
-    soldOnDate = models.DateTimeField(default = None)
-    openHouse = models.CharField(default = None, max_length = 75)
-    agentID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    apartment = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    soldondate = models.DateTimeField(default = None)
+    agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+
+class OpenHouse(models.Model):
+    openhousestart = models.DateTimeField(default=None, max_length=75)
+    openhouseend = models.DateTimeField(default=None, max_length=75)
+    listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
+
+class ListingMiscs(models.Model):
+    footpreschool = models.CharField(max_length = 5, blank=True,null=True)
+    carpreschool = models.CharField(max_length = 5 ,blank=True,null=True)
+    footbusstop = models.CharField(max_length = 5, blank=True, null=True)
+    carsupermarket = models.CharField(max_length = 5, blank=True, null=True)
+    footsupermarket = models.CharField(max_length=5, blank=True, null=True)
+    footmetro = models.CharField(max_length=5, blank=True, null=True)
+    carmetro = models.CharField(max_length=5, blank=True, null=True)
+    listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
 
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
 class listingDocs(models.Model):
-    listing = models.ForeignKey(Listings, on_delete = models.CASCADE)
     attachment = models.CharField(max_length = 500, default = None)
     description = models.CharField(max_length = 500, default = None)
+    listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
 # Used to calculate the final price and used to display the list on our website
 class PriceLists(models.Model):
-    salesCost = models.CharField(max_length = 20)
-    appraisalCost = models.CharField(max_length = 15)
-    photoCost = models.CharField(max_length = 15)
-    managementCost = models.CharField(max_length = 15)
-    dataCollection = models.CharField(max_length = 15)
+    salescost = models.CharField(max_length = 20)
+    appraisalcost = models.CharField(max_length = 15)
+    photocost = models.CharField(max_length = 15)
+    managementcost = models.CharField(max_length = 15)
+    datacollection = models.CharField(max_length = 15)
 
 # All the information necessary to make a purchase on our platform
 class PaymentInfos(models.Model):
-    cardNumber = models.CharField(max_length=30)
-    cardHolder = models.CharField(max_length=80)
-    expMonth = models.IntegerField()
-    expYear = models.IntegerField()
+    cardnumber = models.CharField(max_length=30)
+    cardholder = models.CharField(max_length=80)
+    expmonth = models.IntegerField()
+    expyear = models.IntegerField()
     address = models.CharField(max_length=80)
-    aptSuite = models.CharField(max_length=20, default = None)
-    userID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+    aptsuite = models.CharField(max_length=20, default = None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
