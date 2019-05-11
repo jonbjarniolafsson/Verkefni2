@@ -129,6 +129,7 @@ def create_location(request):
             address_form.save()
             return redirect('create-apartment')
         context = {'address_form': address_form}
+        print address_form.errors
         return render(request, 'apartments/create-location.html', context)
     else:
         address_form = AddressCreateForm(data=request.GET)
@@ -145,6 +146,7 @@ def create_apartment(request):
             return redirect('frontpage')
 
         context = {'app_form': app_form}
+        print app_form.errors
         return render(request, 'apartments/create-apartment.html', context)
     else:
         app_form = CastleAppsCreateForm(data=request.GET)
