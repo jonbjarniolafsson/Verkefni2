@@ -9,9 +9,9 @@ from .forms import UsersCreationForm, UsersChangeForm
 from .models import Users
 
 class CustomUserAdmin(UserAdmin):
+    model = Users
     add_form = UsersCreationForm
     form = UsersChangeForm
-    model = Users
     list_display = ['email', 'username',]
 
 admin.site.register(Users, CustomUserAdmin)
