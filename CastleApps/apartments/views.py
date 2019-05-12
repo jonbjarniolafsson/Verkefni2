@@ -70,6 +70,12 @@ def home(request):
     return render(request, 'apartments/home.html', context)
 
 
+def buyNow(request, apartmentID):
+    context = {
+        'apartments' : Apartments.objects.get(id=apartmentID)
+    }
+    return render(request, 'apartments/buy_now.html')
+
 # This is
 def agents(request):
 
@@ -95,12 +101,14 @@ def singleApartment(request, apartmentID): # Need to add error handling
         apartments = Apartments.objects.get(id = apartmentID)
         apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
-        listings = Listings.objects.filter(apartment=apartmentID)
-        print("LISTING OBJECT: ", listings)
+        listings = Listings.objects.filter(apartmentid=apartmentID)
+        #print("LISTING OBJECT: ", listings)
         idOfActiveListing = listings.aggregate(Max('id'))
+        print(idOfActiveListing)
         listing = Listings.objects.get(id = idOfActiveListing['id__max'])
-        print("PRINTING agentID: ", listing.agentID_id)
-        listingAgent = Users.objects.get(id = listing.agentID_id)
+        print(listing)
+        #print("PRINTING agentID: ", listing.agentID_id)
+        listingAgent = Users.objects.get(id = listing.agent_id)
         context = {
             'apartment': apartments,
             'images' : apartmentImages,
