@@ -66,7 +66,7 @@ class Listings(models.Model):
     price = models.BigIntegerField()
     description = models.TextField()
     registered = models.DateTimeField(default=timezone.now)
-    soldondate = models.DateTimeField(default = None)
+    soldondate = models.DateTimeField(default = None, blank=True,null=True)
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
 

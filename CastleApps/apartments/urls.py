@@ -22,6 +22,9 @@ urlpatterns = [
          views.singleUser, name = "user"),
 
     path('create_apartment', views.create_apartment, name="create-apartment"),
-    path('create_location', views.create_location, name="create-location")
+    path('create_location', views.create_location, name="create-location"),
+
+    path('apartments/<int:apartmentID>/buynow', views.buyNow, name= "buy_now"),
+    path('apartments/<int:apartmentID>/buynow/submit', views.buyNowSubmit, name= "buy_now")
 
 ]
