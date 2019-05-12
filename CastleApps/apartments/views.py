@@ -11,6 +11,9 @@ from django.shortcuts import get_object_or_404
 
 from .forms import buynowform
 
+from django.db.models import Q
+
+
 
 
 apartments = [
@@ -66,10 +69,27 @@ apartments = [
 
 # This is the main home page
 def home(request):
-    context = {
-        'apartments': Apartments.objects.all(),
-    }
-    return render(request, 'apartments/home.html', context)
+
+        #listings = Listings.objects.all()
+        #print("PRINT STATEMENT: ", Listings.apartmentid)
+        newList = []
+
+        for x in OpenHouse.objects.all():
+            #appID = x.listingid.apartmentid
+            print(x.listingid.apartmentid.id)
+            newList.append(x.listingid.apartmentid.id)
+        newList = set(newList)
+        newList = list(newList)
+
+        newApart = Apartments.objects.filter(pk__in=newList)
+
+
+        context = {
+            'listings': Listings.objects.all(),
+            'apartments' : newApart,
+            #'appID': appID
+        }
+        return render(request, 'apartments/home.html', context)
 
 
 def buyNow(request, apartmentID):
@@ -79,7 +99,7 @@ def buyNow(request, apartmentID):
     return render(request, 'apartments/buy_now.html', context)
 
 
-def buyNowSubmit(request, apartmentID):
+def buyNowSubmitss(request, apartmentID):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -116,18 +136,20 @@ def aboutus(request):
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID): # Need to add error handling
     context = {}
-    print("ERROR HANDLING" ,apartmentID)
+
+    print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
+
     if Apartments.objects.get(id=apartmentID).id == apartmentID:
         #print("HEre we are", apartmentid)
         apartments = Apartments.objects.get(id = apartmentID)
         apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
         listings = Listings.objects.filter(apartmentid=apartmentID)
-        #print("LISTING OBJECT: ", listings)
+
         idOfActiveListing = listings.aggregate(Max('id'))
-        print(idOfActiveListing)
+
         listing = Listings.objects.get(id = idOfActiveListing['id__max'])
-        print(listing)
+
         #print("PRINTING agentID: ", listing.agentID_id)
         listingAgent = Users.objects.get(id = listing.agent_id)
         context = {
@@ -158,13 +180,33 @@ def all_apartments(request):
     return render(request, 'apartments/apartments-list.html', context)
 
 
+
+def buyNowSubmit(request):
+    if request.method == 'POST':
+        address_form = AddressCreateForm(data=request.POST, prefix='location')
+        if address_form.is_valid(): #Built in to check if valid
+            print("VALID")
+            address_form.save() #Saves to the DB
+            return redirect('create-apartment') #Supposed to redirect to create apartment
+        context = {'address_form': address_form}
+        f = AddressCreateForm(data=request.POST)
+        f.non_field_errors()
+        field_errors = [(field.label, field.errors) for field in f]
+        return render(request, 'apartments/create-location.html', context)
+    else:
+        address_form = AddressCreateForm(data=request.GET)
+        return render(request, 'apartments/create-location.html', {
+            'address_form': address_form
+        })
+
+
 def create_location(request):
     if request.method == 'POST':
         address_form = AddressCreateForm(data=request.POST, prefix='location')
-        if address_form.is_valid():
+        if address_form.is_valid(): #Built in to check if valid
             print("VALID")
-            address_form.save()
-            return redirect('create-apartment')
+            address_form.save() #Saves to the DB
+            return redirect('create-apartment') #Supposed to redirect to create apartment
         context = {'address_form': address_form}
         f = AddressCreateForm(data=request.POST)
         f.non_field_errors()

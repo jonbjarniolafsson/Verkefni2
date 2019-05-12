@@ -2591,22 +2591,22 @@
       <IntrospectionStateNumber>15778367</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
-      <Relations>sequence|table|1061149|1061151|1
-sequence|table|1061160|1061162|1
-sequence|table|1061170|1061172|1
-sequence|table|1061178|1061180|1
-sequence|table|1061188|1061190|1
-sequence|table|1061222|1061224|1
+      <Relations>sequence|table|1061222|1061224|1
 sequence|table|1061235|1061237|1
 sequence|table|1061243|1061245|1
 sequence|table|1061280|1061282|1
 sequence|table|1061304|1061306|1
-sequence|table|1061350|1061352|1
 sequence|table|1061315|1061317|1
+sequence|table|1061350|1061352|1
 sequence|table|1061323|1061325|1
 sequence|table|1061331|1061333|1
 sequence|table|1061339|1061341|1
 sequence|table|1061361|1061363|1
+sequence|table|1061149|1061151|1
+sequence|table|1061160|1061162|1
+sequence|table|1061170|1061172|1
+sequence|table|1061178|1061180|1
+sequence|table|1061188|1061190|1
 </Relations>
     </database>
     <database id="519" parent="1" name="ftbzptxz">

@@ -1,33 +1,37 @@
 {% extends "base.html" %}
-{% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
-{% endblock css %}
-{% block content%}
-<div class="container">
-    <div class="apartment single">
-        <div class="image">
-            <img src="{{apartment.image}}" alt="">
+
+{% block content %}
+    <div class="container">
+        <div class="errors">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-        <a href="/apartments/{{apartment.id}}/buynow/submit">
-
-        <h2> Dream place today! </h2>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="location">
-                    <h2>{{apartment.address}}</h2>
-                    <p>{{apartment.zip}}</p>
-                    <p>{{apartment.city}}</p>
-                    <p>{{apartment.country}}</p>
+         <form action="{% url 'create-location' %}" class="background-white" method="POST">
+             {% csrf_token %}
+                {% for item in address_form %}
+                 <div class="form-group">
+                     <label>{{item.name}}</label>
+                    {{item}}
                 </div>
-            </div>
-
-
-
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+          <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+        </form>
     </div>
-</div>
-{% endblock%}
+
+
+{% endblock %}
+<div> WRAPPERS
+    <a href="/apartments/{{apartment.id}}/buynow/submit"> </a>>
+    </div>
