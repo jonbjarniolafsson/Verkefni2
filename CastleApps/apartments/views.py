@@ -72,9 +72,9 @@ def home(request):
 
 def buyNow(request, apartmentID):
     context = {
-        'apartments' : Apartments.objects.get(id=apartmentID)
+        'apartment' : Apartments.objects.get(id=apartmentID)
     }
-    return render(request, 'apartments/buy_now.html')
+    return render(request, 'apartments/buy_now.html', context)
 
 # This is
 def agents(request):

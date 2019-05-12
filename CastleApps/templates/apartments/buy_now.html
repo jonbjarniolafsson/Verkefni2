@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h2>Your dream place today!</h2>
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+{% endblock css %}
+{% block content%}
+<div class="container">
+    <div class="apartment single">
+        <div class="image">
+            <img src="{{apartment.image}}" alt="">
+        </div>
 
-</body>
-</html>
+        <h2> Dream place today! </h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="location">
+                    <h2>{{apartment.address}}</h2>
+                    <p>{{apartment.zip}}</p>
+                    <p>{{apartment.city}}</p>
+                    <p>{{apartment.country}}</p>
+                </div>
+            </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
