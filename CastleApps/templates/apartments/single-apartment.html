@@ -39,6 +39,7 @@
                     <p>Registered: {{apartment.timeOfRegistration}}</p>
                     <p>Country: {{apartment.location.country}}</p>
                     <p>Zip: {{apartment.location.zip}}</p>
+                    <button type=submit href="/apartments/{{apartment.id}}/buynow" value="Buy now" ></button>
                     {%  for image in images %}
                         <img src="{{ image }}" alt="Image here" srcset="">
                     {%  endfor %}
