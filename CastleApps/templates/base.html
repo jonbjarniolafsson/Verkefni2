@@ -66,8 +66,11 @@
                                 Settings
                                 <ul class="submenu">
                                     {% if user.is_authenticated %}
-                                        <li class="profile">
-                                            <a href="{% url 'profile' %}">Profile</a>
+                                        <li class="editprofile">
+                                            <a href="{% url 'editProfile' %}">Edit Profile</a>
+                                        </li>
+                                        <li class="viewprofile">
+                                            <a href="{% url 'editProfile' %}">View Profile</a>
                                         </li>
                                         <li class="logout">
                                             <a href="{% url 'logout' %}" >Logout</a>
