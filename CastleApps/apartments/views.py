@@ -128,6 +128,7 @@ def all_apartments(request):
     }
     return render(request, 'apartments/apartments-list.html', context)
 
+
 def create_location(request):
     if request.method == 'POST':
         address_form = AddressCreateForm(data=request.POST, prefix='location')
@@ -136,7 +137,7 @@ def create_location(request):
             address_form.save()
             return redirect('create-apartment')
         context = {'address_form': address_form}
-        f = AddressCreateForm(data)
+        f = AddressCreateForm(data=request.POST)
         f.non_field_errors()
         field_errors = [(field.label, field.errors) for field in f]
         return render(request, 'apartments/create-location.html', context)
