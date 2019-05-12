@@ -9,6 +9,8 @@ from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
 
+from .forms import buynowform
+
 
 
 apartments = [
@@ -75,6 +77,25 @@ def buyNow(request, apartmentID):
         'apartment' : Apartments.objects.get(id=apartmentID)
     }
     return render(request, 'apartments/buy_now.html', context)
+
+
+def buyNowSubmit(request, apartmentID):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = buynowform(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return buynowform('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = 'empty'
+
+    return render(request, 'apartments/purchase_status.html', {'form': form})
 
 # This is
 def agents(request):
