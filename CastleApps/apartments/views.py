@@ -8,13 +8,16 @@ from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
-<<<<<<< HEAD
+
 from django.db.models import Q
-=======
+
 
 from .forms import buynowform
 
 from django.db.models import Q
+
+from datetime import timezone, datetime
+from django.utils import timezone
 
 
 
@@ -69,30 +72,33 @@ apartments = [
         'image': '/static/img/b70.jpeg'
     }
 ]
->>>>>>> 437e3896724c0c39a8fbd2b323ff8787bb498406
 
 # This is the main home page
 def home(request):
 
-        #listings = Listings.objects.all()
-        #print("PRINT STATEMENT: ", Listings.apartmentid)
+        openHouse =  OpenHouse.objects.all()
+
+
         newList = []
+        # Context has to be a dictionary
+        context = {}
+        for x in range(0,len(OpenHouse.objects.all()) +1):
+            # NEed to make sure the filter doesn't return empty or it crashes
+            if len(openHouse.filter(id=x)) != 0:
+                # We are comparing the date in our timezone vs the date coming from the database
+                if timezone.now() < openHouse.get(id = x).openhousestart:
+                    #We know for sure it exists, now we need access to the object
+                    y = OpenHouse.objects.get(id=x)
+                    #Make a new list of all the apartments that have open houses scheduled in the future
+                    newList.append(y.listingid.apartmentid.id)
+                    newList = set(newList)
+                    newList = list(newList)
+                    # We ask the DB to return all the apartments in the list that match
+                    newApart = Apartments.objects.filter(pk__in=newList)
+                    context = {
+                        'apartments' : newApart, # Send all the apartments
+                    }
 
-        for x in OpenHouse.objects.all():
-            #appID = x.listingid.apartmentid
-            print(x.listingid.apartmentid.id)
-            newList.append(x.listingid.apartmentid.id)
-        newList = set(newList)
-        newList = list(newList)
-
-        newApart = Apartments.objects.filter(pk__in=newList)
-
-
-        context = {
-            'listings': Listings.objects.all(),
-            'apartments' : newApart,
-            #'appID': appID
-        }
         return render(request, 'apartments/home.html', context)
 
 
