@@ -256,19 +256,17 @@ def create_apartment(request):
 
 
 def search_apartment(request):
+    #Getting the string that is being searched
     searchString = request.GET.get("search")
+    #First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
     checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
     checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
     checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString))
+    # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
     apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
 
     context = {
         'apartments' : apps
     }
 
-    
     return render(request, "apartments/search-results.html", context)
-
-
-def returnType(string):
-    return type(string)
