@@ -8,7 +8,7 @@
 {% block banner %}
 <div class="frontpage-banner">
     <div class="search-form">
-        <form action="/">
+        <form action="{% url 'search-results' %}" method="GET">
             <div class="form-group">
                 <label for="search">Search here</label>
                 <input type="search" name="search" id="search">

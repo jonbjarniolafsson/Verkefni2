@@ -1,30 +1,37 @@
-from django.urls import path
 from . import views
+from django.urls import path
 
 urlpatterns = [
-    #Our mainpage
-    path('',views.home, name='frontpage'),
-    # Here we have a list of employees page -> Should lead to their profile if clicked on
-    path('agents/',views.agents, name='agents'),
+     #Our mainpage
+     path('',views.home, name='frontpage'),
+     # Here we have a list of employees page -> Should lead to their profile if clicked on
+     path('agents/',views.agents, name='agents'),
 
-    path('aboutus/',views.aboutus, name='aboutus'),
+     path('aboutus/',views.aboutus, name='aboutus'),
 
-    #Page below has to be revamped
-    path('all-apartments/',
-         views.all_apartments, name="apartment-list"),
+     #Page below is for ajax search
+     path('all-apartments/',
+          views.pureApartment, name="apartment-list"),
 
-    #This should lead to a listing
-    path('apartments/<int:apartmentID>/',
-         views.singleApartment, name="apartment"),
+     #Search form on frontpage
+     path('search-results/', views.search_apartment, name="search-results"),
 
-    #Path leads to a single user in our system
-    path('users/<int:userID>/',
-         views.singleUser, name = "user"),
+     #This should lead to a listing
+     path('apartments/<int:apartmentID>/',
+          views.singleApartment, name="apartment"),
 
-    path('create_apartment', views.create_apartment, name="create-apartment"),
-    path('create_location', views.create_location, name="create-location"),
+     #Path leads to a single user in our system
+     path('users/<int:userID>/',
+          views.singleUser, name = "user"),
 
+     path('create_apartment', views.create_apartment, name="create-apartment"),
+     path('create_location', views.create_location, name="create-location"),
+
+<<<<<<< HEAD
+     path('buy_now', views.buyNow, name= "buy_now")
+=======
     path('apartments/<int:apartmentID>/buynow', views.buyNow, name= "buy_now"),
     path('apartments/<int:apartmentID>/buynow/submit', views.buyNowSubmit, name= "buy_now")
+>>>>>>> 437e3896724c0c39a8fbd2b323ff8787bb498406
 
 ]

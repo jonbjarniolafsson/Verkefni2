@@ -8,6 +8,9 @@ from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
+<<<<<<< HEAD
+from django.db.models import Q
+=======
 
 from .forms import buynowform
 
@@ -66,6 +69,7 @@ apartments = [
         'image': '/static/img/b70.jpeg'
     }
 ]
+>>>>>>> 437e3896724c0c39a8fbd2b323ff8787bb498406
 
 # This is the main home page
 def home(request):
@@ -126,6 +130,13 @@ def agents(request):
        'agents': users
     }
     return render(request, 'apartments/agents.html', context)
+
+def pureApartment(request):
+    context = {
+        'apartments': Apartments.objects.all(),
+    }
+
+    return render(request, 'apartments/pure-apartments.html', context)
 
 def aboutus(request):
     context = {
@@ -235,3 +246,23 @@ def create_apartment(request):
         return render(request, 'apartments/create-apartment.html', {
             'app_form': app_form
         })
+
+
+
+def search_apartment(request):
+    searchString = request.GET.get("search")
+    checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
+    checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
+    checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString))
+    apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
+
+    context = {
+        'apartments' : apps
+    }
+
+    
+    return render(request, "apartments/search-results.html", context)
+
+
+def returnType(string):
+    return type(string)
