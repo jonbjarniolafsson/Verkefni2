@@ -12,3 +12,4 @@ class AddressCreateForm(ModelForm):
             'region': widgets.TextInput(attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'})
         }
+

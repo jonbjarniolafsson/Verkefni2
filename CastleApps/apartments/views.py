@@ -8,7 +8,65 @@ from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
+<<<<<<< HEAD
 from django.db.models import Q
+=======
+
+from .forms import buynowform
+
+
+
+apartments = [
+    {
+        'aid': '123',
+        'address': 'Lindarberg 26',
+        'city': 'Hafnarfjörður',
+        'zip': '221',
+        'country': 'Iceland',
+        'size': '250',
+        'rooms': '6',
+        'price': '50000000',
+        'type': 'Villa',
+        'image': '/static/img/b70.jpeg'
+    },
+    {
+        'aid': '124',
+        'address': 'Miðvangur 56',
+        'city': 'Hafnarfjörður',
+        'zip': '220',
+        'country': 'Iceland',
+        'size': '230',
+        'rooms': '3',
+        'price': '73000000',
+        'type': 'Penthouse apartment',
+        'image': '/static/img/b70.jpeg'
+    },
+    {
+        'aid': '125',
+        'address': 'Skuggagata 56',
+        'city': 'Reykjavík',
+        'zip': '101',
+        'country': 'Iceland',
+        'size': '500',
+        'rooms': '10',
+        'price': '12000000',
+        'type': 'Penthouse apartment',
+        'image': '/static/img/b70.jpeg'
+    },
+    {
+        'aid': '126',
+        'address': 'Bergstaðastræti 70',
+        'city': 'Reykjavík',
+        'zip': '101',
+        'country': 'Iceland',
+        'size': '100',
+        'rooms': '2',
+        'price': '150000000',
+        'type': 'Luxury Lodge',
+        'image': '/static/img/b70.jpeg'
+    }
+]
+>>>>>>> 437e3896724c0c39a8fbd2b323ff8787bb498406
 
 # This is the main home page
 def home(request):
@@ -20,9 +78,28 @@ def home(request):
 
 def buyNow(request, apartmentID):
     context = {
-        'apartments' : Apartments.objects.get(id=apartmentID)
+        'apartment' : Apartments.objects.get(id=apartmentID)
     }
-    return render(request, 'apartments/buy_now.html')
+    return render(request, 'apartments/buy_now.html', context)
+
+
+def buyNowSubmit(request, apartmentID):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = buynowform(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return buynowform('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = 'empty'
+
+    return render(request, 'apartments/purchase_status.html', {'form': form})
 
 # This is
 def agents(request):
@@ -91,6 +168,7 @@ def all_apartments(request):
     }
     return render(request, 'apartments/apartments-list.html', context)
 
+
 def create_location(request):
     if request.method == 'POST':
         address_form = AddressCreateForm(data=request.POST, prefix='location')
@@ -99,7 +177,7 @@ def create_location(request):
             address_form.save()
             return redirect('create-apartment')
         context = {'address_form': address_form}
-        f = AddressCreateForm(data)
+        f = AddressCreateForm(data=request.POST)
         f.non_field_errors()
         field_errors = [(field.label, field.errors) for field in f]
         return render(request, 'apartments/create-location.html', context)
