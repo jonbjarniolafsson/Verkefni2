@@ -28,7 +28,7 @@
                 <div class="image">
                     <a href="/apartments/{{apartment.id}}">
 
-                        <img src="{{ apartment.displayImage }}" alt="Image here" srcset="">
+                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
                     </a>
                 </div>
                 <div class="meta">
@@ -36,15 +36,15 @@
                         {{apartment.address}}
                     </div>
                     <div class="postdata">
-                        {{apartment.location.zip}}
-                        {{apartment.location.city}} <br>
-                        {{apartment.location.country}}
+                        Zip: {{apartment.locationid.zip}}
+                        City: {{apartment.locationid.city}} <br>
+                        {{apartment.locationid.country.country}}
                     </div>
                     <div class="size">
                         {{apartment.size}} m2.
                     </div>
                     <div class="price">
-                        $ {{apartment.listings_set.price}} .
+                        $ {{apartment.listings.price}} .
                     </div>
                 </div>
             </div>
