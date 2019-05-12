@@ -19,3 +19,13 @@ class UsersChangeForm(UserChangeForm):
     class Meta:
         model = Users
         fields = UserChangeForm.Meta.fields
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = Users
+        fields = UserChangeForm.Meta.fields
+        fields = (
+            'phone', 'profileImagePath','email', 'first_name', 'last_name'
+        )
+
+

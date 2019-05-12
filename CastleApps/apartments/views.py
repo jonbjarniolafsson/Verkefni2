@@ -9,71 +9,17 @@ from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
 
-from django.db.models import Q
 
 
 from .forms import buynowform
 
 from django.db.models import Q
 
-from datetime import timezone, datetime
+from datetime import datetime
 from django.utils import timezone
 
 
 
-
-apartments = [
-    {
-        'aid': '123',
-        'address': 'Lindarberg 26',
-        'city': 'Hafnarfjörður',
-        'zip': '221',
-        'country': 'Iceland',
-        'size': '250',
-        'rooms': '6',
-        'price': '50000000',
-        'type': 'Villa',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '124',
-        'address': 'Miðvangur 56',
-        'city': 'Hafnarfjörður',
-        'zip': '220',
-        'country': 'Iceland',
-        'size': '230',
-        'rooms': '3',
-        'price': '73000000',
-        'type': 'Penthouse apartment',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '125',
-        'address': 'Skuggagata 56',
-        'city': 'Reykjavík',
-        'zip': '101',
-        'country': 'Iceland',
-        'size': '500',
-        'rooms': '10',
-        'price': '12000000',
-        'type': 'Penthouse apartment',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '126',
-        'address': 'Bergstaðastræti 70',
-        'city': 'Reykjavík',
-        'zip': '101',
-        'country': 'Iceland',
-        'size': '100',
-        'rooms': '2',
-        'price': '150000000',
-        'type': 'Luxury Lodge',
-        'image': '/static/img/b70.jpeg'
-    }
-]
-
-# This is the main home page
 def home(request):
 
         openHouse =  OpenHouse.objects.all()
@@ -129,9 +75,10 @@ def buyNowSubmitss(request, apartmentID):
 
 # This is
 def agents(request):
-
+    # Checks if the person in the Users table is staff
     users = Users.objects.filter(is_staff = True)
-    #print("PRINTING ALL THE USERS : ", users.profileImagePath)
+    # Simply returns every users that returned true as staff
+    # HTML will then loop through the users that are part of the staff and display them
     context = {
        'agents': users
     }
@@ -178,13 +125,13 @@ def singleApartment(request, apartmentID): # Need to add error handling
 
 
 
-#Here you can display a single user
+#Here you can display a single users
 def singleUser(request, userID):
-    #user = Users.objects.get(id = userID)
-    #print("Printing all users: ", user)
+    #users = Users.objects.get(id = userID)
+    #print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
     context = {
-        'user': user
+        'users': user
     }
     return render(request, 'apartments/single_user.html', context)
 

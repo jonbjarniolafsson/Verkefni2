@@ -146,4 +146,4 @@ LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.Users' # new
-#AUTH_USER_MODEL = 'user.user'
+#AUTH_USER_MODEL = 'users.users'
