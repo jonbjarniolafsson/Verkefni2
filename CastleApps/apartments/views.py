@@ -8,59 +8,7 @@ from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404
-
-
-
-apartments = [
-    {
-        'aid': '123',
-        'address': 'Lindarberg 26',
-        'city': 'Hafnarfjörður',
-        'zip': '221',
-        'country': 'Iceland',
-        'size': '250',
-        'rooms': '6',
-        'price': '50000000',
-        'type': 'Villa',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '124',
-        'address': 'Miðvangur 56',
-        'city': 'Hafnarfjörður',
-        'zip': '220',
-        'country': 'Iceland',
-        'size': '230',
-        'rooms': '3',
-        'price': '73000000',
-        'type': 'Penthouse apartment',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '125',
-        'address': 'Skuggagata 56',
-        'city': 'Reykjavík',
-        'zip': '101',
-        'country': 'Iceland',
-        'size': '500',
-        'rooms': '10',
-        'price': '12000000',
-        'type': 'Penthouse apartment',
-        'image': '/static/img/b70.jpeg'
-    },
-    {
-        'aid': '126',
-        'address': 'Bergstaðastræti 70',
-        'city': 'Reykjavík',
-        'zip': '101',
-        'country': 'Iceland',
-        'size': '100',
-        'rooms': '2',
-        'price': '150000000',
-        'type': 'Luxury Lodge',
-        'image': '/static/img/b70.jpeg'
-    }
-]
+from django.db.models import Q
 
 # This is the main home page
 def home(request):
@@ -85,6 +33,13 @@ def agents(request):
        'agents': users
     }
     return render(request, 'apartments/agents.html', context)
+
+def pureApartment(request):
+    context = {
+        'apartments': Apartments.objects.all(),
+    }
+
+    return render(request, 'apartments/pure-apartments.html', context)
 
 def aboutus(request):
     context = {
@@ -171,3 +126,23 @@ def create_apartment(request):
         return render(request, 'apartments/create-apartment.html', {
             'app_form': app_form
         })
+
+
+
+def search_apartment(request):
+    searchString = request.GET.get("search")
+    checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
+    checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
+    checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString))
+    apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
+
+    context = {
+        'apartments' : apps
+    }
+
+    
+    return render(request, "apartments/search-results.html", context)
+
+
+def returnType(string):
+    return type(string)

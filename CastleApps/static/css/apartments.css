@@ -1,6 +1,7 @@
 .apartments .apartment{
     background: #0067BC;
     margin-bottom: 15px;
+    max-width: 333px;
 }
 
 .apartments .apartment .meta{
@@ -36,11 +37,6 @@
 .apartments .apartments-wrapper.flexed .apartment{
     width: calc(33% - 15px);
     margin-bottom: 30px;
-}
-
-.apartments .apartments-wrapper.flexed .apartment .image img{
-    width: 100%;
-    height: auto;
 }
 
 
