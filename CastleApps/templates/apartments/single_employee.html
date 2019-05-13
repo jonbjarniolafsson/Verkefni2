@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/agents.css' %}">
+{% endblock css %}
+{% block content%}
+<div class="container">
+    <h1> Castle Apartments Agent</h1>
+    <div class="agent">
+        <div class="image">
+            <img src="{{user.profileImagePath}}" alt="">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="location">
+                    <h2>{{apartment.address}}</h2>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="meta">
+
+                    <p>First name: {{user.first_name}}</p>
+                    <p>Last name: {{user.last_name}}</p>
+                    <p>Last Login: {{user.last_login}}</p>
+
+                    {%  for image in images %}
+                        <img src="{{ image }}" alt="Image here" srcset="">
+                    {%  endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

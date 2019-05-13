@@ -7,22 +7,22 @@
 <div class="agents">
     <div class="container">
         <div class="agents-wrapper">
-            {% for agent in agents %}
+            {% for user in users %}
             <div class="agent">
                 <div class="image">
-                    <a href="/users/{{agent.id}}">
-                    <img src=" {{ agent.profileImagePath }}"/>
+                    <a href="/users/{{user.id}}">
+                    <img src=" {{ user.profileImagePath }}"/>
                     </a>
                 </div>
                 <div class="meta">
-                    <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-                    <div class="start"><span>Started working on {{agent.startDate}}</span></div>
+                    <h2>{{user.first_name}} {{user.last_name}}</h2>
+                    <div class="start"><span>Started working on {{user.startDate}}</span></div>
                     <div class="contact">
-                        <div class="email">Email: {{agent.email}}</div>
-                        <div class="phone">Phone: {{agent.phone}}</div>
+                        <div class="email">Email: {{user.email}}</div>
+                        <div class="phone">Phone: {{user.phone}}</div>
                     </div>
                     <div class="desc">
-                        <p>{{agent.description}}</p>
+                        <p>{{user.description}}</p>
                     </div>
                 </div>
             </div>

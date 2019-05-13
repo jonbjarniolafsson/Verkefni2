@@ -82,7 +82,7 @@ def agents(request):
     # Simply returns every users that returned true as staff
     # HTML will then loop through the users that are part of the staff and display them
     context = {
-        'agents': users
+        'users': users
     }
     return render(request, 'apartments/agents.html', context)
 
@@ -133,10 +133,15 @@ def singleUser(request, userID):
     #users = Users.objects.get(id = userID)
     #print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
+
+    user = Users.objects.get(pk=userID )
     context = {
-        'users': user
+        'user': user
     }
-    return render(request, 'apartments/single_user.html', context)
+    if user.is_staff == False:
+        return render(request, 'apartments/single_user.html', context)
+    return render(request, 'apartments/single_employee.html', context)
+
 
 
 def all_apartments(request):
