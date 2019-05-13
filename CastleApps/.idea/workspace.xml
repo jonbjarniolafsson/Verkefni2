@@ -3,9 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="9424dadd-2af5-4b1f-bad9-cef06ac337b3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartments/forms/apartmentform.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/forms/apartment_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartments/forms/buynowform.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/forms/buy_now_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartments/forms/locationform.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/forms/location_form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartments/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apartments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apartments/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/apartments/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/apartments-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/apartments_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/create-apartment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/create_apartment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/create-location.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/create_location.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/pure-apartments.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/pure_apartments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/search-results.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/search_results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apartments/single-apartment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apartments/single_apartment.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,43 +102,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/users/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apartments/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" column="16" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CastleApps/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="896">
-              <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apartments/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
+            <state relative-caret-position="946">
+              <caret line="266" column="24" lean-forward="true" selection-start-line="266" selection-start-column="24" selection-end-line="266" selection-end-column="24" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -137,56 +113,48 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/apartments/home.html">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apartments/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="136">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/apartments/unlisted_apartment.html">
+        <entry file="file://$PROJECT_DIR$/apartments/forms/apartment_form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="360">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/apartments/single-apartment.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12">
-              <caret column="25" lean-forward="true" selection-start-column="25" selection-end-column="25" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/templates/apartments/pure_apartments.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/templates/apartments/search_results.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/apartments/single_employee.html">
+        <entry file="file://$PROJECT_DIR$/apartments/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/apartments/single_user.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+            <state relative-caret-position="375">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -221,6 +189,8 @@
       <find>request</find>
       <find>edit</find>
       <find>newuser</find>
+      <find>search</find>
+      <find>singleuser</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -245,9 +215,7 @@
         <option value="$PROJECT_DIR$/apartments/forms/apartmentform.py" />
         <option value="$PROJECT_DIR$/templates/apartments/edit_apartments.html" />
         <option value="$PROJECT_DIR$/templates/apartments/edit_apartment.html" />
-        <option value="$PROJECT_DIR$/apartments/urls.py" />
         <option value="$PROJECT_DIR$/templates/apartments/not_authorized.html" />
-        <option value="$PROJECT_DIR$/apartments/models.py" />
         <option value="$PROJECT_DIR$/templates/apartments/employee.html" />
         <option value="$PROJECT_DIR$/templates/apartments/agents.html" />
         <option value="$PROJECT_DIR$/templates/apartments/single_user.html" />
@@ -256,7 +224,9 @@
         <option value="$PROJECT_DIR$/templates/apartments/unlisted_apartment.html" />
         <option value="$PROJECT_DIR$/templates/apartments/home.html" />
         <option value="$PROJECT_DIR$/users/models.py" />
+        <option value="$PROJECT_DIR$/apartments/urls.py" />
         <option value="$PROJECT_DIR$/apartments/views.py" />
+        <option value="$PROJECT_DIR$/apartments/models.py" />
       </list>
     </option>
   </component>
@@ -377,13 +347,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38530000" />
+    <option name="totallyTimeSpent" value="39812000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14520743" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14520743" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -399,7 +369,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.3299363" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.1477707" />
-      <window_info active="true" anchor="bottom" id="manage.py@CastleApps" order="13" visible="true" weight="0.3299363" />
+      <window_info anchor="bottom" id="manage.py@CastleApps" order="13" weight="0.3299363" />
       <window_info anchor="bottom" id="Database Console" order="14" weight="0.3299363" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -441,21 +411,7 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/apartments/about_us.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/auth/custom_email_auth_backend.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/forms/buynowform.py">
+    <entry file="file://$PROJECT_DIR$/apartments/forms/buy_now_form.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/apartments/purchase_status.html">
@@ -484,7 +440,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/forms/locationform.py">
+    <entry file="file://$PROJECT_DIR$/apartments/forms/location_form.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
@@ -545,7 +501,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/apartments/create-location.html">
+    <entry file="file://$PROJECT_DIR$/templates/apartments/create_location.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
@@ -639,16 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/forms/apartmentform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://1174bf84-3fc9-4d40-816e-4551eac54720/database/fstfyiru/schema/public/table/apartments_country">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -709,13 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/agents.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -747,7 +686,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/apartments/single-apartment.html">
+    <entry file="file://$PROJECT_DIR$/templates/apartments/single_apartment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-12">
           <caret column="25" lean-forward="true" selection-start-column="25" selection-end-column="25" />
@@ -761,13 +700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CastleApps/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="896">
-          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/apartments/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -775,13 +707,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/models.py">
+    <entry file="file://$PROJECT_DIR$/CastleApps/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="16" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="896">
+          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
         </state>
       </provider>
     </entry>
@@ -795,12 +724,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apartments/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apartments/forms/apartment_form.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/apartments/pure_apartments.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/apartments/search_results.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/apartments/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
+        <state relative-caret-position="946">
+          <caret line="266" column="24" lean-forward="true" selection-start-line="266" selection-start-column="24" selection-end-line="266" selection-end-column="24" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apartments/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

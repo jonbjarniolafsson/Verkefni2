@@ -1,13 +1,10 @@
 from django.shortcuts import render,redirect
 
-from .forms.buynowform import PaymentInfoForm
-from .forms.apartmentform import CastleAppsCreateForm
-from .forms.locationform import AddressCreateForm
-#from .forms.signup_form import CastleAppsSignupForm
-from django.http import HttpResponse, HttpResponseRedirect
+# This document will act as our controller in our Apartments app. The main magic happens here.
 
-from .forms.apartmentform import CastleAppsCreateForm
-from .forms.locationform import AddressCreateForm
+from .forms.buy_now_form import PaymentInfoForm
+from .forms.apartment_form import CastleAppsCreateForm
+from .forms.location_form import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -15,11 +12,10 @@ from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404,render,redirect
-from django.views.generic.edit import UpdateView
-from django.contrib.auth.models import auth, Permission
 
 
-from .forms import buynowform
+
+from .forms import buy_now_form
 
 from django.db.models import Q
 
@@ -30,12 +26,6 @@ def home(request):
 
         newUser = request.user.id
         print(newUser)
-
-        #paymentInfo = PaymentInfos.objects.get(id=29)
-        #userID = paymentInfo.user_id
-        #print(userID)
-        #newUser = Users.objects.get(id=userID)
-        #print("BLDSFDSJF: ", newUser)
 
         openHouse =  OpenHouse.objects.all()
 
@@ -102,13 +92,13 @@ def buyNowSubmitss(request, apartmentID):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = buynowform(request.POST)
+        form = buy_now_form(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return buynowform('/thanks/')
+            return buy_now_form('/thanks/')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -168,7 +158,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'images': apartmentImages,
             'agent': listingAgent
         }
-        return render(request, 'apartments/single-apartment.html', context)
+        return render(request, 'apartments/single_apartment.html', context)
 
 
 
@@ -205,12 +195,11 @@ def singleUser(request, userID):
 
 
 
-def all_apartments(request):
+def allApartments(request):
     context = {
-        'apartments': apartments,
         'apartments' : Apartments.objects.all()
     }
-    return render(request, 'apartments/apartments-list.html', context)
+    return render(request, 'apartments/apartments_list.html', context)
 
 
 
@@ -248,53 +237,50 @@ def reviewPayment(request, apartmentID, paymentID):
             'payment': paymentInfo,
             'apartment': apartment
         }
-
-
-
     return render(request, 'apartments/review_payment.html', context)
 
 
 
 
-def create_location(request):
+def createLocation(request):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
         return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
-        address_form = AddressCreateForm(data=request.POST, prefix='location')
-        if address_form.is_valid(): #Built in to check if valid
-            address_form.save() #Saves to the DB
+        addressForm = AddressCreateForm(data=request.POST, prefix='location')
+        if addressForm.is_valid(): #Built in to check if valid
+            addressForm.save() #Saves to the DB
             return redirect('create-apartment') #Supposed to redirect to create apartment
-        context = {'address_form': address_form}
-        return render(request, 'apartments/create-location.html', context)
+        context = {'address_form': addressForm}
+        return render(request, 'apartments/create_location.html', context)
     else:
-        address_form = AddressCreateForm(data=request.GET, prefix='location')
-        return render(request, 'apartments/create-location.html', {
-            'address_form': address_form
+        addressForm = AddressCreateForm(data=request.GET, prefix='location')
+        return render(request, 'apartments/create_location.html', {
+            'address_form': addressForm
         })
 
 
-def create_apartment(request):
+def createApartments(request):
         currentUser = request.user
         if currentUser.id == None or currentUser.is_staff == False:
             return HttpResponse('Unauthorized', status=401)
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
-            if app_form.is_valid():
-                app_form.save()
+            appForm = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            if appForm.is_valid():
+                appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': app_form}
-            return render(request, 'apartments/create-apartment.html', context)
+            context = {'app_form': appForm}
+            return render(request, 'apartments/create_apartment.html', context)
         else:
-            app_form = CastleAppsCreateForm(data=request.GET, prefix='apartment')
-            return render(request, 'apartments/create-apartment.html', {
-                'app_form': app_form
+            appForm = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            return render(request, 'apartments/create_apartment.html', {
+                'app_form': appForm
             })
 
 
 
-def search_apartment(request):
+def searchApartments(request):
     #Getting the string that is being searched
     searchString = request.GET.get("search")
     if searchString != None:
@@ -309,6 +295,6 @@ def search_apartment(request):
         }
 
     if searchString == None:
-        return render(request, "apartments/search-results.html")
+        return render(request, "apartments/search_results.html")
     else:
-        return render(request, "apartments/search-results.html", context)
+        return render(request, "apartments/search_results.html", context)

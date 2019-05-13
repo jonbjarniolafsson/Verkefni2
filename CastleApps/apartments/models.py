@@ -21,6 +21,11 @@ from django.shortcuts import  render
 
 # Location is a general place to be able to better normalize the data.
 
+
+# In the model.py we decided to break our own rules when it comes to variables
+# We did this to make it easier for us to access the Database through the Django code
+# So we did not have to worry about capitalization
+
 class Country(models.Model):
     country = models.CharField(primary_key = True, max_length = 40)
     def __str__(self):

@@ -7,14 +7,14 @@ urlpatterns = [
      # Here we have a list of employees page -> Should lead to their profile if clicked on
      path('agents/',views.agents, name='agents'),
 
-     path('aboutus/',views.aboutus, name='aboutus'),
+     path('about_us/',views.aboutus, name='aboutus'),
 
      #Page below is for ajax search
-     path('all-apartments/',
-          views.all_apartments, name="apartment-list"),
+     path('all_apartments/',
+          views.allApartments, name="apartment-list"),
 
      #Search form on frontpage
-     path('search-results/', views.search_apartment, name="search-results"),
+     path('search_results/', views.searchApartments, name="search-results"),
 
      #This should lead to a listing
      path('apartments/<int:apartmentID>/',
@@ -24,8 +24,8 @@ urlpatterns = [
      path('users/<int:userID>/',
           views.singleUser, name = "users"),
 
-     path('create_apartment', views.create_apartment, name="create-apartment"),
-     path('create_location', views.create_location, name="create-location"),
+     path('create_apartment', views.createApartments, name="create-apartment"),
+     path('create_location', views.createLocation, name="create-location"),
 
 
 
