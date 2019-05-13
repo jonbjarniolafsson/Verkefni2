@@ -23,14 +23,18 @@ from django.shortcuts import  render
 
 class Country(models.Model):
     country = models.CharField(primary_key = True, max_length = 40)
+    def __str__(self):
+        return self.country
 
 class Locations(models.Model):
     city = models.CharField(max_length=100, blank=True,null=True)
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-#    def __str__(self):
-#        return self.country
+    def __str__(self):
+        return str(self.country)
+
+
 
 
 # Apartments is general information about the apartment that is only inserted once
