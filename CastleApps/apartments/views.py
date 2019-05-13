@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render,redirect
 
 from .forms.buynowform import PaymentInfoForm
@@ -6,13 +5,11 @@ from .forms.apartmentform import CastleAppsCreateForm
 from .forms.locationform import AddressCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse, HttpResponseRedirect
-=======
 
 from .forms.apartmentform import CastleAppsCreateForm
 from .forms.locationform import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
->>>>>>> 2b9c077217220c6c42d837e2e51b88f341ca3991
 # Create your views here.
 from apartments.models import *
 from users.models import *
@@ -58,7 +55,6 @@ def home(request):
         return render(request, 'apartments/home.html', context)
 
 
-<<<<<<< HEAD
 # def buyNow(request, apartmentID):
 #     context = {
 #         'apartment' : Apartments.objects.get(id=apartmentID)
@@ -83,7 +79,6 @@ def home(request):
 #         form = 'empty'
 #
 #     return render(request, 'apartments/purchase_status.html', {'form': form})
-=======
 def buyNow(request, apartmentID):
     context = {
         'apartment': Apartments.objects.get(id=apartmentID)
@@ -108,7 +103,6 @@ def buyNowSubmitss(request, apartmentID):
         form = 'empty'
 
     return render(request, 'apartments/purchase_status.html', {'form': form})
->>>>>>> 2b9c077217220c6c42d837e2e51b88f341ca3991
 
 
 # This is
@@ -201,11 +195,8 @@ def singleUser(request, userID):
 
 def all_apartments(request):
     context = {
-<<<<<<< HEAD
         'apartments': apartments,
-=======
         'apartments' : Apartments.objects.all()
->>>>>>> 2b9c077217220c6c42d837e2e51b88f341ca3991
     }
     return render(request, 'apartments/apartments-list.html', context)
 
