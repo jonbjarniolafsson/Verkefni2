@@ -28,12 +28,22 @@ from django.utils import timezone
 
 def home(request):
 
+        newUser = request.user.id
+        print(newUser)
+
+        #paymentInfo = PaymentInfos.objects.get(id=29)
+        #userID = paymentInfo.user_id
+        #print(userID)
+        #newUser = Users.objects.get(id=userID)
+        #print("BLDSFDSJF: ", newUser)
+
         openHouse =  OpenHouse.objects.all()
 
 
         newList = []
         # Context has to be a dictionary
         context = {}
+        newApart = ''
         for x in range(0,len(OpenHouse.objects.all()) +1):
             # NEed to make sure the filter doesn't return empty or it crashes
             if len(openHouse.filter(id=x)) != 0:
@@ -48,9 +58,11 @@ def home(request):
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
 
-                    context = {
-                        'apartments' : newApart, # Send all the apartments
-                    }
+        #newlyListed =
+
+        context = {
+            'apartments': newApart,  # Send all the apartments
+        }
 
         return render(request, 'apartments/home.html', context)
 
@@ -236,6 +248,8 @@ def reviewPayment(request, apartmentID, paymentID):
             'payment': paymentInfo,
             'apartment': apartment
         }
+
+
 
     return render(request, 'apartments/review_payment.html', context)
 
