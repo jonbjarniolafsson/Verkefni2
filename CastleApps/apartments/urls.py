@@ -28,9 +28,8 @@ urlpatterns = [
      path('create_location', views.create_location, name="create-location"),
 
 
-     path('buy_now', views.buyNow, name= "buy_now"),
 
-    path('apartments/<int:apartmentID>/buynow', views.buyNow, name= "buy_now"),
-    path('apartments/<int:apartmentID>/buynow/submit', views.buyNowSubmit, name= "buy_now")
+    path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
+     path('apartments/<int:apartmentID>/payment_info/<int:id>/review', views.reviewPayment, name="review"),
 
 ]

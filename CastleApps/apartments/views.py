@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
+
+from .forms.buynowform import PaymentInfoForm
 from .forms.apartmentform import CastleAppsCreateForm
 from .forms.locationform import AddressCreateForm
 #from .forms.signup_form import CastleAppsSignupForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from apartments.models import *
 from users.models import *
@@ -17,8 +19,6 @@ from django.db.models import Q
 
 from datetime import datetime
 from django.utils import timezone
-
-
 
 def home(request):
 
@@ -48,30 +48,30 @@ def home(request):
         return render(request, 'apartments/home.html', context)
 
 
-def buyNow(request, apartmentID):
-    context = {
-        'apartment' : Apartments.objects.get(id=apartmentID)
-    }
-    return render(request, 'apartments/buy_now.html', context)
-
-
-def buyNowSubmitss(request, apartmentID):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = buynowform(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return buynowform('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = 'empty'
-
-    return render(request, 'apartments/purchase_status.html', {'form': form})
+# def buyNow(request, apartmentID):
+#     context = {
+#         'apartment' : Apartments.objects.get(id=apartmentID)
+#     }
+#     return render(request, 'apartments/buy_now.html', context)
+#
+#
+# def buyNowSubmitss(request, apartmentID):
+#     # if this is a POST request we need to process the form data
+#     if request.method == 'POST':
+#         # create a form instance and populate it with data from the request:
+#         form = buynowform(request.POST)
+#         # check whether it's valid:
+#         if form.is_valid():
+#             # process the data in form.cleaned_data as required
+#             # ...
+#             # redirect to a new URL:
+#             return buynowform('/thanks/')
+#
+#     # if a GET (or any other method) we'll create a blank form
+#     else:
+#         form = 'empty'
+#
+#     return render(request, 'apartments/purchase_status.html', {'form': form})
 
 # This is
 def agents(request):
@@ -139,29 +139,50 @@ def singleUser(request, userID):
 
 def all_apartments(request):
     context = {
-        'apartments': apartments
+        'apartments': apartments,
     }
     return render(request, 'apartments/apartments-list.html', context)
 
 
 
-def buyNowSubmit(request):
+def addPaymentInfo(request, apartmentID):
+    #get or what??
+    print("addPaymentInfo")
     if request.method == 'POST':
-        address_form = AddressCreateForm(data=request.POST, prefix='location')
-        if address_form.is_valid(): #Built in to check if valid
-            print("VALID")
-            address_form.save() #Saves to the DB
-            return redirect('create-apartment') #Supposed to redirect to create apartment
-        context = {'address_form': address_form}
-        f = AddressCreateForm(data=request.POST)
-        f.non_field_errors()
-        field_errors = [(field.label, field.errors) for field in f]
-        return render(request, 'apartments/create-location.html', context)
-    else:
-        address_form = AddressCreateForm(data=request.GET)
-        return render(request, 'apartments/create-location.html', {
-            'address_form': address_form
-        })
+        print("IF ")
+        form=PaymentInfoForm(data=request.POST)
+        if form.is_valid():
+            print('HANDLING POST REQUEST',request)
+            #færa notanda á review síðu
+            #TODO review.html
+            payment=form.save(commit=False)
+            payment.user = request.user
+            payment.save()
+            print(payment.user, request.user.id)
+            return redirect('review', {{apartmentID}}, request.user.id[-1])
+        #else:
+         #   print("ELSE")
+            #form = PaymentInfoForm()
+    currentUser = request.user.id
+    form = PaymentInfoForm(data=request.GET)
+    print('HANDLING GET REQUEST',request)
+    return render(request, 'apartments/buy_now.html', {
+        'form': form
+    })
+
+#shows info for user and user confirms payment
+def reviewPayment(request, apartmentID, paymentID):
+    if PaymentInfos.objects.get(id=paymentID).id == paymentID:
+        paymentInfo = PaymentInfos.objects.get(id=paymentID)
+        apartment = Apartments.objects.get(id=apartmentID)
+        context = {
+            'payment': paymentInfo,
+            'apartment': apartment
+        }
+
+    return render(request, 'apartments/review_payment.html', context)
+
+
 
 
 def create_location(request):
