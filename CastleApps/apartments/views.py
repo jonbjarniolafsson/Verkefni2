@@ -127,13 +127,28 @@ def singleUser(request, userID):
     #users = Users.objects.get(id = userID)
     #print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
+    #user = Users.objects.get(pk=userID )
 
-    user = Users.objects.get(pk=userID )
-    context = {
-        'user': user
-    }
+
     if user.is_staff == False:
+        apartments = Apartments.objects.filter(owner_id=userID)
+        context = {
+            'user': user,
+            'apartments': apartments
+        }
         return render(request, 'apartments/single_user.html', context)
+    listingsOfApartments = Listings.objects.filter(agent_id=userID)
+    print("PRINTING: ",listingsOfApartments)
+    pkOfApps = []
+    for x in listingsOfApartments:
+        print(x.apartmentid_id)
+        pkOfApps.append(x.apartmentid_id)
+    apartments = Apartments.objects.filter(id__in=pkOfApps)
+    context = {
+        'user': user,
+        'apartments': apartments
+    }
+    #Listings.objects.filter(userID)
     return render(request, 'apartments/single_employee.html', context)
 
 
