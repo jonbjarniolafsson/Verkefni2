@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+
 from .forms.apartmentform import CastleAppsCreateForm
 from .forms.locationform import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
@@ -7,8 +7,9 @@ from django.http import HttpResponse
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-from django.shortcuts import get_object_or_404
-
+from django.shortcuts import get_object_or_404,render,redirect
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.models import auth, Permission
 
 
 from .forms import buynowform
@@ -166,23 +167,17 @@ def buyNowSubmit(request):
 
 
 def create_location(request):
-    print('Handling request ', request)
-    print('Handling request GET ', request.GET)
-    print('Handling request POST ', request.POST)
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
-        print('Handle POST request')
         address_form = AddressCreateForm(data=request.POST, prefix='location')
         if address_form.is_valid(): #Built in to check if valid
-            print("VALID")
             address_form.save() #Saves to the DB
             return redirect('create-apartment') #Supposed to redirect to create apartment
         context = {'address_form': address_form}
-        f = AddressCreateForm(data=request.POST)
-        f.non_field_errors()
-        field_errors = [(field.label, field.errors) for field in f]
         return render(request, 'apartments/create-location.html', context)
     else:
-        print('Handle GET request')
         address_form = AddressCreateForm(data=request.GET, prefix='location')
         return render(request, 'apartments/create-location.html', {
             'address_form': address_form
@@ -190,22 +185,22 @@ def create_location(request):
 
 
 def create_apartment(request):
-    if request.method == 'POST':
-        # Read data from apartments form, and from address form.
-        app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
-        if app_form.is_valid():
-            print("VALID")
-            app_form.save()
-            return redirect('frontpage')
-
-        context = {'app_form': app_form}
-        print("INVALID")
-        return render(request, 'apartments/create-apartment.html', context)
-    else:
-        app_form = CastleAppsCreateForm(data=request.GET, prefix='apartment')
-        return render(request, 'apartments/create-apartment.html', {
-            'app_form': app_form
-        })
+        currentUser = request.user
+        if currentUser.id == None or currentUser.is_staff == False:
+            return HttpResponse('Unauthorized', status=401)
+        if request.method == 'POST':
+            # Read data from apartments form, and from address form.
+            app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            if app_form.is_valid():
+                app_form.save()
+                return redirect('frontpage')
+            context = {'app_form': app_form}
+            return render(request, 'apartments/create-apartment.html', context)
+        else:
+            app_form = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            return render(request, 'apartments/create-apartment.html', {
+                'app_form': app_form
+            })
 
 
 
