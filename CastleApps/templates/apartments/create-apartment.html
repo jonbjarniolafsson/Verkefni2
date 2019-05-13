@@ -2,22 +2,34 @@
 
 {% block content %}
     <div class="container">
-        <div class="errors">
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+{#        <div class="errors">#}
+{#            {% if form.errors %}#}
+{#                {% for field in form %}#}
+{#                    {% for error in field.errors %}#}
+{#                        <div class="alert alert-danger">#}
+{#                            <strong>{{ error|escape }}</strong>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                {% endfor %}#}
+{#                {% for error in form.non_field_errors %}#}
+{#                    <div class="alert alert-danger">#}
+{#                        <strong>{{ error|escape }}</strong>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            {% endif %}#}
+{#        </div>#}
+{#        <div class="new_errors">#}
+{#            {% if form.errors %}#}
+{#                <ul class="errorlist">#}
+{#                {% for field, errors in form.errors.items %}#}
+{#                    {% for error in errors %}#}
+{#                        <li>{{ error }}</li>#}
+{#                        {% endfor %}#}
+{#                {% endfor %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+{#        </div>#}
+
         <form action="{% url 'create-apartment' %}" class="background-white" method="POST">
             {% csrf_token %}
              {% for item in app_form %}

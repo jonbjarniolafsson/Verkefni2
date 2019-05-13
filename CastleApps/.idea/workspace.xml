@@ -213,6 +213,8 @@
         <option value="$PROJECT_DIR$/templates/apartments/home.html" />
         <option value="$PROJECT_DIR$/apartments/models.py" />
         <option value="$PROJECT_DIR$/apartments/urls.py" />
+        <option value="$PROJECT_DIR$/templates/apartments/create-location.html" />
+        <option value="$PROJECT_DIR$/templates/apartments/create-apartment.html" />
         <option value="$PROJECT_DIR$/apartments/views.py" />
         <option value="$PROJECT_DIR$/templates/user/edit_profile.html" />
         <option value="$PROJECT_DIR$/users/admin.py" />
@@ -253,12 +255,7 @@
             </path>
             <path>
               <item name="CastleApps" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/Documents/Verkefni2/CastleApps" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="apartments" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="CastleApps" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/Documents/Verkefni2/CastleApps" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="~/Desktop/Verkefni2/CastleApps" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="apartments" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="forms" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
@@ -357,7 +354,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.3297568" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" weight="0.030832477" />
       <window_info anchor="right" id="Database" order="6" weight="0.021459227" />
@@ -384,7 +381,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.3297568" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" visible="true" weight="0.030832477" />
       <window_info anchor="right" id="Database" order="6" weight="0.021459227" />
@@ -548,12 +545,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apartments/models.py">
+    <entry file="file://$PROJECT_DIR$/users/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#17#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
