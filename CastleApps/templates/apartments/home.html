@@ -24,12 +24,18 @@
         <h2>Open houses</h2>
         <div class="apartments-wrapper slider owl-carousel">
             {% for apartment in apartments %}
+
             <div class="apartment">
                 <div class="image">
                     <a href="/apartments/{{apartment.id}}">
 
+
                         <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
                     </a>
+                    <div>
+                            {{ apartment.listings_set.last.openhouse_set.last.openhousestart }} -
+                            {{ apartment.listings_set.last.openhouse_set.last.openhouseend }}
+                        </div>
                 </div>
                 <div class="meta">
                     <div class="address">

@@ -11,7 +11,7 @@ urlpatterns = [
 
      #Page below is for ajax search
      path('all-apartments/',
-          views.pureApartment, name="apartment-list"),
+          views.all_apartments, name="apartment-list"),
 
      #Search form on frontpage
      path('search-results/', views.search_apartment, name="search-results"),
@@ -20,9 +20,9 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/',
           views.singleApartment, name="apartment"),
 
-     #Path leads to a single user in our system
+     #Path leads to a single users in our system
      path('users/<int:userID>/',
-          views.singleUser, name = "user"),
+          views.singleUser, name = "users"),
 
      path('create_apartment', views.create_apartment, name="create-apartment"),
      path('create_location', views.create_location, name="create-location"),

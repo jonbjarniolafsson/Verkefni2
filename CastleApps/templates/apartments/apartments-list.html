@@ -1,40 +1,37 @@
-{% extends "base.html" %}
-{% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
-{% endblock css %}
-{% block banner %}
-{% endblock %}
-{% block content %}
-<div class="apartments">
-    <div class="container">
-        <div class="apartments-wrapper flexed">
-            {% for apartment in apartments %}
-            <div class="apartment">
-                <div class="image">
-                    <a href="/apartment/{{apartment.aid}}">
-                        <img src="{{ apartment.image }}" alt="" srcset="">
-                    </a>
+{% for apartment in apartments %}<div class="apartment col-md-4" data-address="{{apartment.address}}" data-country="{{apartment.locationid.country.country}}">
+        <div class="image">
+            <a href="/apartments/{{apartment.id}}">
+                <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+            </a>
+        </div>
+        <div class="meta">
+            {% if apartment.listings_set.last.openhouse_set.last.openhousestart%}
+            <div class="time" style="margin-bottom: 15px;">
+                <div class="start">
+                    <span>Starts {{ apartment.listings_set.last.openhouse_set.last.openhousestart }}</span>
                 </div>
-                <div class="meta">
-                    <div class="address">
-                        {{apartment.address}}
-                    </div>
-                    <div class="postdata">
-                        {{apartment.zip}}, {{apartment.city}}
-                    </div>
-                    <div class="size">
-                        {{apartment.size}} fm.
-                    </div>
-                    <div class="price">
-                        {{apartment.price}} isk.
-                    </div>
+                <div class="open">
+                    <span>Opens {{ apartment.listings_set.last.openhouse_set.last.openhouseend }}</span>
                 </div>
             </div>
-            {% endfor %}
+            {% endif %}
+            <div class="address">
+                <span>{{apartment.address}}</span>
+            </div>
+            <div class="postdata">
+                <div class="post-meta">
+                    <span>Zip: {{apartment.locationid.zip}}</span>
+                    <span>City: {{apartment.locationid.city}}</span>
+                    <span cass="country">{{apartment.locationid.country.country}}</span>
+                </div>
+            </div>
+            <div class="size">
+                <span>{{apartment.size}} m2.</span>
+            </div>
+            {% if apartment.listings_set.first.price %}
+            <div class="price">
+                <span>$ {{apartment.listings_set.first.price}} .</span>
+            </div>
+            {% endif %}
         </div>
-    </div>
-</div>
-{% endblock content %}
-{% block script %}
-{% endblock%}
+    </div>{% endfor %}
