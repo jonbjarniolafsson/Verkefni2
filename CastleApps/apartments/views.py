@@ -48,10 +48,12 @@ def home(request):
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
 
-        #newlyListed =
+        newlyListed = Listings.objects.all().order_by('registered')
+        apps = Apartments.objects.filter(pk__in=newlyListed)
 
         context = {
             'apartments': newApart,  # Send all the apartments
+            'newlyListed': apps
         }
 
         return render(request, 'apartments/home.html', context)
