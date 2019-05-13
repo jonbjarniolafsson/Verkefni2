@@ -27,11 +27,7 @@ urlpatterns = [
      path('create_apartment', views.create_apartment, name="create-apartment"),
      path('create_location', views.create_location, name="create-location"),
 
-<<<<<<< HEAD
-     path('buy_now', views.buyNow, name= "buy_now")
-=======
     path('apartments/<int:apartmentID>/buynow', views.buyNow, name= "buy_now"),
     path('apartments/<int:apartmentID>/buynow/submit', views.buyNowSubmit, name= "buy_now")
->>>>>>> 437e3896724c0c39a8fbd2b323ff8787bb498406
 
 ]
