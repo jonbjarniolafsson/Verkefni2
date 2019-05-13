@@ -257,3 +257,29 @@ form.white-background .form-group.focused label{
 .contact-form.active{
     right: 0;
 }
+
+
+.spinner{
+    width: 75px;
+    height: 75px;
+    border: 5px solid transparent;
+    border-top: 4px solid #0067BC;
+    border-radius: 50%;
+    margin: 50px auto;
+    display: none;
+}
+
+.spinner.active{
+    display: block;
+    animation: infinite-spinning 1s ease infinite;
+}
+
+
+@keyframes infinite-spinning {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

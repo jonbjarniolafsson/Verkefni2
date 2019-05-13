@@ -18,6 +18,17 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="new_errors">
+            {% if form.errors %}
+                <ul class="errorlist">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                {% endfor %}apartments_apartments_registration_key
+                </ul>
+            {% endif %}
+        </div>
          <form action="{% url 'create-location' %}" class="background-white" method="POST">
              {% csrf_token %}
                 {% for item in address_form %}
@@ -29,6 +40,4 @@
           <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>
     </div>
-
-
 {% endblock %}

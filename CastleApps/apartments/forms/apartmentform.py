@@ -20,3 +20,5 @@ class CastleAppsCreateForm(ModelForm):
             'type': widgets.TextInput(attrs={'class':'form-control'})
 
 }
+
+

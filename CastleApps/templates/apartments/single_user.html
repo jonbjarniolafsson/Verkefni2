@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+<link rel="stylesheet" href="{% static 'css/agents.css' %}">
 {% endblock css %}
 {% block content%}
 <div class="container">
-    <div class="apartment single">
+    <h1> A seller</h1>
+    <div class="agent">
         <div class="image">
-            <img src="{{apartment.image}}" alt="">
+            <img src="{{user.profileImagePath}}" alt="">
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -19,8 +20,6 @@
             <div class="col-md-6">
                 <div class="meta">
 
-
-                    Username: <img src="{{ user.profileImagePath}}" alt="Image here" srcset="">
                     <p>First name: {{user.first_name}}</p>
                     <p>Last name: {{user.last_name}}</p>
                     <p>Last Login: {{user.last_login}}</p>
@@ -28,6 +27,41 @@
                     {%  for image in images %}
                         <img src="{{ image }}" alt="Image here" srcset="">
                     {%  endfor %}
+
+                        <h2>{{ user.first_name }} {{ user.last_name }} has these listed for sale: </h2>
+        <div class="apartments-wrapper slider owl-carousel">
+            {% for apartment in apartments %}
+
+            <div class="apartment">
+                <div class="image">
+                    <a href="/apartments/{{apartment.id}}">
+
+
+                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                    </a>
+                    <div>
+                            {{ apartment.listings_set.last.openhouse_set.last.openhousestart }} -
+                            {{ apartment.listings_set.last.openhouse_set.last.openhouseend }}
+                        </div>
+                </div>
+                <div class="meta">
+                    <div class="address">
+                        {{apartment.address}}
+                    </div>
+                    <div class="postdata">
+                        Zip: {{apartment.locationid.zip}}
+                        City: {{apartment.locationid.city}} <br>
+                        {{apartment.locationid.country.country}}
+                    </div>
+                    <div class="size">
+                        {{apartment.size}} m2.
+                    </div>
+                    <div class="price">
+                        $ {{apartment.listings.price}} .
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
 
                 </div>
             </div>
