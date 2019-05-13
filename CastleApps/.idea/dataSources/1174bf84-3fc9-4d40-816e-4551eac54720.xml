@@ -2606,24 +2606,22 @@
       <IntrospectionStateNumber>16174617</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
-      <Relations>sequence|table|1067110|1067112|1
-sequence|table|1067121|1067123|1
-sequence|table|1067131|1067133|1
-sequence|table|1067139|1067141|1
-sequence|table|1067149|1067151|1
-sequence|table|1067183|1067185|1
-sequence|table|1067196|1067198|1
-sequence|table|1067204|1067206|1
-sequence|table|1067242|1067244|1
-sequence|table|1067278|1067280|1
-sequence|table|1067296|1067298|1
-sequence|table|1067307|1067309|1
-sequence|table|1067315|1067317|1
-sequence|table|1067323|1067325|1
-sequence|table|1067331|1067333|1
-sequence|table|1067339|1067341|1
-sequence|table|1067347|1067349|1
-sequence|table|1067358|1067360|1
+      <Relations>sequence|table|1061222|1061224|1
+sequence|table|1061235|1061237|1
+sequence|table|1061243|1061245|1
+sequence|table|1061280|1061282|1
+sequence|table|1061304|1061306|1
+sequence|table|1061315|1061317|1
+sequence|table|1061350|1061352|1
+sequence|table|1061323|1061325|1
+sequence|table|1061331|1061333|1
+sequence|table|1061339|1061341|1
+sequence|table|1061361|1061363|1
+sequence|table|1061149|1061151|1
+sequence|table|1061160|1061162|1
+sequence|table|1061170|1061172|1
+sequence|table|1061178|1061180|1
+sequence|table|1061188|1061190|1
 </Relations>
     </database>
     <database id="522" parent="1" name="ftbzptxz">

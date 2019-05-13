@@ -47,8 +47,7 @@ class Apartments(models.Model):
     displayimage = models.CharField(max_length = 5000)
     locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
-    def __str__(self):
-        self.displayImage, self.location
+
 
 
 

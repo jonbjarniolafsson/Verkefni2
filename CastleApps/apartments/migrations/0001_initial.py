@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                 ('expyear', models.IntegerField()),
                 ('address', models.CharField(max_length=80)),
                 ('aptsuite', models.CharField(default=None, max_length=20)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('users', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

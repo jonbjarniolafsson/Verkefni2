@@ -14,8 +14,16 @@ class UsersCreationForm(UserCreationForm):
         model = Users #this is the "YourCustomUser" that you imported at the top of the file
         fields = ('username', 'email') #etc etc, other fields you want displayed on the form)
 
-class UsersChangeForm(UserChangeForm):
+
+
+class EditProfileForm(UserChangeForm):
+    template_name='/something/else'
 
     class Meta:
         model = Users
-        fields = UserChangeForm.Meta.fields
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+            'password'
+        )
