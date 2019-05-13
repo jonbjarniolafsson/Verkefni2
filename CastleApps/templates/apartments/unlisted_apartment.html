@@ -6,18 +6,17 @@
 {% block content%}
 <div class="container">
     <div class="apartment single">
-        <div class="image">
-            <img src="{{apartment.displayimage}}" alt="">
-        </div>
+    <h1> Apartment not currently listed for sale</h1>
 
 
-        <a href="/apartments/{{apartment.id}}/buynow">
-        <button>Buy Now</button>
-         </a>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="location">
                     <h2>{{apartment.address}}</h2>
+                        <div class="image">
+                <img src="{{apartment.displayimage}}" alt="">
+            </div>
                     <p>{{apartment.zip}}</p>
                     <p>{{apartment.city}}</p>
                     <p>{{apartment.country}}</p>
@@ -26,11 +25,7 @@
             <div class="col-md-6">
                 <div class="meta">
                     <p>{{apartment.type}} in {{apartment.location.region}}, {{apartment.location.city}}  </p>
-                    <p>price: {{listing.price}}</p>
-                    <p>Sold on the date: {{listing.price}}</p>
 
-                 Agent: <img src="{{ agent.profileImagePath}}" alt="Image here" srcset="">
-                    <p>AgentUserName: {{agent.username}}</p>
                     <p>Size: {{apartment.size}}</p>
                     <p>Rooms: {{apartment.rooms}}</p>
                     <p>Bathrooms: {{apartment.bathrooms}}</p>

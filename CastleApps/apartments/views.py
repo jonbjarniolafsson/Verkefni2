@@ -42,6 +42,7 @@ def home(request):
                     newList = list(newList)
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
+
                     context = {
                         'apartments' : newApart, # Send all the apartments
                     }
@@ -99,16 +100,24 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
 
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
+    aparments = get_object_or_404(Apartments, pk=apartmentID)
 
-    if Apartments.objects.get(id=apartmentID).id == apartmentID:
-        # print("HEre we are", apartmentid)
+    checking = Listings.objects.filter(apartmentid_id =apartmentID)
+    apartments = Apartments.objects.get(id=apartmentID)
+    print(len(checking))
+    if len(checking) == 0:
+        context = {
+            'apartment': apartments,
+        }
+        return render(request, 'apartments/unlisted_apartment.html', context)
+
+    else:
         apartments = Apartments.objects.get(id=apartmentID)
         apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
         listings = Listings.objects.filter(apartmentid=apartmentID)
 
         idOfActiveListing = listings.aggregate(Max('id'))
-
         listing = Listings.objects.get(id = idOfActiveListing['id__max'])
 
         #print("PRINTING agentID: ", listing.agentID_id)
@@ -118,12 +127,15 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'images': apartmentImages,
             'agent': listingAgent
         }
-    return render(request, 'apartments/single-apartment.html', context)
+        return render(request, 'apartments/single-apartment.html', context)
+
 
 
 
 #Here you can display a single users
 def singleUser(request, userID):
+
+    #print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
     #users = Users.objects.get(id = userID)
     #print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
@@ -138,7 +150,6 @@ def singleUser(request, userID):
         }
         return render(request, 'apartments/single_user.html', context)
     listingsOfApartments = Listings.objects.filter(agent_id=userID)
-    print("PRINTING: ",listingsOfApartments)
     pkOfApps = []
     for x in listingsOfApartments:
         print(x.apartmentid_id)
