@@ -1,7 +1,7 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .forms.apartmentform import CastleAppsCreateForm
 from .forms.locationform import AddressCreateForm
-#from .forms.signup_form import CastleAppsSignupForm
+# from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
@@ -10,8 +10,6 @@ from django.db.models import Max
 from django.shortcuts import get_object_or_404
 
 from .forms import buynowform
-
-
 
 apartments = [
     {
@@ -64,6 +62,7 @@ apartments = [
     }
 ]
 
+
 # This is the main home page
 def home(request):
     context = {
@@ -74,7 +73,7 @@ def home(request):
 
 def buyNow(request, apartmentID):
     context = {
-        'apartment' : Apartments.objects.get(id=apartmentID)
+        'apartment': Apartments.objects.get(id=apartmentID)
     }
     return render(request, 'apartments/buy_now.html', context)
 
@@ -97,58 +96,58 @@ def buyNowSubmit(request, apartmentID):
 
     return render(request, 'apartments/purchase_status.html', {'form': form})
 
+
 # This is
 def agents(request):
-
-    users = Users.objects.filter(is_staff = True)
-    #print("PRINTING ALL THE USERS : ", users.profileImagePath)
+    users = Users.objects.filter(is_staff=True)
+    # print("PRINTING ALL THE USERS : ", users.profileImagePath)
     context = {
-       'agents': users
+        'agents': users
     }
     return render(request, 'apartments/agents.html', context)
 
+
 def aboutus(request):
     context = {
-        'oliver':'oliver'
+        'oliver': 'oliver'
     }
     return render(request, 'apartments/about_us.html', context)
 
+
 # This is the page you are led to when an apartment is clicked on
-def singleApartment(request, apartmentID): # Need to add error handling
+def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
-    print("ERROR HANDLING" ,apartmentID)
+    print("ERROR HANDLING", apartmentID)
     if Apartments.objects.get(id=apartmentID).id == apartmentID:
-        #print("HEre we are", apartmentid)
-        apartments = Apartments.objects.get(id = apartmentID)
+        # print("HEre we are", apartmentid)
+        apartments = Apartments.objects.get(id=apartmentID)
         apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
         listings = Listings.objects.filter(apartmentid=apartmentID)
-        #print("LISTING OBJECT: ", listings)
+        # print("LISTING OBJECT: ", listings)
         idOfActiveListing = listings.aggregate(Max('id'))
         print(idOfActiveListing)
-        listing = Listings.objects.get(id = idOfActiveListing['id__max'])
+        listing = Listings.objects.get(id=idOfActiveListing['id__max'])
         print(listing)
-        #print("PRINTING agentID: ", listing.agentID_id)
-        listingAgent = Users.objects.get(id = listing.agent_id)
+        # print("PRINTING agentID: ", listing.agentID_id)
+        listingAgent = Users.objects.get(id=listing.agent_id)
         context = {
             'apartment': apartments,
-            'images' : apartmentImages,
+            'images': apartmentImages,
             'agent': listingAgent
         }
     return render(request, 'apartments/single-apartment.html', context)
 
 
-
-#Here you can display a single user
+# Here you can display a single user
 def singleUser(request, userID):
-    #user = Users.objects.get(id = userID)
-    #print("Printing all users: ", user)
+    # user = Users.objects.get(id = userID)
+    # print("Printing all users: ", user)
     user = get_object_or_404(Users, pk=userID)
     context = {
         'user': user
     }
     return render(request, 'apartments/single_user.html', context)
-
 
 
 def all_apartments(request):
@@ -159,7 +158,11 @@ def all_apartments(request):
 
 
 def create_location(request):
+    print('Handling request ', request)
+    print('Handling request GET ', request.GET)
+    print('Handling request POST ', request.POST)
     if request.method == 'POST':
+        print('Handle POST request')
         address_form = AddressCreateForm(data=request.POST, prefix='location')
         if address_form.is_valid():
             print("VALID")
@@ -171,10 +174,12 @@ def create_location(request):
         field_errors = [(field.label, field.errors) for field in f]
         return render(request, 'apartments/create-location.html', context)
     else:
-        address_form = AddressCreateForm(data=request.GET)
+        print('Handle GET request')
+        address_form = AddressCreateForm(data=request.GET, prefix='location')
         return render(request, 'apartments/create-location.html', {
             'address_form': address_form
         })
+
 
 def create_apartment(request):
     if request.method == 'POST':
@@ -189,7 +194,7 @@ def create_apartment(request):
         print("INVALID")
         return render(request, 'apartments/create-apartment.html', context)
     else:
-        app_form = CastleAppsCreateForm(data=request.GET)
+        app_form = CastleAppsCreateForm(data=request.GET, prefix='apartment')
         return render(request, 'apartments/create-apartment.html', {
             'app_form': app_form
         })
