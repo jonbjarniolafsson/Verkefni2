@@ -32,7 +32,6 @@ def home(request):
 
         openHouse =  OpenHouse.objects.all()
 
-
         newList = []
         # Context has to be a dictionary
         context = {}
@@ -112,7 +111,6 @@ def buyNowSubmitss(request, apartmentID):
     return render(request, 'apartments/purchase_status.html', {'form': form})
 
 
-# This is
 def agents(request):
     # Checks if the person in the Users table is staff
     users = Users.objects.filter(is_staff = True)
