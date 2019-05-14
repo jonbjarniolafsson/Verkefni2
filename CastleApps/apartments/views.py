@@ -302,7 +302,7 @@ def createApartments(request):
 
 
 
-def search_apartment(request):
+def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
 
@@ -346,13 +346,10 @@ def edit_apartment(request, apartment_id=None):
             form.save()
             return redirect('frontpage')
     form = EditAppForm(data=request.GET, instance=apartment)
-<<<<<<< HEAD
-    return render(request, 'apartments/edit-apartment.html', {"apartment": newList, 'form': form, 'apartmenta':apartment})
-=======
-    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
+    return render(request, 'apartments/edit-apartment.html',{"apartment":newList, "form": form, "apartmenta":apartment})
 
 
-def add_lisiting(request, apartment_id=None):
+def add_listing(request, apartment_id=None):
     print("IN ADD LISTING")
     apartment_id = Apartments.objects.get(id=apartment_id)
     print(apartment_id)
@@ -368,4 +365,4 @@ def add_lisiting(request, apartment_id=None):
             return redirect('frontpage')
     form = ListingForm(data=request.GET)
     return render(request, 'apartments/add_listing.html', {'form': form})
->>>>>>> 7fd1d5532bd0304de54674308dd89a0ffa0728c6
+
