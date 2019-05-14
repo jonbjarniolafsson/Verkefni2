@@ -24,6 +24,10 @@ from django.utils import timezone
 
 def home(request):
 
+        listing = Listings.objects.get(id=1)
+        print(listing.shortMortgage)
+
+
         newUser = request.user.id
         print(newUser)
 
@@ -121,11 +125,24 @@ def agents(request):
     return render(request, 'apartments/agents.html', context)
     
 
-def aboutus(request):
+# History of the company. It is important to play to the prestige of the company
+# As this is supposed to be a reputable seller
+def companyHistory(request):
     context = {
         'oliver': 'oliver'
     }
-    return render(request, 'apartments/about_us.html', context)
+    return render(request, 'apartments/company_history.html', context)
+
+
+# Price list is what the seller can come to expect to pay to the real estate agent
+# Some of the prices are also charged directly to the buyer and added to the final
+# price of the real estate in question
+def priceList(request):
+    fluff = ''
+    context = {
+        'fluff':fluff
+    }
+    return render(request, 'apartments/price_list.html', context)
 
 
 # This is the page you are led to when an apartment is clicked on
@@ -158,7 +175,8 @@ def singleApartment(request, apartmentID):  # Need to add error handling
         context = {
             'apartment': apartments,
             'images': apartmentImages,
-            'agent': listingAgent
+            'agent': listingAgent,
+            'listing' : listing
         }
         return render(request, 'apartments/single_apartment.html', context)
 

@@ -7,7 +7,9 @@ urlpatterns = [
      # Here we have a list of employees page -> Should lead to their profile if clicked on
      path('agents/',views.agents, name='agents'),
 
-     path('about_us/',views.aboutus, name='aboutus'),
+     #Paths below are available to everyone
+     path('price_list/',views.priceList, name='priceList'),
+     path('company_history/', views.companyHistory, name ='companyHistory'),
 
      #Page below is for ajax search
      path('all_apartments/',
