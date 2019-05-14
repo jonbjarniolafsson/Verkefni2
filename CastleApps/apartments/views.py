@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 # This document will act as our controller in our Apartments app. The main magic happens here.
 
 from .forms.buy_now_form import PaymentInfoForm
-from .forms.apartment_form import CastleAppsCreateForm
+from .forms.apartment_form import CastleAppsCreateForm,EditAppForm
 from .forms.location_form import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
@@ -331,3 +331,16 @@ def searchApartments(request):
         return render(request, "apartments/search-results.html")
     else:
         return render(request, "apartments/search-results.html", context)
+
+def edit_apartment(request, apartment_id=None):
+    apartment = Apartments.objects.get(id=apartment_id)
+    if request.method == 'POST':
+        currentUser = request.user
+        if currentUser.id == None or currentUser.is_staff == False:
+           return HttpResponse('Unauthorized', status=401)
+        form = EditAppForm(data=request.POST, instance=apartment)
+        if form.is_valid():
+            form.save()
+            return redirect('frontpage')
+    form = EditAppForm(data=request.GET, instance=apartment)
+    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
