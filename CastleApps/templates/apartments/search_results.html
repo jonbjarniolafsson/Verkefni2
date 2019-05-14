@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+{% endblock css %}
+{% block content %}
+<div class="apartments">
+    <div class="container">
+        <h2>Total results: {{apartments|length}}</h2>
+        {% if apartments %}
+            <div class="apartments-wrapper row">
+                {% for apartment in apartments %}
+                <div class="col-md-4 apartment">
+                    <div class="image">
+                        <a href="/apartments/{{apartment.id}}">
+                            
+                            <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                        </a>
+                    </div>
+                    <div class="meta">
+                        <div class="address">
+                            {{apartment.address}}
+                        </div>
+                        <div class="postdata">
+                            Zip: {{apartment.locationid.zip}}
+                            City: {{apartment.locationid.city}} <br>
+                            {{apartment.locationid.country.country}}
+                        </div>
+                        <div class="size">
+                            {{apartment.size}} m2.
+                        </div>
+
+                        {% if apartment.listings_set.first.price %}
+                        <div class="price">
+                            ${{apartment.listings_set.first.price}}
+                        </div>
+                        {% endif%}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="ajax-search">
+    <div class="apartments">
+        <div class="container">
+            <h2>Quick search</h2>
+            <p>You can search for</p>
+            <ul>
+                <li>Country</li>
+                <li>Address</li>
+            </ul>
+            <form action="" class="white-background">
+                <div class="form-group">
+                    <label for="ajax">Search here</label>
+                    <input type="text" name="ajax" id="ajax">
+                </div>
+                <div class="spinner"></div>
+            </form>
+            <div class="apartments-row row">
+    
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

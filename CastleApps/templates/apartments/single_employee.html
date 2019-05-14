@@ -5,7 +5,8 @@
 {% endblock css %}
 {% block content%}
 <div class="container">
-    <h1> A seller</h1>
+    <h1> Castle Apartments Agent</h1>
+    <h1> {{ user.first_name }} {{ user.last_name }}  </h1>
     <div class="agent">
         <div class="image">
             <img src="{{user.profileImagePath}}" alt="">
@@ -19,7 +20,6 @@
             </div>
             <div class="col-md-6">
                 <div class="meta">
-
                     <p>First name: {{user.first_name}}</p>
                     <p>Last name: {{user.last_name}}</p>
                     <p>Last Login: {{user.last_login}}</p>
@@ -28,7 +28,7 @@
                         <img src="{{ image }}" alt="Image here" srcset="">
                     {%  endfor %}
 
-                        <h2>{{ user.first_name }} {{ user.last_name }} has these listed for sale: </h2>
+                        <h2>{{ user.first_name }} {{ user.last_name }} is currently managing these listings: </h2>
         <div class="apartments-wrapper slider owl-carousel">
             {% for apartment in apartments %}
 

@@ -46,6 +46,81 @@ $(document).ready(function () {
         }
     });
 
+    if ($(".ajax-search").length){
+        $(".spinner").addClass('active');
+        loadAllApartments()
+    }
+    
+    var timeout = null; 
+    $("#ajax").on('keyup', function(){
+        var searchString = $(this).val();
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){
+            $('.apartments-row').empty();
+            filteredSearch(searchString)
+        }, 500);
+    });
+    
+    function loadAllApartments(){
+        $.ajax({        
+            url: "/all-apartments/",
+            type: "GET",
+            dataType: "html",
+            async: true,
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(errorThrown);
+            },
+            success: function(data, textStatus, jqXHR){
+                wrapper = $('.apartments-row')
+                $(".spinner").removeClass('active');
+                wrapper.html(data)
+            },
+        });
+    }
+    
+    function filteredSearch(searchString){
+        searchString = searchString.toLowerCase()
+        if (searchString === ""){
+            $(".spinner").addClass('active');
+            loadAllApartments()
+        }
+        else{
+            $(".spinner").addClass('active');
+            $.ajax({        
+                url: "/all-apartments/",
+                type: "GET",
+                dataType: "html",
+                async: true,
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(errorThrown);
+                },
+                success: function(data, textStatus, jqXHR){
+                    var address = ""
+                    var country = ""
+                    filteredApartments = []
+                    wrapper = $('.apartments-row')
+                    $(".spinner").removeClass('active');
+                    $(data).each(function(){
+                        address = $(this).data('address').toLowerCase();
+                        country = $(this).data('country').toLowerCase();
+                        if(address.includes(searchString) || country.includes(searchString)){
+                            wrapper.append(this)
+                        }
+                    })
+
+                    if(wrapper.contents().length == 0){
+                        wrapper.append("<h2>No results found!</h2>")
+                    }
+                }
+            });
+        }
+    }
+
+
+
+
+
+
     jQuery('img.svg').each(function () {
         var $img = jQuery(this);
         var imgID = $img.attr('id');

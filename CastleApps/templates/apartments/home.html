@@ -50,7 +50,39 @@
                         {{apartment.size}} m2.
                     </div>
                     <div class="price">
-                        $ {{apartment.listings.price}} .
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<div class="container">
+        <h2>New Listing</h2>
+        <div class="apartments-wrapper slider owl-carousel">
+            {% for apartment in newlyListed %}
+
+            <div class="apartment">
+                <div class="image">
+                    <a href="/apartments/{{apartment.id}}">
+
+
+                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                    </a>
+
+                </div>
+                <div class="meta">
+                    <div class="address">
+                        {{apartment.address}}
+                    </div>
+                    <div class="postdata">
+                        Zip: {{apartment.locationid.zip}}
+                        City: {{apartment.locationid.city}} <br>
+                        {{apartment.locationid.country.country}}
+                    </div>
+                    <div class="size">
+                        {{apartment.size}} m2.
+                    </div>
+                    <div class="price">
                     </div>
                 </div>
             </div>

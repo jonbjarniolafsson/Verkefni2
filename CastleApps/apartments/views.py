@@ -1,27 +1,35 @@
+from django.shortcuts import render,redirect
 
-from .forms.apartmentform import CastleAppsCreateForm, EditAppForm
-from .forms.locationform import AddressCreateForm
+# This document will act as our controller in our Apartments app. The main magic happens here.
+
+from .forms.buy_now_form import PaymentInfoForm
+from .forms.apartment_form import CastleAppsCreateForm
+from .forms.location_form import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-from django.shortcuts import get_object_or_404,render,redirect,reverse, HttpResponseRedirect
-from django.views.generic.edit import UpdateView
-from django.contrib.auth.models import auth, Permission
+from django.shortcuts import get_object_or_404,render,redirect
 
 
-from .forms import buynowform
+
+from .forms import buy_now_form
 
 from django.db.models import Q
 
 from datetime import datetime
 from django.utils import timezone
 
-
-
 def home(request):
+
+        listing = Listings.objects.get(id=1)
+        print(listing.shortMortgage)
+
+
+        newUser = request.user.id
+        print(newUser)
 
         openHouse =  OpenHouse.objects.all()
 
@@ -29,6 +37,7 @@ def home(request):
         newList = []
         # Context has to be a dictionary
         context = {}
+        newApart = ''
         for x in range(0,len(OpenHouse.objects.all()) +1):
             # NEed to make sure the filter doesn't return empty or it crashes
             if len(openHouse.filter(id=x)) != 0:
@@ -42,13 +51,42 @@ def home(request):
                     newList = list(newList)
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
-                    context = {
-                        'apartments' : newApart, # Send all the apartments
-                    }
+
+        newlyListed = Listings.objects.all().order_by('registered')
+        apps = Apartments.objects.filter(pk__in=newlyListed)
+
+        context = {
+            'apartments': newApart,  # Send all the apartments
+            'newlyListed': apps
+        }
 
         return render(request, 'apartments/home.html', context)
 
 
+# def buyNow(request, apartmentID):
+#     context = {
+#         'apartment' : Apartments.objects.get(id=apartmentID)
+#     }
+#     return render(request, 'apartments/buy_now.html', context)
+#
+#
+# def buyNowSubmitss(request, apartmentID):
+#     # if this is a POST request we need to process the form data
+#     if request.method == 'POST':
+#         # create a form instance and populate it with data from the request:
+#         form = buynowform(request.POST)
+#         # check whether it's valid:
+#         if form.is_valid():
+#             # process the data in form.cleaned_data as required
+#             # ...
+#             # redirect to a new URL:
+#             return buynowform('/thanks/')
+#
+#     # if a GET (or any other method) we'll create a blank form
+#     else:
+#         form = 'empty'
+#
+#     return render(request, 'apartments/purchase_status.html', {'form': form})
 def buyNow(request, apartmentID):
     context = {
         'apartment': Apartments.objects.get(id=apartmentID)
@@ -60,13 +98,13 @@ def buyNowSubmitss(request, apartmentID):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = buynowform(request.POST)
+        form = buy_now_form(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return buynowform('/thanks/')
+            return buy_now_form('/thanks/')
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -82,22 +120,29 @@ def agents(request):
     # Simply returns every users that returned true as staff
     # HTML will then loop through the users that are part of the staff and display them
     context = {
-        'agents': users
+        'users': users
     }
     return render(request, 'apartments/agents.html', context)
+    
 
-def pureApartment(request):
-    context = {
-        'apartments': Apartments.objects.all(),
-    }
-
-    return render(request, 'apartments/pure-apartments.html', context)
-
-def aboutus(request):
+# History of the company. It is important to play to the prestige of the company
+# As this is supposed to be a reputable seller
+def companyHistory(request):
     context = {
         'oliver': 'oliver'
     }
-    return render(request, 'apartments/about_us.html', context)
+    return render(request, 'apartments/company_history.html', context)
+
+
+# Price list is what the seller can come to expect to pay to the real estate agent
+# Some of the prices are also charged directly to the buyer and added to the final
+# price of the real estate in question
+def priceList(request):
+    fluff = ''
+    context = {
+        'fluff':fluff
+    }
+    return render(request, 'apartments/price_list.html', context)
 
 
 # This is the page you are led to when an apartment is clicked on
@@ -105,16 +150,24 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
 
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
+    aparments = get_object_or_404(Apartments, pk=apartmentID)
 
-    if Apartments.objects.get(id=apartmentID).id == apartmentID:
-        # print("HEre we are", apartmentid)
+    checking = Listings.objects.filter(apartmentid_id =apartmentID)
+    apartments = Apartments.objects.get(id=apartmentID)
+    print(len(checking))
+    if len(checking) == 0:
+        context = {
+            'apartment': apartments,
+        }
+        return render(request, 'apartments/unlisted_apartment.html', context)
+
+    else:
         apartments = Apartments.objects.get(id=apartmentID)
         apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
         apartmentImages = apartmentImages.all()
         listings = Listings.objects.filter(apartmentid=apartmentID)
 
         idOfActiveListing = listings.aggregate(Max('id'))
-
         listing = Listings.objects.get(id = idOfActiveListing['id__max'])
 
         #print("PRINTING agentID: ", listing.agentID_id)
@@ -122,121 +175,159 @@ def singleApartment(request, apartmentID):  # Need to add error handling
         context = {
             'apartment': apartments,
             'images': apartmentImages,
-            'agent': listingAgent
+            'agent': listingAgent,
+            'listing' : listing
         }
-    return render(request, 'apartments/single-apartment.html', context)
+        return render(request, 'apartments/single_apartment.html', context)
+
 
 
 
 #Here you can display a single users
 def singleUser(request, userID):
+
+    #print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
     #users = Users.objects.get(id = userID)
     #print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
-    context = {
-        'users': user
-    }
-    return render(request, 'apartments/single_user.html', context)
+    #user = Users.objects.get(pk=userID )
 
 
-def all_apartments(request):
+    if user.is_staff == False:
+        apartments = Apartments.objects.filter(owner_id=userID)
+        context = {
+            'user': user,
+            'apartments': apartments
+        }
+        return render(request, 'apartments/single_user.html', context)
+    listingsOfApartments = Listings.objects.filter(agent_id=userID)
+    pkOfApps = []
+    for x in listingsOfApartments:
+        print(x.apartmentid_id)
+        pkOfApps.append(x.apartmentid_id)
+    apartments = Apartments.objects.filter(id__in=pkOfApps)
     context = {
+        'user': user,
         'apartments': apartments
     }
-    return render(request, 'apartments/apartments-list.html', context)
+    #Listings.objects.filter(userID)
+    return render(request, 'apartments/single_employee.html', context)
 
 
 
-def buyNowSubmit(request):
+def allApartments(request):
+    context = {
+        'apartments' : Apartments.objects.all()
+    }
+    return render(request, 'apartments/apartments_list.html', context)
+
+
+
+def addPaymentInfo(request, apartmentID):
+    #get or what??
+    print("addPaymentInfo")
     if request.method == 'POST':
-        address_form = AddressCreateForm(data=request.POST, prefix='location')
-        if address_form.is_valid(): #Built in to check if valid
-            print("VALID")
-            address_form.save() #Saves to the DB
-            return redirect('create-apartment') #Supposed to redirect to create apartment
-        context = {'address_form': address_form}
-        f = AddressCreateForm(data=request.POST)
-        f.non_field_errors()
-        field_errors = [(field.label, field.errors) for field in f]
-        return render(request, 'apartments/create-location.html', context)
-    else:
-        address_form = AddressCreateForm(data=request.GET)
-        return render(request, 'apartments/create-location.html', {
-            'address_form': address_form
-        })
+        print("IF ")
+        form=PaymentInfoForm(data=request.POST)
+        if form.is_valid():
+            print('HANDLING POST REQUEST',request)
+            #færa notanda á review síðu
+            #TODO review.html
+            payment=form.save(commit=False)
+            payment.user = request.user
+            payment.save()
+            print(payment.user, request.user.id)
+            return redirect('review', {{apartmentID}}, request.user.id[-1])
+        #else:
+         #   print("ELSE")
+            #form = PaymentInfoForm()
+    currentUser = request.user.id
+    form = PaymentInfoForm(data=request.GET)
+    print('HANDLING GET REQUEST',request)
+    return render(request, 'apartments/buy_now.html', {
+        'form': form
+    })
+
+#shows info for user and user confirms payment
+def reviewPayment(request, apartmentID, paymentID):
+    if PaymentInfos.objects.get(id=paymentID).id == paymentID:
+        paymentInfo = PaymentInfos.objects.get(id=paymentID)
+        apartment = Apartments.objects.get(id=apartmentID)
+        context = {
+            'payment': paymentInfo,
+            'apartment': apartment
+        }
+    return render(request, 'apartments/review_payment.html', context)
 
 
-def create_location(request):
+
+
+def createLocation(request):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
         return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
-        address_form = AddressCreateForm(data=request.POST, prefix='location')
-        if address_form.is_valid(): #Built in to check if valid
-            address_form.save() #Saves to the DB
+        addressForm = AddressCreateForm(data=request.POST, prefix='location')
+        if addressForm.is_valid(): #Built in to check if valid
+            addressForm.save() #Saves to the DB
             return redirect('create-apartment') #Supposed to redirect to create apartment
-        context = {'address_form': address_form}
-        return render(request, 'apartments/create-location.html', context)
+        context = {'address_form': addressForm}
+        return render(request, 'apartments/create_location.html', context)
     else:
-        address_form = AddressCreateForm(data=request.GET, prefix='location')
-        return render(request, 'apartments/create-location.html', {
-            'address_form': address_form
+        addressForm = AddressCreateForm(data=request.GET, prefix='location')
+        return render(request, 'apartments/create_location.html', {
+            'address_form': addressForm
         })
 
 
-def create_apartment(request):
+def createApartments(request):
         currentUser = request.user
         if currentUser.id == None or currentUser.is_staff == False:
             return HttpResponse('Unauthorized', status=401)
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            app_form = CastleAppsCreateForm(data=request.POST, prefix='apartment')
-            if app_form.is_valid():
-                app_form.save()
+            appForm = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            if appForm.is_valid():
+                appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': app_form}
-            return render(request, 'apartments/create-apartment.html', context)
+            context = {'app_form': appForm}
+            return render(request, 'apartments/create_apartment.html', context)
         else:
-            app_form = CastleAppsCreateForm(data=request.GET, prefix='apartment')
-            return render(request, 'apartments/create-apartment.html', {
-                'app_form': app_form
+            appForm = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            return render(request, 'apartments/create_apartment.html', {
+                'app_form': appForm
             })
 
 
-def search_apartment(request):
-    #Getting the string that is being searched
-    searchString = request.GET.get("search")
-    #First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
-    checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
-    checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
-    checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString))
-    # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
-    apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
 
+def searchApartments(request):
+    # Getting the string that is being searched
+    searchString = request.GET.get("search")
+    zipCode = request.GET.get("zip")
+
+    # First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
+    checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
+    checkingApartments = Apartments.objects.filter(
+        Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(
+            aptsuite__icontains=searchString) | Q(type__icontains=searchString))
+    records = checkingListings | checkingApartments
+    if zipCode != None:
+        checkingLocation = Locations.objects.filter(Q(zip__icontains=zipCode)).filter(
+            Q(country__country__icontains=searchString) | Q(region__icontains=searchString) | Q(
+                city__icontains=searchString))
+    else:
+        checkingLocation = Locations.objects.filter(
+            Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(
+                region__icontains=searchString) | Q(city__icontains=searchString))
+
+    # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
+    apps = Apartments.objects.filter(
+        Q(locationid__in=checkingLocation) | Q(id__in=checkingListings) | Q(id__in=checkingApartments))
     context = {
         'apartments': apps
     }
 
-    return render(request, "apartments/search-results.html", context)
-
-
-def edit_apartment(request, apartment_id=None):
-    apartment = Apartments.objects.get(id=apartment_id)
-    if request.method == 'POST':
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-           return HttpResponse('Unauthorized', status=401)
-        form = EditAppForm(data=request.POST, instance=apartment)
-        if form.is_valid():
-            form.save()
-            return redirect('frontpage')
-    form = EditAppForm(data=request.GET, instance=apartment)
-    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
-
-
-
-
-
-
-
-
+    if searchString == None and zipCode == None:
+        return render(request, "apartments/search-results.html")
+    else:
+        return render(request, "apartments/search-results.html", context)

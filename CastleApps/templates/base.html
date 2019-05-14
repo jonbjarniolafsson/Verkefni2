@@ -59,9 +59,18 @@
                     </div>
                     <div class="navbar-right">
                         <ul class="nav-links">
-                            <li><a href="{% url 'frontpage' %}">Home</a></li>
-                        <li><a href="{% url 'aboutus' %}">About Us</a></li>
                             <li><a href="{% url 'agents' %}">Agents</a></li>
+                        <li class="user">
+                                About us
+                                <ul class="submenu">
+                                        <li class="editprofile">
+                                            <a href="{% url 'companyHistory' %}">Company History</a>
+                                        </li>
+                                        <li class="viewprofile">
+                                            <a href="{% url 'priceList' %}">Price List</a>
+                                        </li>
+                                </ul>
+                            </li>
                             <li class="user">
                                 Settings
                                 <ul class="submenu">

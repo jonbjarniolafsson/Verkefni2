@@ -1,5 +1,15 @@
 {% extends "base.html" %}
+{% block content %}
+<form class="background-white" href="/apartments/{{apartment.id}}/payment_info" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Next" class="btn btn-primary pull-right" style=""/>
+</form>
+{% endblock %}
 
+
+
+{% comment %}
 {% block content %}
     <div class="container">
         <div class="errors">
@@ -18,20 +28,15 @@
                 {% endfor %}
             {% endif %}
         </div>
-         <form action="{% url 'create-location' %}" class="background-white" method="POST">
              {% csrf_token %}
-                {% for item in address_form %}
-                 <div class="form-group">
-                     <label>{{item.name}}</label>
-                    {{item}}
+            <form action="{% url 'payment_info' %}" class="background-white" method="POST">
                 </div>
-            {% endfor %}
-          <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+          <input type="submit" value="Next" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>
     </div>
-
+<div> WRAPPERS
+    <a href="/apartments/{{apartment.id}}/payment_info/submit"> </a>
+    </div>
 
 {% endblock %}
-<div> WRAPPERS
-    <a href="/apartments/{{apartment.id}}/buynow/submit"> </a>>
-    </div>
+{% endcomment %}
