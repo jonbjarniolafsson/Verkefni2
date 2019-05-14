@@ -30,20 +30,7 @@
 {#            {% endif %}#}
 {#        </div>#}
 
-        <form href="edit-apartments/{{apartment.id}}" class="background-white" method="POST">
-            <div>This is apartment address {{ apartment.address }}</div>
-            <div>This is apartment Registration Number {{ apartment.registration }}</div>
-            <div>This is apartment size {{ apartment.size }}</div>
-            <div>This is apartment rooms: {{ apartment.rooms }}</div>
-            <div>This is apartment bathrooms {{ apartment.bathrooms }}</div>
-            <div>This is apartment apartment suite {{ apartment.aptsuite }}</div>
-            <div>This is the apartment's Time of Construction {{ apartment.timeofconstruction }}</div>
-            <div>This is apartment type {{ apartment.type }}</div>
-            <div>This is apartment Registration Number {{ apartment.registration }}</div>
-            <div>This is apartment Location_id {{ apartment.locationid }}</div>
-            <div>This is apartment Owners id {{ apartment.owner_id }}</div>
-
-
+        <form href="add-listing/{{apartment.id}}" class="background-white" method="POST">
             {% csrf_token %}
              {% for item in form %}
                 <div class="form-group">
@@ -53,7 +40,7 @@
                 </div>
             {% endfor %}
 
-            <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+            <input type="submit" value="Submit" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>
 
     </div>

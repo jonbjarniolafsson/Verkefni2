@@ -5,6 +5,7 @@ from django.shortcuts import render,redirect
 from .forms.buy_now_form import PaymentInfoForm
 from .forms.apartment_form import CastleAppsCreateForm,EditAppForm
 from .forms.location_form import AddressCreateForm
+from .forms.listing_form import ListingForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -332,6 +333,7 @@ def searchApartments(request):
     else:
         return render(request, "apartments/search-results.html", context)
 
+
 def edit_apartment(request, apartment_id=None):
     apartment = Apartments.objects.get(id=apartment_id)
     if request.method == 'POST':
@@ -344,3 +346,21 @@ def edit_apartment(request, apartment_id=None):
             return redirect('frontpage')
     form = EditAppForm(data=request.GET, instance=apartment)
     return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
+
+
+def add_lisiting(request, apartment_id=None):
+    print("IN ADD LISTING")
+    apartment_id = Apartments.objects.get(id=apartment_id)
+    print(apartment_id)
+    if request.method == 'POST':
+        #currentUser = request.user
+        #if currentUser.id == None or currentUser.is_staff:
+            #return HttpResponse('Unauthorized', status=401)
+        form = ListingForm(data=request.POST)
+        if form.is_valid():
+            print("FORM VALID")
+            form.save()
+            print("Form saved")
+            return redirect('frontpage')
+    form = ListingForm(data=request.GET)
+    return render(request, 'apartments/add_listing.html', {'form': form})
