@@ -25,11 +25,8 @@ from django.utils import timezone
 
 def home(request):
 
-
-        listing = Listings.objects.get(id=1)
-        print(listing.shortMortgage)
-
-
+        #listing = Listings.objects.get(id=1)
+        #print(listing.shortMortgage)
         newUser = request.user.id
         print(newUser)
 

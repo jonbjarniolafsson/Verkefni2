@@ -36,19 +36,22 @@ class Locations(models.Model):
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.country)
 
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
     registration = models.CharField(max_length = 100, unique = True)
     address = models.CharField(max_length = 50)
-    size = models.IntegerField()
-    rooms = models.IntegerField()
-    bathrooms = models.IntegerField()
+    size = models.CharField(max_length = 50)
+    rooms = models.CharField(max_length = 50)
+    bathrooms = models.CharField(max_length = 50)
     aptsuite = models.CharField(blank=True,null=True, max_length = 30)
     type = models.CharField(max_length=50)
-    timeofconstruction = models.IntegerField( default = 2000)
+    timeofconstruction = models.CharField(max_length =50, default = 2000)
     type = models.CharField(max_length = 50)
     displayimage = models.CharField(max_length = 5000)
+    forsale = models.BooleanField(default=False,blank=True,null=True )
     locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 
@@ -62,25 +65,12 @@ class ApartmentImages(models.Model):
 # Each apartments has a listing. It can have many listings.
 # Same apartment can only have one listing up at a time though!
 class Listings(models.Model):
-    price = models.BigIntegerField()
+    price = models.CharField(max_length = 200)
     description = models.TextField()
     registered = models.DateTimeField(default=timezone.now)
     soldondate = models.DateTimeField(default = None, blank=True,null=True)
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
-    @property
-    def shortMortgage(self):
-        priceAfterDownPayment = self.price*0.85 #We assume people put 15% down
-        return ((priceAfterDownPayment/120)+(0.05/12*priceAfterDownPayment))
-    @property
-    def mediumMortgage(self):
-        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
-    @property
-    def longMortgage(self):
-        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
-
 
 class OpenHouse(models.Model):
     openhousestart = models.DateTimeField(default=None, max_length=75)
@@ -97,9 +87,22 @@ class ListingMiscs(models.Model):
     carmetro = models.CharField(max_length=5, blank=True, null=True)
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
+    @property
+    def shortMortgage(self):
+        priceAfterDownPayment = self.price*0.85 #We assume people put 15% down
+        return ((priceAfterDownPayment/120)+(0.05/12*priceAfterDownPayment))
+    @property
+    def mediumMortgage(self):
+        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
+    @property
+    def longMortgage(self):
+        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
+
 
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
-class listingDocs(models.Model):
+class ListingDocs(models.Model):
     attachment = models.CharField(max_length = 500, default = None)
     description = models.CharField(max_length = 500, default = None)
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
@@ -112,12 +115,38 @@ class PriceLists(models.Model):
     managementcost = models.CharField(max_length = 15)
     datacollection = models.CharField(max_length = 15)
 
+
+class Transactions(models.Model):
+    price = models.CharField(max_length=4000)
+    date = models.DateField()
+    isseller = models.BooleanField()
+    listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
+
+
 # All the information necessary to make a purchase on our platform
 class PaymentInfos(models.Model):
     cardnumber = models.CharField(max_length=30)
     cardholder = models.CharField(max_length=80)
-    expmonth = models.IntegerField()
-    expyear = models.IntegerField()
+    expmonth = models.CharField(max_length=50)
+    expyear = models.CharField(max_length=50)
+    city = models.CharField(max_length=80)
     address = models.CharField(max_length=80)
-    aptsuite = models.CharField(max_length=20, default = None)
+    aptsuite = models.CharField(max_length=20, default=None, blank=True, null=True)
+    zip = models.CharField(max_length=80)
+    ssn = models.CharField(max_length=25)
+    isreviewed = models.BooleanField(default = False, blank=True,null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+
+class ViewHistory(models.Model):
+    apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+
+class CompanyInformation(models.Model):
+    name = models.CharField(max_length=15)
+    logo = models.CharField(max_length = 5000)
+    backgroundPhoto = models.CharField(max_length = 5000)
+    phone = models.CharField(max_length=15)
+    email = models.CharField(max_length=100)
+    officeHours = models.CharField(max_length=40)
+
+

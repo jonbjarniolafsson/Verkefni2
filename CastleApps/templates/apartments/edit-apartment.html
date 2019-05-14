@@ -14,13 +14,9 @@
         </div>
 
             <form href="edit-apartments/{{apartment.id}}" class="background-white" method="POST">
-
             {% csrf_token %}
              {%for a, item in apartment|zip:form %}
-
-
                     <label>{{item.name}}</label>: {{a}}  {{item}}
-
             {% endfor %}
 
             <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
