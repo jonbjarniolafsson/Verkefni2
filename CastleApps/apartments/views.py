@@ -5,6 +5,7 @@ from django.shortcuts import render,redirect
 from .forms.buy_now_form import PaymentInfoForm
 from .forms.apartment_form import CastleAppsCreateForm,EditAppForm
 from .forms.location_form import AddressCreateForm
+from .forms.listing_form import ListingForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -301,37 +302,25 @@ def createApartments(request):
 
 
 
-def searchApartments(request):
-    # Getting the string that is being searched
+def search_apartment(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
 
-    # First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
-    checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
-    checkingApartments = Apartments.objects.filter(
-        Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(
-            aptsuite__icontains=searchString) | Q(type__icontains=searchString))
-    records = checkingListings | checkingApartments
     if zipCode != None:
-        checkingLocation = Locations.objects.filter(Q(zip__icontains=zipCode)).filter(
-            Q(country__country__icontains=searchString) | Q(region__icontains=searchString) | Q(
-                city__icontains=searchString))
+        apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
+        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
     else:
-        checkingLocation = Locations.objects.filter(
-            Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(
-                region__icontains=searchString) | Q(city__icontains=searchString))
-
-    # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
-    apps = Apartments.objects.filter(
-        Q(locationid__in=checkingLocation) | Q(id__in=checkingListings) | Q(id__in=checkingApartments))
-    context = {
-        'apartments': apps
+        apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+    
+    apps = {
+        'apartments' : apartments
     }
 
     if searchString == None and zipCode == None:
         return render(request, "apartments/search-results.html")
     else:
-        return render(request, "apartments/search-results.html", context)
+        return render(request, "apartments/search-results.html", apps)
+
 
 def edit_apartment(request, apartment_id=None):
     newList = []
@@ -357,4 +346,26 @@ def edit_apartment(request, apartment_id=None):
             form.save()
             return redirect('frontpage')
     form = EditAppForm(data=request.GET, instance=apartment)
+<<<<<<< HEAD
     return render(request, 'apartments/edit-apartment.html', {"apartment": newList, 'form': form, 'apartmenta':apartment})
+=======
+    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
+
+
+def add_lisiting(request, apartment_id=None):
+    print("IN ADD LISTING")
+    apartment_id = Apartments.objects.get(id=apartment_id)
+    print(apartment_id)
+    if request.method == 'POST':
+        #currentUser = request.user
+        #if currentUser.id == None or currentUser.is_staff:
+            #return HttpResponse('Unauthorized', status=401)
+        form = ListingForm(data=request.POST)
+        if form.is_valid():
+            print("FORM VALID")
+            form.save()
+            print("Form saved")
+            return redirect('frontpage')
+    form = ListingForm(data=request.GET)
+    return render(request, 'apartments/add_listing.html', {'form': form})
+>>>>>>> 7fd1d5532bd0304de54674308dd89a0ffa0728c6

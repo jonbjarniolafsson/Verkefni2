@@ -36,18 +36,27 @@
             </div>
         </form>
     </div>
-    <!-- div class="login-form">
-       {% if user.is_authenticated %}
-            <div class="logout">
-                <a href="{% url 'logout' %}" >Logout</a>
-            </div>
-       {% else %}
-            <div class="sign-in">
-                <a href="{% url 'login' %}">Login here</a>
-            </div>
-            <div class="register"><a href="{% url 'register' %}">Register here</a></div>
-       {% endif %}
-    </div -->
+    <div class="search-form">
+        <div class="container">
+            <h2>Search here</h2>
+            <form action="{% url 'search-results' %}" method="GET">
+                <div class="form-group">
+                    <label for="search">Search</label>
+                    <input type="search" name="search" id="search">
+                </div>
+                <div class="form-group smaller">
+                    
+                    <select name="zip" id="zip">
+                        <option value="">Zip code</option>
+                        {% for z in zip %}
+                        <option value="{{z}}">{{z}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     <header>
         <div class="navigation">
             <div class="container">
@@ -95,9 +104,17 @@
                                 </ul>
                             </li>
                         </ul>
-                        <!-- div class="loggin-toggle">
-                            <img src="/static/img/user.svg" class="svg user" />
-                        </div -->
+                        <div class="search-toggle">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g id="Desktop-Fraedsluvefur" transform="translate(-1297.000000, -24.000000)" fill="#221F20">
+                                            <g id="Header">
+                                                <path style="fill: #fff;" d="M1306.997,42 C1304.86,42 1302.851,41.168 1301.34,39.657 C1298.221,36.538 1298.221,31.462 1301.34,28.343 C1302.851,26.832 1304.86,26 1306.997,26 C1309.134,26 1311.143,26.832 1312.654,28.343 C1314.165,29.854 1314.997,31.863 1314.997,34 C1314.997,36.137 1314.165,38.146 1312.654,39.657 C1311.143,41.168 1309.134,42 1306.997,42 M1319.842,45.431 L1314.739,40.328 C1317.958,36.4 1317.735,30.596 1314.068,26.929 C1312.115,24.976 1309.556,24 1306.997,24 C1304.438,24 1301.879,24.976 1299.926,26.929 C1299.177,27.678 1298.574,28.518 1298.113,29.411 C1296.629,32.282 1296.629,35.718 1298.113,38.589 C1298.574,39.482 1299.177,40.322 1299.926,41.071 C1301.879,43.024 1304.438,44 1306.997,44 C1309.243,44 1311.489,43.247 1313.325,41.742 L1318.428,46.845 C1318.818,47.235 1319.451,47.235 1319.842,46.845 C1320.232,46.454 1320.232,45.821 1319.842,45.431" id="Page-1"/>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                        </div>
                     </div>
                 </div>
             </div>
