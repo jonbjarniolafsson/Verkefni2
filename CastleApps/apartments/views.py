@@ -1,5 +1,5 @@
 
-from .forms.apartmentform import CastleAppsCreateForm
+from .forms.apartmentform import CastleAppsCreateForm, EditAppForm
 from .forms.locationform import AddressCreateForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-from django.shortcuts import get_object_or_404,render,redirect
+from django.shortcuts import get_object_or_404,render,redirect,reverse, HttpResponseRedirect
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.models import auth, Permission
 
@@ -203,7 +203,6 @@ def create_apartment(request):
             })
 
 
-
 def search_apartment(request):
     #Getting the string that is being searched
     searchString = request.GET.get("search")
@@ -215,7 +214,29 @@ def search_apartment(request):
     apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
 
     context = {
-        'apartments' : apps
+        'apartments': apps
     }
 
     return render(request, "apartments/search-results.html", context)
+
+
+def edit_apartment(request, apartment_id=None):
+    apartment = Apartments.objects.get(id=apartment_id)
+    if request.method == 'POST':
+        currentUser = request.user
+        if currentUser.id == None or currentUser.is_staff == False:
+           return HttpResponse('Unauthorized', status=401)
+        form = EditAppForm(data=request.POST, instance=apartment)
+        if form.is_valid():
+            form.save()
+            return redirect('frontpage')
+    form = EditAppForm(data=request.GET, instance=apartment)
+    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
+
+
+
+
+
+
+
+
