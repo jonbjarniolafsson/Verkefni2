@@ -1,57 +1,24 @@
 {% extends "base.html" %}
+{% load app_tags %}
 
 {% block content %}
     <div class="container">
-{#        <div class="errors">#}
-{#            {% if form.errors %}#}
-{#                {% for field in form %}#}
-{#                    {% for error in field.errors %}#}
-{#                        <div class="alert alert-danger">#}
-{#                            <strong>{{ error|escape }}</strong>#}
-{#                        </div>#}
-{#                    {% endfor %}#}
-{#                {% endfor %}#}
-{#                {% for error in form.non_field_errors %}#}
-{#                    <div class="alert alert-danger">#}
-{#                        <strong>{{ error|escape }}</strong>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            {% endif %}#}
-{#        </div>#}
-{#        <div class="new_errors">#}
-{#            {% if form.errors %}#}
-{#                <ul class="errorlist">#}
-{#                {% for field, errors in form.errors.items %}#}
-{#                    {% for error in errors %}#}
-{#                        <li>{{ error }}</li>#}
-{#                        {% endfor %}#}
-{#                {% endfor %}#}
-{#                </ul>#}
-{#            {% endif %}#}
-{#        </div>#}
 
-        <form href="edit-apartments/{{apartment.id}}" class="background-white" method="POST">
-             <div>This is apartment address {{ apartment.address }}</div>
-            <div>This is apartment Registration Number {{ apartment.registration }}</div>
-            <div>This is apartment size {{ apartment.size }}</div>
-            <div>This is apartment rooms: {{ apartment.rooms }}</div>
-            <div>This is apartment bathrooms {{ apartment.bathrooms }}</div>
-            <div>This is apartment apartment suite {{ apartment.aptsuite }}</div>
-            <div>This is the apartment's Time of Construction {{ apartment.timeofconstruction }}</div>
-            <div>This is apartment type {{ apartment.type }}</div>
-            <div>This is apartment Registration Number {{ apartment.registration }}</div>
-            <div>This is apartment Location_id {{ apartment.locationid }}</div>
-            <div>This is apartment Owners id {{ apartment.owner_id }}</div>
+    <h1> Edit apartment: {{ apartmenta.address }} <br>
+        <div> <a href="/users/{{apartmenta.owner_id}}" class="btn btn-primary pull right">Go to owner page</a>
+         </a> Owned by: {{ apartmenta.owner}}  </div>
+
+    </h1>
+        <div class="image">
+            <img src="{{apartmenta.displayimage}}" alt="">
+        </div>
 
 
-            {% csrf_token %}
-             {% for item in form %}
-                <div class="form-group">
 
-                    <label>{{item.name}}</label>
-                    {{item}}
-                </div>
-            {% endfor %}
+
+        {%for a, b in apartment|zip:form %}
+               <label>{{b.name}}</label>: {{a}}  {{b}}
+            {%endfor%}
 
             <input type="submit" value="Create" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>

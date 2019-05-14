@@ -24,6 +24,7 @@ from django.utils import timezone
 
 def home(request):
 
+
         listing = Listings.objects.get(id=1)
         print(listing.shortMortgage)
 
@@ -333,6 +334,19 @@ def searchApartments(request):
         return render(request, "apartments/search-results.html", context)
 
 def edit_apartment(request, apartment_id=None):
+    newList = []
+    apartment = Apartments.objects.filter(id=1)
+    for x in apartment:
+        newList.append(x.registration)
+        newList.append(x.address)
+        newList.append(x.size)
+        newList.append(x.rooms)
+        newList.append(x.bathrooms)
+        newList.append(x.aptsuite)
+        newList.append(x.timeofconstruction)
+        newList.append(x.type)
+        newList.append(x.displayimage)
+        print(newList)
     apartment = Apartments.objects.get(id=apartment_id)
     if request.method == 'POST':
         currentUser = request.user
@@ -343,4 +357,4 @@ def edit_apartment(request, apartment_id=None):
             form.save()
             return redirect('frontpage')
     form = EditAppForm(data=request.GET, instance=apartment)
-    return render(request, 'apartments/edit-apartment.html', {"apartment": apartment, 'form': form})
+    return render(request, 'apartments/edit-apartment.html', {"apartment": newList, 'form': form, 'apartmenta':apartment})
