@@ -21,6 +21,11 @@ from django.shortcuts import  render
 
 # Location is a general place to be able to better normalize the data.
 
+
+# In the model.py we decided to break our own rules when it comes to variables
+# We did this to make it easier for us to access the Database through the Django code
+# So we did not have to worry about capitalization
+
 class Country(models.Model):
     country = models.CharField(primary_key = True, max_length = 40)
     def __str__(self):
@@ -31,9 +36,6 @@ class Locations(models.Model):
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-
-
-
 
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
@@ -50,16 +52,12 @@ class Apartments(models.Model):
     locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 
-
-
-
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
     aid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
     def __str__(self):
         return self.image
-
 
 # Each apartments has a listing. It can have many listings.
 # Same apartment can only have one listing up at a time though!
@@ -70,6 +68,19 @@ class Listings(models.Model):
     soldondate = models.DateTimeField(default = None, blank=True,null=True)
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    @property
+    def shortMortgage(self):
+        priceAfterDownPayment = self.price*0.85 #We assume people put 15% down
+        return ((priceAfterDownPayment/120)+(0.05/12*priceAfterDownPayment))
+    @property
+    def mediumMortgage(self):
+        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
+    @property
+    def longMortgage(self):
+        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
+
 
 class OpenHouse(models.Model):
     openhousestart = models.DateTimeField(default=None, max_length=75)

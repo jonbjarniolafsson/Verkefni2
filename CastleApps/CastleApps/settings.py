@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'users'
-    'apartments.apps.ApartmentsConfig',
     #'apartments'
+    'apartments.apps.ApartmentsConfig',
+    #'users'
     'users.apps.UserConfig',
 
     #'django.contrib.sites', # new
@@ -147,4 +147,4 @@ LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.Users' # new
-#AUTH_USER_MODEL = 'users.users'
+AUTH_USER_MODEL = 'users.users'
