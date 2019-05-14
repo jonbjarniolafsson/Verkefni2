@@ -199,20 +199,50 @@ def create_apartment(request):
 
 
 def search_apartment(request):
-    #Getting the string that is being searched
     searchString = request.GET.get("search")
-    if searchString != None:
-        #First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
-        checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
-        checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
-        checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString))
-        # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
-        apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
-        context = {
-            'apartments' : apps
-        }
+    zipCode = request.GET.get("zip")
 
-    if searchString == None:
+    if zipCode != None:
+        apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
+        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
+    else:
+        apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+    
+    apps = {
+        'apartments' : apartments
+    }
+
+    if searchString == None and zipCode == None:
         return render(request, "apartments/search-results.html")
     else:
-        return render(request, "apartments/search-results.html", context)
+        return render(request, "apartments/search-results.html", apps)
+
+
+
+
+# def search_apartment(request):
+#     #Getting the string that is being searched
+#     searchString = request.GET.get("search")
+#     zipCode = request.GET.get("zip")
+
+#     #First we filter everything in the search string by location. SELECT * FROM Locations L WHERE x OR y OR Z OR M
+#     checkingListings = Listings.objects.filter(Q(description__icontains=searchString))
+#     checkingApartments = Apartments.objects.filter(Q(registration__icontains=searchString) | Q(address__icontains=searchString) | Q(aptsuite__icontains=searchString) | Q(type__icontains=searchString))
+#     records = checkingListings | checkingApartments
+#     if zipCode != None:
+#         checkingLocation = Locations.objects.filter(Q(zip__icontains=zipCode)).filter(Q(country__country__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
+#     else:
+#         checkingLocation = Locations.objects.filter(Q(country__country__icontains=searchString) | Q(zip__icontains=searchString) | Q(region__icontains=searchString) | Q(city__icontains=searchString))
+
+#     # Now we have the 3 main tables that we need to check and so we do the same except now we check if the APID is in the QueryStrings
+#     apps = Apartments.objects.filter(Q(locationid__in = checkingLocation) | Q(id__in =checkingListings) | Q(id__in =checkingApartments))
+#     context = {
+#         'apartments' : apps
+#     }
+
+
+
+#     if searchString == None and zipCode == None:
+#         return render(request, "apartments/search-results.html")
+#     else:
+#         return render(request, "apartments/search-results.html", context)

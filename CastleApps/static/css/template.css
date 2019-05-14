@@ -148,7 +148,7 @@ form button:hover{
     text-transform: capitalize;
 }
 
-.form-group input{
+.form-group input, .form-group select{
     border-radius: 0px;
     border: 1px solid transparent;
     padding-left: 20px;
@@ -156,12 +156,12 @@ form button:hover{
     height: 45px;
 }
 
-.form-group input:focus, .form-group input:active{
+.form-group input:focus, .form-group input:active, .form-group select:focus, .form-group select:active{
     outline: none;
     box-shadow: none;
 }
 
-.form-group.focused input{
+.form-group.focused input, .form-group.focused select{
     border-color: #0067BC;
 }
 
@@ -282,4 +282,66 @@ form.white-background .form-group.focused label{
     to {
         transform: rotate(360deg);
     }
+}
+
+
+
+.search-toggle{
+    position: absolute;
+    top: 14px;
+    right: -45px;
+    padding: 15px;
+
+}
+
+.search-toggle:hover{
+    cursor: pointer;
+}
+
+.search-form{
+    position: fixed;
+    min-height: 300px;
+    width: 100%;
+    top: -400px;
+    left: 0;
+    transition: all 0.3s ease;
+    z-index: 110;
+    background: #0067BC;
+    padding: 50px 0px 100px 0px;
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.35)
+}
+
+.search-form.active{
+    top: 0;
+}
+
+
+.search-form form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.search-form h2{
+    font-size: 36px;
+    color: #fff;
+}
+
+.search-form .form-group{
+    width: calc(50% - 15px);
+    margin: 0;
+}
+
+.search-form .form-group.smaller{
+    width: calc(25% - 15px);
+}
+
+.search-form button{
+    width: calc(25% - 15px);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 18px;
 }

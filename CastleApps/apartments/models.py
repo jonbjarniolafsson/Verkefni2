@@ -31,8 +31,6 @@ class Locations(models.Model):
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    def __str__(self):
-        return str(self.country)
 
 
 

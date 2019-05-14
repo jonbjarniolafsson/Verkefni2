@@ -14,6 +14,12 @@ $(document).ready(function () {
         }
     })
 
+    $('.search-toggle').on('click', function(){
+        $(".site-overlay").addClass('active');
+        $(".search-form").addClass('active');
+        $("body").addClass('no-scroll');
+    });
+
     $(".contact-toggle").on("click", function () {
         $(".site-overlay").addClass('active');
         $(".contact-form").addClass('active');
@@ -36,6 +42,7 @@ $(document).ready(function () {
         $(".login-form").removeClass('open');
         $("body").removeClass('no-scroll');
         $(".contact-form").removeClass('active');
+        $(".search-form").removeClass("active");
     }
 
     $(".form-group input, .form-group textarea").focus(function () {
