@@ -53,7 +53,7 @@ def home(request):
 
         newlyListed = Listings.objects.all().order_by('registered')
         apps = Apartments.objects.filter(pk__in=newlyListed, forsale=True)
-        companyInfo = CompanyInformation.objects.all()
+        #companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
             'newlyListed': apps,
@@ -101,9 +101,17 @@ def priceList(request):
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
-
+    user = request.user.id
+    print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
     aparments = get_object_or_404(Apartments, pk=apartmentID)
+
+
+    #if request.user.is_authenticated == True:
+
+    #    apartment = Apartments.objects.get(id=apartmentID)
+    #    ViewHistory.objects.create(apartmentid=apartment.pk, user=user)
+
 
     checking = Listings.objects.filter(apartmentid_id =apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
@@ -349,19 +357,22 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
     #vantar aðgengi að context
     listing = Listings.objects.get(id=listingID)
     if request.method == 'POST':
+
         apartment = Apartments.objects.get(id=apartmentID)
         apartment = Apartments.objects.get(id=apartmentID)
+        seller = apartment.owner_id
         apartment.forsale = False  # change field
         apartment.owner_id = request.user.id
         apartment.save()  # this will update only
-        #pricelist = PriceLists.objects.all()
-       # salescost = float(pricelist.salescost)
+        buyer = apartment.owner_id
 
+        priceSeller = str(listing.price)
+        priceBuyer = str(-listing.price)
 
         #BUYER TRANSACTION
-        #buyerTransaction = Transactions.objects.create(id=1, price=-listing.price, date=datetime.now(), isseller=False, listingid=listingID)
+        buyerTransaction = Transactions.objects.create(price=priceBuyer, date=datetime.now(), isseller=False, listingid_id=listingID, user_id=buyer)
         #SELLER TRANSACTION
-        #sellerTransaction = Transactions.objects.create(price=listing.price*1-salescost, date=datetime.now(), isseller=True, listingid_id=listing.id)
+        sellerTransaction = Transactions.objects.create(price=priceSeller, date=datetime.now(), isseller=True, listingid_id=listingID, user_id=seller)
         return redirect('frontpage')
     context = {
         'listing': listing,
