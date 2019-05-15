@@ -377,10 +377,11 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
     #vantar aðgengi að context
     listing = Listings.objects.get(id=listingID)
     if request.method == 'POST':
-        newOwner = Apartments.objects.get(id=apartmentID)
-        newOwner.forsale = False  # change field
-        newOwner.ownerid = request.user.id
-        newOwner.save()  # this will update only
+        apartment = Apartments.objects.get(id=apartmentID)
+        apartment.forsale = False  # change field
+        apartment = Apartments.objects.get(id=apartmentID)
+        apartment.owner_id = request.user.id
+        apartment.save()  # this will update only
         pricelist = PriceLists.objects.all()
         salescost = float(pricelist.salescost)
 
