@@ -7,36 +7,49 @@
 <div class="apartments">
     <div class="container">
         <h2>Total results: {{apartments|length}}</h2>
+        {% if request.GET.search %}
+            <p>- You search for {{request.GET.search}}</p>
+        {% endif %}
         {% if apartments %}
             <div class="apartments-wrapper row">
                 {% for apartment in apartments %}
-                <div class="col-md-4 apartment">
-                    <div class="image">
-                        <a href="/apartments/{{apartment.id}}">
-                            
-                            <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
-                        </a>
+                    <div class="apartment col-md-4">
+                        <div class="header">
+                            <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                            <div class="rooms">
+                                <div class="room bedroom">
+                                    <div class="total">
+                                        {{apartment.rooms}}
+                                    </div>
+                                    <div class="icon">
+                                        <img src="/static/img/bed.svg" />
+                                    </div>
+                                </div>
+                                <div class="room bathroom">
+                                    <div class="total">
+                                            {{apartment.bathrooms}}
+                                    </div>
+                                    <div class="icon">
+                                        <img src="/static/img/bed.svg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image">
+                            <a href="/apartments/{{apartment.id}}">
+                                <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                            </a>
+                        </div>
+                        <div class="meta">
+                            <div class="header">
+                                <div class="price">&euro; {{apartment.listings_set.first.price}}</div>
+                                <div class="size">{{apartment.size}} m&sup2;</div>
+                            </div>
+                            <div class="desc">
+                                {{apartment.listings_set.first.description}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="meta">
-                        <div class="address">
-                            {{apartment.address}}
-                        </div>
-                        <div class="postdata">
-                            Zip: {{apartment.locationid.zip}}
-                            City: {{apartment.locationid.city}} <br>
-                            {{apartment.locationid.country.country}}
-                        </div>
-                        <div class="size">
-                            {{apartment.size}} m2.
-                        </div>
-
-                        {% if apartment.listings_set.first.price %}
-                        <div class="price">
-                            ${{apartment.listings_set.first.price}}
-                        </div>
-                        {% endif%}
-                    </div>
-                </div>
                 {% endfor %}
             </div>
         {% endif %}

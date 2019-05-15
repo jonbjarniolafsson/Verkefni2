@@ -17,63 +17,83 @@
             {% for apartment in apartments %}
 
             <div class="apartment">
+                <div class="header">
+                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                    <div class="rooms">
+                        <div class="room bedroom">
+                            <div class="total">
+                                {{apartment.rooms}}
+                            </div>
+                            <div class="icon">
+                                <img src="/static/img/bed.svg" />
+                            </div>
+                        </div>
+                        <div class="room bathroom">
+                            <div class="total">
+                                    {{apartment.bathrooms}}
+                            </div>
+                            <div class="icon">
+                                <img src="/static/img/bathtub.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image">
                     <a href="/apartments/{{apartment.id}}">
-
-
                         <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
                     </a>
-                    <div>
-                            {{ apartment.listings_set.last.openhouse_set.last.openhousestart }} -
-                            {{ apartment.listings_set.last.openhouse_set.last.openhouseend }}
-                        </div>
                 </div>
                 <div class="meta">
-                    <div class="address">
-                        {{apartment.address}}
+                    <div class="header">
+                        <div class="price">&euro; {{apartment.listings_set.first.price}}</div>
+                        <div class="size">{{apartment.size}} m&sup2;</div>
                     </div>
-                    <div class="postdata">
-                        Zip: {{apartment.locationid.zip}}
-                        City: {{apartment.locationid.city}} <br>
-                        {{apartment.locationid.country.country}}
-                    </div>
-                    <div class="size">
-                        {{apartment.size}} m2.
-                    </div>
-                    <div class="price">
+                    <div class="desc">
+                        {{apartment.listings_set.first.description}}
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-<div class="container">
+</div>
+<div class="apartments">
+    <div class="container">
         <h2>New Listing</h2>
-        <div class="apartments-wrapper slider owl-carousel">
+        <div class="apartments-wrapper row">
             {% for apartment in newlyListed %}
-
-            <div class="apartment">
+            <div class="col-md-4 apartment">
+                <div class="header">
+                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                    <div class="rooms">
+                        <div class="room bedroom">
+                            <div class="total">
+                                {{apartment.rooms}}
+                            </div>
+                            <div class="icon">
+                                <img src="/static/img/bed.svg" />
+                            </div>
+                        </div>
+                        <div class="room bathroom">
+                            <div class="total">{{apartment.bathrooms}}</div>
+                            <div class="icon">
+                                <img src="/static/img/bathtub.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="image">
                     <a href="/apartments/{{apartment.id}}">
-
-
                         <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
                     </a>
-
                 </div>
                 <div class="meta">
-                    <div class="address">
-                        {{apartment.address}}
+                    <div class="header">
+                        <div class="price">&euro; {{apartment.listings_set.first.price}}</div>
+                        <div class="size">{{apartment.size}} m&sup2;</div>
                     </div>
-                    <div class="postdata">
-                        Zip: {{apartment.locationid.zip}}
-                        City: {{apartment.locationid.city}} <br>
-                        {{apartment.locationid.country.country}}
-                    </div>
-                    <div class="size">
-                        {{apartment.size}} m2.
-                    </div>
-                    <div class="price">
+                    <div class="desc">
+                        {{apartment.listings_set.first.description}}
                     </div>
                 </div>
             </div>

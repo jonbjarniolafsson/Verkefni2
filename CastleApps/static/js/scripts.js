@@ -15,6 +15,7 @@ $(document).ready(function () {
     })
 
     $('.search-toggle').on('click', function(){
+        $("#search").focus();
         $(".site-overlay").addClass('active');
         $(".search-form").addClass('active');
         $("body").addClass('no-scroll');
@@ -70,7 +71,7 @@ $(document).ready(function () {
     
     function loadAllApartments(){
         $.ajax({        
-            url: "/all-apartments/",
+            url: "/all_apartments/",
             type: "GET",
             dataType: "html",
             async: true,
@@ -94,7 +95,7 @@ $(document).ready(function () {
         else{
             $(".spinner").addClass('active');
             $.ajax({        
-                url: "/all-apartments/",
+                url: "/all_apartments/",
                 type: "GET",
                 dataType: "html",
                 async: true,

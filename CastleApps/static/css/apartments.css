@@ -1,12 +1,78 @@
+.apartments{
+    padding: 50px 0px;
+}
+
+.apartments h2{
+    font-size: 36px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.apartments h2::after{
+    content: "";
+    position: absolute;
+    left: -15px;
+    bottom: -10px;
+    width: 85px;
+    height: 3px;
+    background: #0067BC;
+}
+
 .apartments .apartment{
     margin-bottom: 15px;
 
+}
+
+.apartment .header{
+    display: flex;
+    background: #0067BC;
+    color: #fff;
+    padding: 5px 15px;
+    justify-content: space-between;
+}
+
+.apartment .header .rooms{
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+}
+
+.apartment .header .rooms .room{
+    display: flex;
+    align-items: center;
+}
+
+.apartment .header .rooms .room .total{
+    margin-right: 5px;
+}
+
+.apartment .header .rooms .room .icon img{
+    position: relative;
+    top: -1px;
+    width: 20px;
+    height: 20px;   
 }
 
 .apartments .apartment .meta{
     background: #0067BC;
     color: #fff;
     padding: 15px;
+}
+
+
+.apartments .apartment .meta .header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.apartments .apartment .meta .desc{
+    height: 100px;
+    word-break: break-all;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-top: 10px;
 }
 
 

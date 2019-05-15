@@ -301,20 +301,21 @@ def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
 
-    if zipCode != None:
+    if searchString == "" and zipCode == "":
+        return render(request, "apartments/search-results.html")
+
+    if zipCode != "":
         apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
         apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
     else:
         apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+        print(apartments)
     
     apps = {
         'apartments' : apartments
     }
-
-    if searchString == None and zipCode == None:
-        return render(request, "apartments/search-results.html")
-    else:
-        return render(request, "apartments/search-results.html", apps)
+    
+    return render(request, "apartments/search-results.html", apps)
 
 
 def edit_apartment(request, apartment_id=None):

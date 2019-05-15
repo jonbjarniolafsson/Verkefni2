@@ -80,8 +80,16 @@
                                         </li>
                                 </ul>
                             </li>
-                            <li class="user">
-                                Settings
+                            {% if user.is_staff %}
+                                <li class="user">
+                                    
+                                    <ul class="submenu">
+                                        <li><a href="#">Add location</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li class="user options">
+                                <img style="width: 30px;" src="/static/img/user.svg">
                                 <ul class="submenu">
                                     {% if user.is_authenticated %}
                                         <li class="editprofile">
