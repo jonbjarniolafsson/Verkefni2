@@ -25,7 +25,10 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-
+        apartment = Apartments.objects.get(id=1)
+        seller = apartment.owner_id
+        apartment.forsale = True  # change field
+        apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
         newUser = request.user.id
@@ -342,9 +345,11 @@ def addPaymentInfo(request, apartmentID):
                 return redirect(reverse("review", args=[apartmentID, listing.id, payment.id]))
         form = PaymentInfoForm()
         print('HANDLING GET REQUEST',request)
+        apartment = Apartments.objects.get(id=apartmentID)
         return render(request, 'apartments/buy_now.html', {
             'form': form,
             'listing': listing,
+            'apartment': apartment
         })
     else:
         return redirect('frontpage')
