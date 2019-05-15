@@ -12,8 +12,9 @@ from django.http import HttpResponse
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-from django.shortcuts import get_object_or_404,render,redirect
+from django.shortcuts import get_object_or_404,render,redirect, reverse
 
+from django.contrib.auth.decorators import login_required
 
 
 from .forms import buy_now_form
@@ -341,4 +342,57 @@ def addListing(request, apartmentID=None):
     form = ListingForm(data=request.GET)
 
     return render(request, 'apartments/add_listing.html', {'form': form})
+
+
+@login_required
+def addPaymentInfo(request, apartmentID):
+    #get or what??
+    if Apartments.objects.get(id=apartmentID).forsale:
+        listings = Listings.objects.filter(apartmentid=apartmentID)
+        idOfActiveListing = listings.aggregate(Max('id'))
+        listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+        if request.method=="POST":
+            form = PaymentInfoForm(data=request.POST)
+            if form.is_valid():
+                print("VALID FORM")
+                #færa notanda á review síðu
+                payment = form.save(commit=False)
+                payment.user = request.user
+                payment.save()
+                return redirect(reverse("review", args=[apartmentID, listing.id, payment.id]))
+        form = PaymentInfoForm()
+        print('HANDLING GET REQUEST',request)
+        return render(request, 'apartments/buy_now.html', {
+            'form': form,
+            'listing': listing,
+        })
+    else:
+        return redirect('frontpage')
+
+#shows info for user and user confirms payment
+@login_required
+def reviewPayment(request, apartmentID, listingID, paymentID):
+
+    #hvað á að auðkenna?
+    #vantar aðgengi að context
+    listing = Listings.objects.get(id=listingID)
+    if request.method == 'POST':
+        newOwner = Apartments.objects.get(id=apartmentID)
+        newOwner.forsale = False  # change field
+        newOwner.ownerid = request.user.id
+        newOwner.save()  # this will update only
+        pricelist = PriceLists.objects.all()
+        salescost = float(pricelist.salescost)
+
+
+        #BUYER TRANSACTION
+        buyerTransaction = Transactions.objects.create(id=1, price=-listing.price, date=datetime.now(), isseller=False, listingid=listingID)
+        #SELLER TRANSACTION
+        sellerTransaction = Transactions.objects.create(price=listing.price*1-salescost, date=datetime.now(), isseller=True, listingid_id=listing.id)
+        return redirect('frontpage')
+    context = {
+        'listing': listing,
+        'payment': PaymentInfos.objects.get(id=paymentID),
+    }
+    return render(request, 'apartments/review_payment.html', context)
 

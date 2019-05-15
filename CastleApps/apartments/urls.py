@@ -31,9 +31,6 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/edit_apartment', views.editApartment, name="edit-apartment"),
      path('apartments/<int:apartmentID>/add_listing/', views.addListing, name="add-listing"),
 
-
-
-    path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
-     path('apartments/<int:apartmentID>/payment_info/<int:id>/review', views.reviewPayment, name="review"),
-
+     path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
+     path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review")
 ]

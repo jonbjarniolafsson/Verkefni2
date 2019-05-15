@@ -1,42 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<form class="background-white" href="/apartments/{{apartment.id}}/payment_info" method="post">
+<form class="background-white" action="{% url 'pay_info' listing.apartmentid.id %}" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Next" class="btn btn-primary pull-right" style=""/>
+    <input type="submit" value="Next"  class="btn btn-primary pull-right" style=""/>
 </form>
 {% endblock %}
-
-
-
-{% comment %}
-{% block content %}
-    <div class="container">
-        <div class="errors">
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-             {% csrf_token %}
-            <form action="{% url 'payment_info' %}" class="background-white" method="POST">
-                </div>
-          <input type="submit" value="Next" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
-        </form>
-    </div>
-<div> WRAPPERS
-    <a href="/apartments/{{apartment.id}}/payment_info/submit"> </a>
-    </div>
-
-{% endblock %}
-{% endcomment %}
