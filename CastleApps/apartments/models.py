@@ -71,6 +71,21 @@ class Listings(models.Model):
     soldondate = models.DateTimeField(default = None, blank=True,null=True)
     agent = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    @property
+    def shortMortgage(self):
+        price = int(self.price)
+        priceAfterDownPayment = price*0.85 #We assume people put 15% down
+        return ((priceAfterDownPayment/120)+(0.05/12*priceAfterDownPayment))
+    @property
+    def mediumMortgage(self):
+        price = int(self.price)
+        priceAfterDownPayment = price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
+    @property
+    def longMortgage(self):
+        price = int(self.price)
+        priceAfterDownPayment = price * 0.85  # We assume people put 15% down
+        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
 
 class OpenHouse(models.Model):
     openhousestart = models.DateTimeField(default=None, max_length=75)
@@ -87,18 +102,7 @@ class ListingMiscs(models.Model):
     carmetro = models.CharField(max_length=5, blank=True, null=True)
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
-    @property
-    def shortMortgage(self):
-        priceAfterDownPayment = self.price*0.85 #We assume people put 15% down
-        return ((priceAfterDownPayment/120)+(0.05/12*priceAfterDownPayment))
-    @property
-    def mediumMortgage(self):
-        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
-    @property
-    def longMortgage(self):
-        priceAfterDownPayment = self.price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
+
 
 
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
