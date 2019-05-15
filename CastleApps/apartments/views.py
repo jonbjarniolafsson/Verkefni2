@@ -318,18 +318,24 @@ def editApartment(request, apartment_id=None):
 
 def addListing(request, apartment_id=None):
     print("IN ADD LISTING")
-    apartment_id = Apartments.objects.get(id=apartment_id)
-    print(apartment_id)
+    print("PRINTING APARTMENT ID: ", apartment_id)
+    apartment = Apartments.objects.get(id=apartment_id)
+
     if request.method == 'POST':
         #currentUser = request.user
         #if currentUser.id == None or currentUser.is_staff:
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
+            t = Apartments.objects.get(id=apartment_id)
+            t.forsale = True  # change field
+            t.save()  # this will update only
             print("FORM VALID")
             form.save()
             print("Form saved")
             return redirect('frontpage')
+
     form = ListingForm(data=request.GET)
+
     return render(request, 'apartments/add_listing.html', {'form': form})
 
