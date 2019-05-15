@@ -7,7 +7,7 @@ Users = get_user_model()
 from apartments.models import *
 from .forms import EditProfileForm
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import get_object_or_404,render,redirect, reverse
 
 from users.forms import UsersCreationForm, EditProfileForm
 
