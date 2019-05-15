@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 Users = get_user_model()
+from .forms import EditProfileForm
 
 from users.forms import UsersCreationForm, EditProfileForm
 
@@ -44,3 +45,17 @@ def viewProfile(request, userID=None):
         user = request.user
     context = {'user': user}
     return render(request, 'apartments/single_user.html', context)
+
+
+def editProfile(request, userID=None):
+    userID = request.user.id
+    if request.method == 'POST':
+        form = EditProfileForm(data=request.POST)
+        if form.is_valid():
+            print("FORM IS VALID")
+            form.save()
+            print("FORM IS SAVED")
+            return redirect('frontpage')
+    form = EditProfileForm(data=request.GET)
+    return render(request, 'users/edit_profile.html', {'form': form})
+
