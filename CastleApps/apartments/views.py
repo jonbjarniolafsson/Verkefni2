@@ -25,10 +25,11 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-        apartment = Apartments.objects.get(id=1)
+        #print("PRINTING CURRENT DATETIME: ", datetime.now())
+        apartment = Apartments.objects.get(id=3)
         seller = apartment.owner_id
-        apartment.forsale = True  # change field
-        apartment.save()
+        apartment.forsale = False  # change field
+        #apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
         newUser = request.user.id
@@ -54,8 +55,9 @@ def home(request):
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
 
-        newlyListed = Listings.objects.all().order_by('registered')
-        apps = Apartments.objects.filter(pk__in=newlyListed, forsale=True)
+        newlyListed = Listings.objects.all()
+        print("NEWLY LISTED: ",newlyListed)
+        apps = Apartments.objects.filter(forsale=True)
         #companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
@@ -111,7 +113,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     checking = Listings.objects.filter(apartmentid_id =apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
     print(len(checking))
-    if len(checking) == 0:
+    if len(checking) == 0 or apartments.forsale == False:
         context = {
             'apartment': apartments,
         }
@@ -289,6 +291,16 @@ def addListing(request, apartmentID=None):
 
     return render(request, 'apartments/add_listing.html', {'form': form})
 
+def removeListing(request, apartmentID=None):
+    listings = Listings.objects.filter(apartmentid=apartmentID)
+    idOfActiveListing = listings.aggregate(Max('id'))
+    listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+    listing = Listings.objects.get(id=listing.id).delete()
+    apartment = Apartments.objects.get(id = apartmentID)
+    apartment.forsale=False
+    apartment.save()
+    return render(request, 'apartments/single_apartment.html')
+
 
 @login_required
 def addPaymentInfo(request, apartmentID):
@@ -332,10 +344,13 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
         apartment.forsale = False  # change field
         apartment.owner_id = request.user.id
         apartment.save()  # this will update only
+        listing = Listings.objects.get(id=listingID)
+        listing.soldondate = datetime.now()
+        listing.save()
         buyer = apartment.owner_id
-
-        priceSeller = str(listing.price)
-        priceBuyer = str(-listing.price)
+        price = int(listing.price)
+        priceSeller = str(price)
+        priceBuyer = str(-price)
 
         #BUYER TRANSACTION
         buyerTransaction = Transactions.objects.create(price=priceBuyer, date=datetime.now(), isseller=False, listingid_id=listingID, user_id=buyer)

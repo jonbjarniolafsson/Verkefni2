@@ -27,7 +27,8 @@ urlpatterns = [
      path('create_location', views.createLocation, name="create-location"),
      path('apartments/<int:apartmentID>/edit_apartment', views.editApartment, name="edit-apartment"),
      path('apartments/<int:apartmentID>/add_listing/', views.addListing, name="add-listing"),
+     path('apartments/<int:apartmentID>/remove_listing/', views.removeListing, name="add-listing"),
 
      path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
-     path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review")
+     path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review"),
 ]

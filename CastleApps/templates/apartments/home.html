@@ -15,6 +15,7 @@
         <h2>Open houses</h2>
         <div class="apartments-wrapper slider owl-carousel">
             {% for apartment in apartments %}
+                {% if apartment.forsale %}
 
             <div class="apartment">
                 <div class="header">
@@ -53,10 +54,12 @@
                     </div>
                 </div>
             </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
 </div>
+
 <div class="apartments">
     <div class="container">
         <h2>New Listing</h2>

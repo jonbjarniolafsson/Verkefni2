@@ -15,8 +15,10 @@
          </a>
     {% endif %}
     {% if user.is_staff %}
-    <a href="/apartments/{{apartment.id}}/edit_apartment" class="btn btn-primary pull right">Edit apartment</a>
+    <a href="/apartments/{{apartment.id}}/edit_apartment" class="btn btn-primary pull right">Edit Apartment</a>
          </a>
+    <a href="/apartments/{{apartment.id}}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
+     </a>
     {% endif %}
         <div class="row">
             <div class="col-md-6">
