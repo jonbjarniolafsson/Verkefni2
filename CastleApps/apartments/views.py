@@ -128,11 +128,13 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
         #print("PRINTING agentID: ", listing.agentID_id)
         listingAgent = Users.objects.get(id = listing.agent_id)
+        user = request.user
         context = {
             'apartment': apartments,
             'images': apartmentImages,
             'agent': listingAgent,
-            'listing' : listing
+            'listing' : listing,
+            'user' : user
         }
         return render(request, 'apartments/single_apartment.html', context)
 

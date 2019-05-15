@@ -11,6 +11,28 @@ from django.shortcuts import get_object_or_404,render,redirect, reverse
 
 from users.forms import UsersCreationForm, EditProfileForm
 
+from django.shortcuts import render,redirect
+
+# This document will act as our controller in our Apartments app. The main magic happens here.
+
+
+# from .forms.signup_form import CastleAppsSignupForm
+from django.http import HttpResponse
+# Create your views here.
+from apartments.models import *
+from users.models import *
+from django.db.models import Max
+from django.shortcuts import get_object_or_404,render,redirect, reverse
+
+from django.contrib.auth.decorators import login_required
+
+
+
+from django.db.models import Q
+
+from datetime import datetime
+from django.utils import timezone
+
 # Create your views here.
 
 def register(request):
