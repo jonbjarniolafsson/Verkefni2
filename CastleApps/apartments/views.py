@@ -25,9 +25,7 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-        t = Users.objects.get(id=1)
-        t.profileimagepath = 'https://static.gamespot.com/uploads/scale_landscape/171/1712892/3522659-got_night_king_1-e1552249379545.jpg'  # change field
-        t.save()  # this will update only
+
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
         newUser = request.user.id
@@ -62,32 +60,6 @@ def home(request):
         }
 
         return render(request, 'apartments/home.html', context)
-
-
-def buyNow(request, apartmentID):
-    context = {
-        'apartment': Apartments.objects.get(id=apartmentID)
-    }
-    return render(request, 'apartments/buy_now.html', context)
-
-
-def buyNowSubmitss(request, apartmentID):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = buy_now_form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return buy_now_form('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = 'empty'
-
-    return render(request, 'apartments/purchase_status.html', {'form': form})
 
 
 def agents(request):
@@ -378,18 +350,18 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
     listing = Listings.objects.get(id=listingID)
     if request.method == 'POST':
         apartment = Apartments.objects.get(id=apartmentID)
-        apartment.forsale = False  # change field
         apartment = Apartments.objects.get(id=apartmentID)
+        apartment.forsale = False  # change field
         apartment.owner_id = request.user.id
         apartment.save()  # this will update only
-        pricelist = PriceLists.objects.all()
-        salescost = float(pricelist.salescost)
+        #pricelist = PriceLists.objects.all()
+       # salescost = float(pricelist.salescost)
 
 
         #BUYER TRANSACTION
-        buyerTransaction = Transactions.objects.create(id=1, price=-listing.price, date=datetime.now(), isseller=False, listingid=listingID)
+        #buyerTransaction = Transactions.objects.create(id=1, price=-listing.price, date=datetime.now(), isseller=False, listingid=listingID)
         #SELLER TRANSACTION
-        sellerTransaction = Transactions.objects.create(price=listing.price*1-salescost, date=datetime.now(), isseller=True, listingid_id=listing.id)
+        #sellerTransaction = Transactions.objects.create(price=listing.price*1-salescost, date=datetime.now(), isseller=True, listingid_id=listing.id)
         return redirect('frontpage')
     context = {
         'listing': listing,
