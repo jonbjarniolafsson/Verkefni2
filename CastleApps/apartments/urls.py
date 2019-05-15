@@ -28,8 +28,8 @@ urlpatterns = [
 
      path('create_apartment', views.createApartments, name="create-apartment"),
      path('create_location', views.createLocation, name="create-location"),
-     path('edit_apartment/<int:apartment_id>/', views.edit_apartment, name="edit-apartment"),
-     path('add_listing/<int:apartment_id>/', views.add_listing, name="add-listing"),
+     path('apartments/<int:apartment_id>/edit_apartment', views.editApartment, name="edit-apartment"),
+     path('apartments/<int:apartment_id>/add_listing/', views.addListing, name="add-listing"),
 
 
 

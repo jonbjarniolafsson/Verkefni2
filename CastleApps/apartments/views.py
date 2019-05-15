@@ -298,14 +298,12 @@ def searchApartments(request):
         return render(request, "apartments/search-results.html", apps)
 
 
-def edit_apartment(request, apartment_id=None):
+def editApartment(request, apartment_id=None):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
         return HttpResponse('Unauthorized', status=401)
-
     instance = get_object_or_404(Apartments, pk=apartment_id)
     if request.method == 'POST':
-
         form = EditAppForm(data=request.POST, instance=instance)
         if form.is_valid():
             print("FORM IS VALID!")
@@ -313,14 +311,12 @@ def edit_apartment(request, apartment_id=None):
             return redirect('frontpage')
         else:
             print('invalid!!!')
-
-    #form = EditAppForm(instance=instance)
     form = EditAppForm(instance=instance)
     print("FORM INVALID")
     return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartment_id})
 
 
-def add_listing(request, apartment_id=None):
+def addListing(request, apartment_id=None):
     print("IN ADD LISTING")
     apartment_id = Apartments.objects.get(id=apartment_id)
     print(apartment_id)

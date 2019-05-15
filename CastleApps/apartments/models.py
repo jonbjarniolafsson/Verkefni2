@@ -53,6 +53,7 @@ class Apartments(models.Model):
     locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 
+
 # Apartments usually have many images associated with them
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
