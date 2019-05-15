@@ -103,8 +103,6 @@ class ListingMiscs(models.Model):
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
 
-
-
 # Each apartment can have many documents attached to them. repair bills/copy of deed and more
 class ListingDocs(models.Model):
     attachment = models.CharField(max_length = 500, default = None)

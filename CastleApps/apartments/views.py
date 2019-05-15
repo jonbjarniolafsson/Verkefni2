@@ -52,10 +52,10 @@ def home(request):
 
         newlyListed = Listings.objects.all().order_by('registered')
         apps = Apartments.objects.filter(pk__in=newlyListed)
-
+        companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
-            'newlyListed': apps
+            'newlyListed': apps,
         }
 
         return render(request, 'apartments/home.html', context)
