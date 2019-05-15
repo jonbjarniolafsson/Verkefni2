@@ -9,6 +9,14 @@
     <h1> Apartment not currently listed for sale</h1>
 
 
+        {%  if user.is_staff %}
+            <a href="/apartments/{{apartment.id}}/add_listing" class="btn btn-primary pull right">Add listing
+            </a>
+            <a href="/apartments/{{apartment.id}}/edit_apartment" class="btn btn-primary pull right">Edit Apartment
+            </a>
+
+
+        {% endif %}
 
         <div class="row">
             <div class="col-md-6">

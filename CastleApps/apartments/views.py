@@ -52,39 +52,15 @@ def home(request):
 
         newlyListed = Listings.objects.all().order_by('registered')
         apps = Apartments.objects.filter(pk__in=newlyListed)
-
+        companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
-            'newlyListed': apps
+            'newlyListed': apps,
         }
 
         return render(request, 'apartments/home.html', context)
 
 
-# def buyNow(request, apartmentID):
-#     context = {
-#         'apartment' : Apartments.objects.get(id=apartmentID)
-#     }
-#     return render(request, 'apartments/buy_now.html', context)
-#
-#
-# def buyNowSubmitss(request, apartmentID):
-#     # if this is a POST request we need to process the form data
-#     if request.method == 'POST':
-#         # create a form instance and populate it with data from the request:
-#         form = buynowform(request.POST)
-#         # check whether it's valid:
-#         if form.is_valid():
-#             # process the data in form.cleaned_data as required
-#             # ...
-#             # redirect to a new URL:
-#             return buynowform('/thanks/')
-#
-#     # if a GET (or any other method) we'll create a blank form
-#     else:
-#         form = 'empty'
-#
-#     return render(request, 'apartments/purchase_status.html', {'form': form})
 def buyNow(request, apartmentID):
     context = {
         'apartment': Apartments.objects.get(id=apartmentID)
@@ -125,6 +101,7 @@ def agents(request):
 # History of the company. It is important to play to the prestige of the company
 # As this is supposed to be a reputable seller
 def companyHistory(request):
+
     context = {
         'oliver': 'oliver'
     }
@@ -136,7 +113,11 @@ def companyHistory(request):
 # price of the real estate in question
 def priceList(request):
     fluff = ''
+    prices = PriceLists.objects.all()
+    price = prices.last()
+    print(price)
     context = {
+        'price': price,
         'fluff':fluff
     }
     return render(request, 'apartments/price_list.html', context)
@@ -318,47 +299,44 @@ def searchApartments(request):
     return render(request, "apartments/search-results.html", apps)
 
 
-def edit_apartment(request, apartment_id=None):
-    newList = []
-    apartment = Apartments.objects.filter(id=1)
-    for x in apartment:
-        newList.append(x.registration)
-        newList.append(x.address)
-        newList.append(x.size)
-        newList.append(x.rooms)
-        newList.append(x.bathrooms)
-        newList.append(x.aptsuite)
-        newList.append(x.timeofconstruction)
-        newList.append(x.type)
-        newList.append(x.displayimage)
-        print(newList)
-    apartment = Apartments.objects.get(id=apartment_id)
+def editApartment(request, apartment_id=None):
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
+    instance = get_object_or_404(Apartments, pk=apartment_id)
     if request.method == 'POST':
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-           return HttpResponse('Unauthorized', status=401)
-        form = EditAppForm(data=request.POST, instance=apartment)
+        form = EditAppForm(data=request.POST, instance=instance)
         if form.is_valid():
+            print("FORM IS VALID!")
             form.save()
             return redirect('frontpage')
-    form = EditAppForm(data=request.GET, instance=apartment)
-    return render(request, 'apartments/edit-apartment.html',{"apartment":newList, "form": form, "apartmenta":apartment})
+        else:
+            print('invalid!!!')
+    form = EditAppForm(instance=instance)
+    print("FORM INVALID")
+    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartment_id})
 
 
-def add_listing(request, apartment_id=None):
+def addListing(request, apartment_id=None):
     print("IN ADD LISTING")
-    apartment_id = Apartments.objects.get(id=apartment_id)
-    print(apartment_id)
+    print("PRINTING APARTMENT ID: ", apartment_id)
+    apartment = Apartments.objects.get(id=apartment_id)
+
     if request.method == 'POST':
         #currentUser = request.user
         #if currentUser.id == None or currentUser.is_staff:
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
+            t = Apartments.objects.get(id=apartment_id)
+            t.forsale = True  # change field
+            t.save()  # this will update only
             print("FORM VALID")
             form.save()
             print("Form saved")
             return redirect('frontpage')
+
     form = ListingForm(data=request.GET)
+
     return render(request, 'apartments/add_listing.html', {'form': form})
 

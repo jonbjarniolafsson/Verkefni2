@@ -1,18 +1,19 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+    <form href="edit-apartments/{{user.id}}" class="background-white" method="POST">
+           {% csrf_token %}
+             {% for item in form %}
+                <div class="form-group">
+                    <label>{{item.name}}</label>
+                    {{item}}
+                </div>
+            {% endfor %}
 
+            <input type="submit" value="Confirm" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+        </form>
 
-{% block head %}
-<title>Profile</title>
-{% endblock %}
+    </div>
 
-{% block body %}
-<div class="container">
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_table}}
-        <button type="submit">Submit</button>
-    </form>
-    <br>
-</div>
 
 {% endblock %}

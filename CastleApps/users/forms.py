@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Users
 #from django.contrib.auth import get_user_model
+from django.forms import ModelForm, widgets
 #Users = get_user_model()
 
 class UsersCreationForm(UserCreationForm):
@@ -16,14 +17,18 @@ class UsersCreationForm(UserCreationForm):
 
 
 
-class EditProfileForm(UserChangeForm):
-    template_name='/something/else'
-
+class EditProfileForm(ModelForm):
     class Meta:
         model = Users
-        fields = (
-            'email',
-            'first_name',
-            'last_name',
-            'password'
-        )
+        image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+        exclude = ['id' , 'last_login' , 'is_superuser' , 'is_staff' , 'is_active', 'date_joined','groups','user_permissions']
+        widgets = {
+            'password': widgets.TextInput(attrs={'class': 'form-control'}),
+            'username': widgets.TextInput(attrs={'class': 'form-control'}),
+            'first_name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'last_name': widgets.TextInput(attrs={'class': 'form-control'}),
+            'email': widgets.TextInput(attrs={'class': 'form-control'}),
+            'phone': widgets.TextInput(attrs={'class': 'form-control'}),
+            'workplace': widgets.TextInput(attrs={'class': 'form-control'})
+
+        }

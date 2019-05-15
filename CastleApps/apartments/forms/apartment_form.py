@@ -17,7 +17,8 @@ class CastleAppsCreateForm(ModelForm):
             'rooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
             'bathrooms': widgets.NumberInput(attrs={'class' : 'form-control'}),
             'timeofconstruction': widgets.TextInput(attrs={'class': 'form-control'}),
-            'type': widgets.TextInput(attrs={'class':'form-control'})
+            'type': widgets.TextInput(attrs={'class':'form-control'}),
+            'owner': widgets.TextInput(attrs={'class':'form-control'})
 
 }
 
@@ -34,6 +35,7 @@ class EditAppForm(ModelForm):
             'rooms': widgets.NumberInput(attrs={'class': 'form-control'}),
             'bathrooms': widgets.NumberInput(attrs={'class': 'form-control'}),
             'timeofconstruction': widgets.TextInput(attrs={'class': 'form-control'}),
-            'type': widgets.TextInput(attrs={'class': 'form-control'})
+            'type': widgets.TextInput(attrs={'class': 'form-control'}),
+            'owner': widgets.TextInput(attrs={'class': 'form-control'})
         }
 
