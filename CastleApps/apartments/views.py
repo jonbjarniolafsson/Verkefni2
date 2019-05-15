@@ -294,30 +294,25 @@ def searchApartments(request):
 
 
 def edit_apartment(request, apartment_id=None):
-    newList = []
-    apartment = Apartments.objects.filter(id=1)
-    for x in apartment:
-        newList.append(x.registration)
-        newList.append(x.address)
-        newList.append(x.size)
-        newList.append(x.rooms)
-        newList.append(x.bathrooms)
-        newList.append(x.aptsuite)
-        newList.append(x.timeofconstruction)
-        newList.append(x.type)
-        newList.append(x.displayimage)
-        print(newList)
-    apartment = Apartments.objects.get(id=apartment_id)
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
+
+    instance = get_object_or_404(Apartments, pk=apartment_id)
     if request.method == 'POST':
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-           return HttpResponse('Unauthorized', status=401)
-        form = EditAppForm(data=request.POST, instance=apartment)
+
+        form = EditAppForm(data=request.POST, instance=instance)
         if form.is_valid():
+            print("FORM IS VALID!")
             form.save()
             return redirect('frontpage')
-    form = EditAppForm(data=request.GET, instance=apartment)
-    return render(request, 'apartments/edit-apartment.html',{"apartment":newList, "form": form, "apartmenta":apartment})
+        else:
+            print('invalid!!!')
+
+    #form = EditAppForm(instance=instance)
+    form = EditAppForm(instance=instance)
+    print("FORM INVALID")
+    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartment_id})
 
 
 def add_listing(request, apartment_id=None):

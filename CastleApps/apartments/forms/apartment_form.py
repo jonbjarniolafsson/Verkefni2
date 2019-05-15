@@ -25,7 +25,7 @@ class CastleAppsCreateForm(ModelForm):
 class EditAppForm(ModelForm):
     class Meta:
         model = Apartments
-        exclude = ['id', 'forsale']
+        exclude = ['id', 'forsale','owner']
         widgets = {
             'registration': widgets.TextInput(attrs={'class': 'form-control'}),
             'address': widgets.TextInput(attrs={'class': 'form-control'}),
@@ -34,6 +34,6 @@ class EditAppForm(ModelForm):
             'rooms': widgets.NumberInput(attrs={'class': 'form-control'}),
             'bathrooms': widgets.NumberInput(attrs={'class': 'form-control'}),
             'timeofconstruction': widgets.TextInput(attrs={'class': 'form-control'}),
-            'type': widgets.TextInput(attrs={'class': 'form-control'})
+            'type': widgets.TextInput(attrs={'class': 'form-control'}),
         }
 
