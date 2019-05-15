@@ -46,6 +46,7 @@ class Apartments(models.Model):
     size = models.CharField(max_length = 50)
     rooms = models.CharField(max_length = 50)
     bathrooms = models.CharField(max_length = 50)
+    type = models.CharField(max_length=50)
     aptsuite = models.CharField(blank=True,null=True, max_length = 30)
     timeofconstruction = models.CharField(max_length =50, default = 2000)
     displayimage = models.CharField(max_length = 5000)

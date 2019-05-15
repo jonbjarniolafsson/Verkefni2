@@ -82,9 +82,10 @@
                             </li>
                             {% if user.is_staff %}
                                 <li class="user">
-                                    
+                                    Real Estate Options
                                     <ul class="submenu">
                                         <li><a href="{% url 'create-location' %}" >Add location</a></li>
+                                        <li><a href="{% url 'create-apartment' %}" >Add Apartment</a></li>
                                     </ul>
                                 </li>
                             {% endif %}

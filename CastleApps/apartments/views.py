@@ -24,7 +24,9 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-
+        t = Users.objects.get(id=1)
+        t.profileimagepath = 'https://static.gamespot.com/uploads/scale_landscape/171/1712892/3522659-got_night_king_1-e1552249379545.jpg'  # change field
+        t.save()  # this will update only
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
         newUser = request.user.id
@@ -51,7 +53,7 @@ def home(request):
                     newApart = Apartments.objects.filter(pk__in=newList)
 
         newlyListed = Listings.objects.all().order_by('registered')
-        apps = Apartments.objects.filter(pk__in=newlyListed)
+        apps = Apartments.objects.filter(pk__in=newlyListed, forsale=True)
         companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
@@ -299,11 +301,11 @@ def searchApartments(request):
     return render(request, "apartments/search-results.html", apps)
 
 
-def editApartment(request, apartment_id=None):
+def editApartment(request, apartmentID=None):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
         return HttpResponse('Unauthorized', status=401)
-    instance = get_object_or_404(Apartments, pk=apartment_id)
+    instance = get_object_or_404(Apartments, pk=apartmentID)
     if request.method == 'POST':
         form = EditAppForm(data=request.POST, instance=instance)
         if form.is_valid():
@@ -314,13 +316,13 @@ def editApartment(request, apartment_id=None):
             print('invalid!!!')
     form = EditAppForm(instance=instance)
     print("FORM INVALID")
-    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartment_id})
+    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartmentID})
 
 
-def addListing(request, apartment_id=None):
+def addListing(request, apartmentID=None):
     print("IN ADD LISTING")
-    print("PRINTING APARTMENT ID: ", apartment_id)
-    apartment = Apartments.objects.get(id=apartment_id)
+    print("PRINTING APARTMENT ID: ", apartmentID)
+    apartment = Apartments.objects.get(id=apartmentID)
 
     if request.method == 'POST':
         #currentUser = request.user
@@ -328,7 +330,7 @@ def addListing(request, apartment_id=None):
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
-            t = Apartments.objects.get(id=apartment_id)
+            t = Apartments.objects.get(id=apartmentID)
             t.forsale = True  # change field
             t.save()  # this will update only
             print("FORM VALID")
