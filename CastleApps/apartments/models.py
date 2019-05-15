@@ -49,7 +49,6 @@ class Apartments(models.Model):
     aptsuite = models.CharField(blank=True,null=True, max_length = 30)
     type = models.CharField(max_length=50)
     timeofconstruction = models.CharField(max_length =50, default = 2000)
-    type = models.CharField(max_length = 50)
     displayimage = models.CharField(max_length = 5000)
     forsale = models.BooleanField(default=False,blank=True,null=True )
     locationid = models.ForeignKey(Locations, on_delete=models.CASCADE, ) # Foreign keys are singular. While the table

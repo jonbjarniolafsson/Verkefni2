@@ -9,6 +9,5 @@ def getZipCodes(request):
     zipCodes = {
         'zip' : zipList,
         'compInfo':companyInfo
-    } 
-
+    }
     return zipCodes
