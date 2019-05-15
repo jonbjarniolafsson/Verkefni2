@@ -63,7 +63,7 @@
                 <div class="navbar">
                     <div class="navbar-brand">
                         <div class="title">
-                            <a href="{% url 'frontpage' %}"><img src="/static/img/log2.png" /></a>
+                            <a href="{% url 'frontpage' %}"><img src="https://i.imgur.com/qTn1T47.png" alt="/static/img/log2.png" /></a>
                         </div>
                     </div>
                     <div class="navbar-right">
@@ -140,14 +140,14 @@
                         <div class="meta">
 
                             <h3>Contact</h3>
-                            <p>Phone: <a href="tel:444-3214">+354 444-3214</a></p>
-                            <p>Email: <a href="mailto:castle@castleapartments.com">castle@castleapartments.com</a></p>
+                            <p>Phone: <a href={{ compInfo.phone }}>{{ compInfo.phone }}</a></p>
+                            <p>Email: <a href={{ compInfo.email }}>{{ compInfo.email }}</a></p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="meta">
                             <h3>Office hours</h3>
-                            <p>Monday - Friday: 8am - 6pm</p>
+                            <p>{{ compInfo.officeHours }}</p>
                         </div>
                     </div>
                 </div>

@@ -52,10 +52,10 @@ def home(request):
 
         newlyListed = Listings.objects.all().order_by('registered')
         apps = Apartments.objects.filter(pk__in=newlyListed)
-
+        companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
-            'newlyListed': apps
+            'newlyListed': apps,
         }
 
         return render(request, 'apartments/home.html', context)
@@ -101,6 +101,7 @@ def agents(request):
 # History of the company. It is important to play to the prestige of the company
 # As this is supposed to be a reputable seller
 def companyHistory(request):
+
     context = {
         'oliver': 'oliver'
     }
@@ -112,7 +113,11 @@ def companyHistory(request):
 # price of the real estate in question
 def priceList(request):
     fluff = ''
+    prices = PriceLists.objects.all()
+    price = prices.last()
+    print(price)
     context = {
+        'price': price,
         'fluff':fluff
     }
     return render(request, 'apartments/price_list.html', context)
