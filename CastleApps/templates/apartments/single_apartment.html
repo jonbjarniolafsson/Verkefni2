@@ -10,8 +10,10 @@
             <img src="{{apartment.displayimage}}" alt="">
         </div>
 {#   Buy apartment     #}
+    {% if apartment.forsale %}
         <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
          </a>
+    {% endif %}
     <a href="/apartments/{{apartment.id}}/edit_apartment" class="btn btn-primary pull right">Edit apartment</a>
          </a>
         <div class="row">
