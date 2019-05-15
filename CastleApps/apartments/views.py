@@ -95,6 +95,9 @@ def priceList(request):
     return render(request, 'apartments/price_list.html', context)
 
 
+
+    #apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
@@ -102,6 +105,9 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
     aparments = get_object_or_404(Apartments, pk=apartmentID)
+    ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
+
+
 
 
     #if request.user.is_authenticated == True:
@@ -147,9 +153,9 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
 def allApartments(request):
     context = {
-        'apartments' : Apartments.objects.all()
+        'apartments' : Apartments.objects.all()[0:6]
     }
-    return render(request, 'apartments/apartments_list.html', context)
+    return render(request, 'apartments/search-results.html', context)
 
 
 
@@ -300,6 +306,11 @@ def removeListing(request, apartmentID=None):
     apartment.forsale=False
     apartment.save()
     return render(request, 'apartments/single_apartment.html')
+
+def removeApartment(request, apartmentID=None):
+    theApartment = Apartments.objects.get(id=apartmentID)
+    apartment = Apartments.objects.get(id=apartmentID).delete()
+    return render(request, 'apartments/deleted_apartment.html', {'apartment':theApartment})
 
 
 @login_required

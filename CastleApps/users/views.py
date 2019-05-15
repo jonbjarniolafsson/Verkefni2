@@ -131,3 +131,18 @@ def singleUser(request, userID):
     #Listings.objects.filter(userID)
     return render(request, 'users/single_employee.html', context)
 
+def viewHistory(request, userID):
+    hello = ViewHistory.objects.filter(user_id=userID)
+    listOfAppID = []
+    for x in hello:
+        print("PRINTING appID: ",x.apartmentid.id)
+        listOfAppID.append(x.apartmentid.id)
+    listOfAppID = list(set(listOfAppID))
+    apartments = Apartments.objects.filter(id__in=listOfAppID)
+    print("PRRINTING APARTMENTS: ", listOfAppID)
+    context = {
+        'apartments':apartments
+    }
+
+    return render(request, 'users/view_history.html', context)
+
