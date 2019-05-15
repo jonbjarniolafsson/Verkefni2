@@ -57,21 +57,13 @@ def home(request):
         context = {
             'apartments': newApart,  # Send all the apartments
             'newlyListed': apps,
+            'userid': request.user.id
         }
 
         return render(request, 'apartments/home.html', context)
 
 
-def agents(request):
-    # Checks if the person in the Users table is staff
-    users = Users.objects.filter(is_staff = True)
-    # Simply returns every users that returned true as staff
-    # HTML will then loop through the users that are part of the staff and display them
-    context = {
-        'users': users
-    }
-    return render(request, 'apartments/agents.html', context)
-    
+
 
 # History of the company. It is important to play to the prestige of the company
 # As this is supposed to be a reputable seller
@@ -143,36 +135,6 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
 
 
-
-#Here you can display a single users
-def singleUser(request, userID):
-
-    #print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
-    #users = Users.objects.get(id = userID)
-    #print("Printing all users: ", users)
-    user = get_object_or_404(Users, pk=userID)
-    #user = Users.objects.get(pk=userID )
-
-
-    if user.is_staff == False:
-        apartments = Apartments.objects.filter(owner_id=userID)
-        context = {
-            'user': user,
-            'apartments': apartments
-        }
-        return render(request, 'apartments/single_user.html', context)
-    listingsOfApartments = Listings.objects.filter(agent_id=userID)
-    pkOfApps = []
-    for x in listingsOfApartments:
-        print(x.apartmentid_id)
-        pkOfApps.append(x.apartmentid_id)
-    apartments = Apartments.objects.filter(id__in=pkOfApps)
-    context = {
-        'user': user,
-        'apartments': apartments
-    }
-    #Listings.objects.filter(userID)
-    return render(request, 'apartments/single_employee.html', context)
 
 
 
@@ -278,7 +240,6 @@ def searchApartments(request):
     apps = {
         'apartments' : apartments
     }
-    
     return render(request, "apartments/search-results.html", apps)
 
 
@@ -379,4 +340,6 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
         'payment': PaymentInfos.objects.get(id=paymentID),
     }
     return render(request, 'apartments/review_payment.html', context)
+
+
 

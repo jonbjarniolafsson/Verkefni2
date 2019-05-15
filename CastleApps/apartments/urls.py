@@ -4,8 +4,7 @@ from django.urls import path
 urlpatterns = [
      #Our mainpage
      path('',views.home, name='frontpage'),
-     # Here we have a list of employees page -> Should lead to their profile if clicked on
-     path('agents/',views.agents, name='agents'),
+
 
      #Paths below are available to everyone
      path('price_list/',views.priceList, name='priceList'),
@@ -22,9 +21,7 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/',
           views.singleApartment, name="apartment"),
 
-     #Path leads to a single users in our system
-     path('users/<int:userID>/',
-          views.singleUser, name = "users"),
+
 
      path('create_apartment', views.createApartments, name="create-apartment"),
      path('create_location', views.createLocation, name="create-location"),
