@@ -104,6 +104,9 @@
                                         <li class="viewHistory">
                                             <a href="{% url 'view_history' request.user.id%}"> Browsing history</a>
                                         </li>
+                                        <li class="ownedApartments">
+                                            <a href="{% url 'owned_apartments' request.user.id%}"> Owned apartments</a>
+                                        </li>
                                         <li class="logout">
                                             <a href="{% url 'logout' %}" >Logout</a>
                                         </li>

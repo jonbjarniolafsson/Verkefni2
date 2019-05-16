@@ -41,7 +41,7 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('/')
-    
+
     return render(request, 'users/register.html', {
         'form': UserCreationForm()
     })
@@ -70,7 +70,6 @@ def editProfile(request):
 # # Allows the user to view their own profile
 def viewProfile(request, userID=None):
     if userID:
-
         user = Users.objects.get(pk=userID)
     else:
 
@@ -138,11 +137,17 @@ def viewHistory(request, userID):
         print("PRINTING appID: ",x.apartmentid.id)
         listOfAppID.append(x.apartmentid.id)
     listOfAppID = list(set(listOfAppID))
-    apartments = Apartments.objects.filter(id__in=listOfAppID)
+    #Defines how many apartmetns should be displayed
+    apartments = Apartments.objects.filter(id__in=listOfAppID)[0:6]
     print("PRRINTING APARTMENTS: ", listOfAppID)
     context = {
         'apartments':apartments
     }
-
     return render(request, 'users/view_history.html', context)
 
+def ownedApartments(request, userID):
+    apartments = Apartments.objects.filter(owner_id=userID)
+    context = {
+        'apartments':apartments
+    }
+    return render(request, 'users/owned_apartments.html', context)

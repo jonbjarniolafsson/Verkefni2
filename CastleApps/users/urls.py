@@ -15,5 +15,5 @@ urlpatterns = [
     path('<int:userID>/', views.singleUser, name="users"),
     #path('users', include('users.urls')),
     #path('users', include('django.contrib.auth.urls')),
-
+    path('<int:userID>/owned_apartments', views.ownedApartments , name="owned_apartments"),
 ]

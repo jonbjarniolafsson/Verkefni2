@@ -26,9 +26,9 @@ from django.utils import timezone
 
 def home(request):
         #print("PRINTING CURRENT DATETIME: ", datetime.now())
-        apartment = Apartments.objects.get(id=3)
-        seller = apartment.owner_id
-        apartment.forsale = False  # change field
+        #apartment = Apartments.objects.get(id=3)
+        #seller = apartment.owner_id
+        #apartment.forsale = False  # change field
         #apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)

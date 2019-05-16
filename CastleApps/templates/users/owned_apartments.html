@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/agents.css' %}">
+{% endblock css %}
+{% block content%}
+<div class="container">
+    <h1> Your owned apartments (should be displayed same as history)</h1>
+    <div class="agent">
+        <div class="image">
+            <img src="{{user.profileimagepath}}" alt="">
+        </div>
+                    {%  for apartment in apartments %}
+                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                    {%  endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
