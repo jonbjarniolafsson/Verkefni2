@@ -6,28 +6,32 @@
 {% block content%}
 <div class="container">
     <div class="review payment">
+
         <div class="image">
-            <img src="{{apartment.image}}" href="apartments/{{ apartment.id }}"alt="">
+            <img src="{{listing.apartmentid.displayimage}}" href="apartments/{{ listing.apartmentid.id }}"alt="">
         </div>
+        <a href="/apartments/{{ listing.apartmentid.id }}/payment_info" class="btn btn-primary pull right">Back to payment</a>
+         </a>
     <div class="review info">
         <h2>Review</h2>
-        <h3>{{apartment.type}} in {{apartment.location.region}}, {{apartment.location.city}}  </h3>
+        <h3>{{listing.apartmentid.type}} in {{listing.apartmentid.locationid.region}}, {{listing.apartmentid.locationid.city}}  </h3>
         <div class="payment info">
             <p>Cardholder name: {{ payment.cardholder }}</p>
             <p>Cardnumber: {{ payment.cardnumber }}</p>
             <p>Time of expiration: Year: {{ payment.expmonth }} Month: {{ payment.expyear }}</p>
             <p>Cardholder address: {{ payment.address }} apt/suite: {{ payment.aptsuite }} </p>
-            <p>€ {{ apartment.price }}</p>
+            <p>SSN: {{ payment.ssn }}</p>
+            <p>€ {{ listing.price }}</p>
         </div>
     </div>
     <h2>Apartment info:</h2>
         <div class="row">
             <div class="col-md-6">
                 <div class="location">
-                    <h2>{{apartment.address}}</h2>
-                    <p>{{apartment.zip}}</p>
-                    <p>{{apartment.city}}</p>
-                    <p>{{apartment.country}}</p>
+                    <h2>{{listing.apartmentid.address}}</h2>
+                    <p>{{listing.apartmentid.locationid.zip}}</p>
+                    <p>{{listing.apartmentid.locationid.city}}</p>
+                    <p>{{listing.apartmentid.locationid.country}}</p>
                 </div>
             </div>
 
@@ -36,7 +40,7 @@
         </div>
     </div>
 </div>
-    <form class="background-white" href="/apartments/{{apartment.id}}/payment_info/{{ payment.id }}/finish" method="post">
+    <form class="background-white" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Confirm purchase" class="btn btn-primary pull-right" style=""/>
 </form>

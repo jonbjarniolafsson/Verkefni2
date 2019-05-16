@@ -123,6 +123,12 @@ class Transactions(models.Model):
     date = models.DateField()
     isseller = models.BooleanField()
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+class ContactForm(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    description = models.TextField(max_length=1000)
 
 
 # All the information necessary to make a purchase on our platform

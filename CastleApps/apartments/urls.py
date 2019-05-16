@@ -4,8 +4,7 @@ from django.urls import path
 urlpatterns = [
      #Our mainpage
      path('',views.home, name='frontpage'),
-     # Here we have a list of employees page -> Should lead to their profile if clicked on
-     path('agents/',views.agents, name='agents'),
+
 
      #Paths below are available to everyone
      path('price_list/',views.priceList, name='priceList'),
@@ -13,7 +12,7 @@ urlpatterns = [
 
      #Page below is for ajax search
      path('all_apartments/',
-          views.allApartments, name="apartment-list"),
+          views.allApartments, name="apartment_list"),
 
      #Search form on frontpage
      path('search_results/', views.searchApartments, name="search-results"),
@@ -22,18 +21,16 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/',
           views.singleApartment, name="apartment"),
 
-     #Path leads to a single users in our system
-     path('users/<int:userID>/',
-          views.singleUser, name = "users"),
 
+
+     #Admin paths:
      path('create_apartment', views.createApartments, name="create-apartment"),
      path('create_location', views.createLocation, name="create-location"),
-     path('apartments/<int:apartment_id>/edit_apartment', views.editApartment, name="edit-apartment"),
-     path('apartments/<int:apartment_id>/add_listing/', views.addListing, name="add-listing"),
+     path('apartments/<int:apartmentID>/edit_apartment', views.editApartment, name="edit-apartment"),
+     path('apartments/<int:apartmentID>/add_listing/', views.addListing, name="add-listing"),
+     path('apartments/<int:apartmentID>/remove_listing/', views.removeListing, name="add-listing"),
+     path('apartments/<int:apartmentID>/remove_apartment/', views.removeApartment, name="remove-apartment"),
 
-
-
-    path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
-     path('apartments/<int:apartmentID>/payment_info/<int:id>/review', views.reviewPayment, name="review"),
-
+     path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
+     path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review"),
 ]

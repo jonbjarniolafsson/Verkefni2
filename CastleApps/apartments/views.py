@@ -12,8 +12,9 @@ from django.http import HttpResponse
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
-from django.shortcuts import get_object_or_404,render,redirect
+from django.shortcuts import get_object_or_404,render,redirect, reverse
 
+from django.contrib.auth.decorators import login_required
 
 
 from .forms import buy_now_form
@@ -24,7 +25,11 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-
+        #print("PRINTING CURRENT DATETIME: ", datetime.now())
+        #apartment = Apartments.objects.get(id=3)
+        #seller = apartment.owner_id
+        #apartment.forsale = False  # change field
+        #apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
         newUser = request.user.id
@@ -50,53 +55,20 @@ def home(request):
                     # We ask the DB to return all the apartments in the list that match
                     newApart = Apartments.objects.filter(pk__in=newList)
 
-        newlyListed = Listings.objects.all().order_by('registered')
-        apps = Apartments.objects.filter(pk__in=newlyListed)
-        companyInfo = CompanyInformation.objects.all()
+        newlyListed = Listings.objects.all()
+        print("NEWLY LISTED: ",newlyListed)
+        apps = Apartments.objects.filter(forsale=True)
+        #companyInfo = CompanyInformation.objects.all()
         context = {
             'apartments': newApart,  # Send all the apartments
             'newlyListed': apps,
+            'userid': request.user.id
         }
 
         return render(request, 'apartments/home.html', context)
 
 
-def buyNow(request, apartmentID):
-    context = {
-        'apartment': Apartments.objects.get(id=apartmentID)
-    }
-    return render(request, 'apartments/buy_now.html', context)
 
-
-def buyNowSubmitss(request, apartmentID):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = buy_now_form(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return buy_now_form('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = 'empty'
-
-    return render(request, 'apartments/purchase_status.html', {'form': form})
-
-
-def agents(request):
-    # Checks if the person in the Users table is staff
-    users = Users.objects.filter(is_staff = True)
-    # Simply returns every users that returned true as staff
-    # HTML will then loop through the users that are part of the staff and display them
-    context = {
-        'users': users
-    }
-    return render(request, 'apartments/agents.html', context)
-    
 
 # History of the company. It is important to play to the prestige of the company
 # As this is supposed to be a reputable seller
@@ -123,17 +95,31 @@ def priceList(request):
     return render(request, 'apartments/price_list.html', context)
 
 
+
+    #apartmentid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID):  # Need to add error handling
     context = {}
-
+    user = request.user.id
+    print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
     aparments = get_object_or_404(Apartments, pk=apartmentID)
+    ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
+
+
+
+
+    #if request.user.is_authenticated == True:
+
+    #    apartment = Apartments.objects.get(id=apartmentID)
+    #    ViewHistory.objects.create(apartmentid=apartment.pk, user=user)
+
 
     checking = Listings.objects.filter(apartmentid_id =apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
     print(len(checking))
-    if len(checking) == 0:
+    if len(checking) == 0 or apartments.forsale == False:
         context = {
             'apartment': apartments,
         }
@@ -150,54 +136,26 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
         #print("PRINTING agentID: ", listing.agentID_id)
         listingAgent = Users.objects.get(id = listing.agent_id)
+        user = request.user
         context = {
             'apartment': apartments,
             'images': apartmentImages,
             'agent': listingAgent,
-            'listing' : listing
+            'listing' : listing,
+            'user' : user
         }
         return render(request, 'apartments/single_apartment.html', context)
 
 
 
 
-#Here you can display a single users
-def singleUser(request, userID):
-
-    #print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
-    #users = Users.objects.get(id = userID)
-    #print("Printing all users: ", users)
-    user = get_object_or_404(Users, pk=userID)
-    #user = Users.objects.get(pk=userID )
-
-
-    if user.is_staff == False:
-        apartments = Apartments.objects.filter(owner_id=userID)
-        context = {
-            'user': user,
-            'apartments': apartments
-        }
-        return render(request, 'apartments/single_user.html', context)
-    listingsOfApartments = Listings.objects.filter(agent_id=userID)
-    pkOfApps = []
-    for x in listingsOfApartments:
-        print(x.apartmentid_id)
-        pkOfApps.append(x.apartmentid_id)
-    apartments = Apartments.objects.filter(id__in=pkOfApps)
-    context = {
-        'user': user,
-        'apartments': apartments
-    }
-    #Listings.objects.filter(userID)
-    return render(request, 'apartments/single_employee.html', context)
-
 
 
 def allApartments(request):
     context = {
-        'apartments' : Apartments.objects.all()
+        'apartments' : Apartments.objects.all()[0:6]
     }
-    return render(request, 'apartments/apartments_list.html', context)
+    return render(request, 'apartments/search-results.html', context)
 
 
 
@@ -295,15 +253,14 @@ def searchApartments(request):
     apps = {
         'apartments' : apartments
     }
-    
     return render(request, "apartments/search-results.html", apps)
 
 
-def editApartment(request, apartment_id=None):
+def editApartment(request, apartmentID=None):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
         return HttpResponse('Unauthorized', status=401)
-    instance = get_object_or_404(Apartments, pk=apartment_id)
+    instance = get_object_or_404(Apartments, pk=apartmentID)
     if request.method == 'POST':
         form = EditAppForm(data=request.POST, instance=instance)
         if form.is_valid():
@@ -314,13 +271,13 @@ def editApartment(request, apartment_id=None):
             print('invalid!!!')
     form = EditAppForm(instance=instance)
     print("FORM INVALID")
-    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartment_id})
+    return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartmentID})
 
 
-def addListing(request, apartment_id=None):
+def addListing(request, apartmentID=None):
     print("IN ADD LISTING")
-    print("PRINTING APARTMENT ID: ", apartment_id)
-    apartment = Apartments.objects.get(id=apartment_id)
+    print("PRINTING APARTMENT ID: ", apartmentID)
+    apartment = Apartments.objects.get(id=apartmentID)
 
     if request.method == 'POST':
         #currentUser = request.user
@@ -328,7 +285,7 @@ def addListing(request, apartment_id=None):
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
-            t = Apartments.objects.get(id=apartment_id)
+            t = Apartments.objects.get(id=apartmentID)
             t.forsale = True  # change field
             t.save()  # this will update only
             print("FORM VALID")
@@ -339,4 +296,83 @@ def addListing(request, apartment_id=None):
     form = ListingForm(data=request.GET)
 
     return render(request, 'apartments/add_listing.html', {'form': form})
+
+def removeListing(request, apartmentID=None):
+    listings = Listings.objects.filter(apartmentid=apartmentID)
+    idOfActiveListing = listings.aggregate(Max('id'))
+    listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+    listing = Listings.objects.get(id=listing.id).delete()
+    apartment = Apartments.objects.get(id = apartmentID)
+    apartment.forsale=False
+    apartment.save()
+    return render(request, 'apartments/single_apartment.html')
+
+def removeApartment(request, apartmentID=None):
+    theApartment = Apartments.objects.get(id=apartmentID)
+    apartment = Apartments.objects.get(id=apartmentID).delete()
+    return render(request, 'apartments/deleted_apartment.html', {'apartment':theApartment})
+
+
+@login_required
+def addPaymentInfo(request, apartmentID):
+    #get or what??
+    if Apartments.objects.get(id=apartmentID).forsale:
+        listings = Listings.objects.filter(apartmentid=apartmentID)
+        idOfActiveListing = listings.aggregate(Max('id'))
+        listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+        if request.method=="POST":
+            form = PaymentInfoForm(data=request.POST)
+            if form.is_valid():
+                print("VALID FORM")
+                #færa notanda á review síðu
+                payment = form.save(commit=False)
+                payment.user = request.user
+                payment.save()
+                return redirect(reverse("review", args=[apartmentID, listing.id, payment.id]))
+        form = PaymentInfoForm()
+        print('HANDLING GET REQUEST',request)
+        apartment = Apartments.objects.get(id=apartmentID)
+        return render(request, 'apartments/buy_now.html', {
+            'form': form,
+            'listing': listing,
+            'apartment': apartment
+        })
+    else:
+        return redirect('frontpage')
+
+#shows info for user and user confirms payment
+@login_required
+def reviewPayment(request, apartmentID, listingID, paymentID):
+
+    #hvað á að auðkenna?
+    #vantar aðgengi að context
+    listing = Listings.objects.get(id=listingID)
+    if request.method == 'POST':
+
+        apartment = Apartments.objects.get(id=apartmentID)
+        apartment = Apartments.objects.get(id=apartmentID)
+        seller = apartment.owner_id
+        apartment.forsale = False  # change field
+        apartment.owner_id = request.user.id
+        apartment.save()  # this will update only
+        listing = Listings.objects.get(id=listingID)
+        listing.soldondate = datetime.now()
+        listing.save()
+        buyer = apartment.owner_id
+        price = int(listing.price)
+        priceSeller = str(price)
+        priceBuyer = str(-price)
+
+        #BUYER TRANSACTION
+        buyerTransaction = Transactions.objects.create(price=priceBuyer, date=datetime.now(), isseller=False, listingid_id=listingID, user_id=buyer)
+        #SELLER TRANSACTION
+        sellerTransaction = Transactions.objects.create(price=priceSeller, date=datetime.now(), isseller=True, listingid_id=listingID, user_id=seller)
+        return redirect('frontpage')
+    context = {
+        'listing': listing,
+        'payment': PaymentInfos.objects.get(id=paymentID),
+    }
+    return render(request, 'apartments/review_payment.html', context)
+
+
 

@@ -1,5 +1,6 @@
 from django.forms import ModelForm, widgets
 from ..models import PaymentInfos
+
 from django import forms
 #from django.forms import extras
 
@@ -12,7 +13,7 @@ class PaymentInfoForm(ModelForm):
 
     class Meta:
         model = PaymentInfos
-        exclude = ['user']
+        exclude = ['user_id', 'user', 'isreviewed']
         widgets = {
             #hvernig fields líta út í html
             #attributes on name
@@ -21,6 +22,9 @@ class PaymentInfoForm(ModelForm):
             'cardnumber': widgets.TextInput(attrs={'class': 'form-control', 'placeholder':'0000 0000 0000 0000'}),
             'expmonth': widgets.NumberInput(attrs={'class': 'form-control'}),
             'expyear': widgets.NumberInput(attrs={'class': 'form-control'}),
+            'city': widgets.TextInput(attrs={'class': 'form-control'}),
+            'zip': widgets.TextInput(attrs={'class': 'form-control'}),
+            'ssn': widgets.TextInput(attrs={'class': 'form-control'}),
             'address': widgets.TextInput(attrs={'class': 'form-control'}),
             'aptsuite': widgets.NumberInput(attrs={'class': 'form-control'}),
             #'user': widgets.TextInput(attrs={'class':'form-control'})

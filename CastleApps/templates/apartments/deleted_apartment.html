@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+{% endblock css %}
+{% block content%}
+
+
+    <h1> Apartment Deleted</h1>
+    <h2> Registration: {{ apartment.registration }}</h2>
+    <h2> address: {{ apartment.address }}</h2>
+    <h2> Size: {{ apartment.size }}</h2>
+    <h2> Rooms: {{ apartment.rooms }}</h2>
+    <h2> Bathrooms: {{ apartment.bathrooms }}</h2>
+    <h2> Typed: {{ apartment.type }}</h2>
+
+
+{% endblock%}

@@ -68,6 +68,7 @@
                     </div>
                     <div class="navbar-right">
                         <ul class="nav-links">
+                            <li><a href="{% url 'apartment_list' %}">All apartments</a></li>
                             <li><a href="{% url 'agents' %}">Agents</a></li>
                         <li class="user">
                                 About us
@@ -78,13 +79,16 @@
                                         <li class="viewprofile">
                                             <a href="{% url 'priceList' %}">Price List</a>
                                         </li>
+
                                 </ul>
                             </li>
                             {% if user.is_staff %}
                                 <li class="user">
                                     Locations
                                     <ul class="submenu">
-                                        <li><a href="#">Add location</a></li>
+                                        <li><a href="{% url 'create-location' %}" >Add location</a></li>
+                                        <li><a href="{% url 'create-apartment' %}" >Add Apartment</a></li>
+                                        <li><a href="{% url 'managed_apartments' request.user.id %}" >Manage listings</a></li>
                                     </ul>
                                 </li>
                             {% endif %}
@@ -93,10 +97,16 @@
                                 <ul class="submenu">
                                     {% if user.is_authenticated %}
                                         <li class="editprofile">
-                                            <a href="{% url 'editProfile' %}">Edit Profile</a>
+                                            <a href="{% url 'editProfile' request.user.id %}">Edit Profile</a>
                                         </li>
                                         <li class="viewprofile">
-                                            <a href="{% url 'editProfile' %}">View Profile</a>
+                                            <a href="{% url 'editProfile' request.user.id %}">View Profile</a>
+                                        </li>
+                                        <li class="viewHistory">
+                                            <a href="{% url 'view_history' request.user.id%}"> Browsing history</a>
+                                        </li>
+                                        <li class="ownedApartments">
+                                            <a href="{% url 'owned_apartments' request.user.id%}"> Owned apartments</a>
                                         </li>
                                         <li class="logout">
                                             <a href="{% url 'logout' %}" >Logout</a>
