@@ -27,7 +27,7 @@ from django.shortcuts import  render
 # So we did not have to worry about capitalization
 
 class Country(models.Model):
-    country = models.CharField(primary_key = True, max_length = 40)
+    country = models.CharField(primary_key = True, max_length = 100)
     def __str__(self):
         return self.country
 
@@ -43,9 +43,9 @@ class Locations(models.Model):
 class Apartments(models.Model):
     registration = models.CharField(max_length = 100, unique = True)
     address = models.CharField(max_length = 50)
-    size = models.CharField(max_length = 50)
-    rooms = models.CharField(max_length = 50)
-    bathrooms = models.CharField(max_length = 50)
+    size = models.IntegerField(max_length = 50)
+    rooms = models.IntegerField(max_length = 50)
+    bathrooms = models.IntegerField(max_length = 50)
     type = models.CharField(max_length = 50, default="Apartment")
     aptsuite = models.CharField(blank=True,null=True, max_length = 30)
     timeofconstruction = models.CharField(max_length =50, default = 2000)
@@ -65,7 +65,7 @@ class ApartmentImages(models.Model):
 # Each apartments has a listing. It can have many listings.
 # Same apartment can only have one listing up at a time though!
 class Listings(models.Model):
-    price = models.CharField(max_length = 200)
+    price = models.IntegerField(max_length = 200)
     description = models.TextField()
     registered = models.DateTimeField(default=timezone.now)
     soldondate = models.DateTimeField(default = None, blank=True,null=True)
@@ -96,6 +96,7 @@ class ListingMiscs(models.Model):
     footpreschool = models.CharField(max_length = 5, blank=True,null=True)
     carpreschool = models.CharField(max_length = 5 ,blank=True,null=True)
     footbusstop = models.CharField(max_length = 5, blank=True, null=True)
+    carbusstop = models.CharField(max_length=5, blank=True, null=True)
     carsupermarket = models.CharField(max_length = 5, blank=True, null=True)
     footsupermarket = models.CharField(max_length=5, blank=True, null=True)
     footmetro = models.CharField(max_length=5, blank=True, null=True)
@@ -141,7 +142,7 @@ class PaymentInfos(models.Model):
     address = models.CharField(max_length=80)
     aptsuite = models.CharField(max_length=20, default=None, blank=True, null=True)
     zip = models.CharField(max_length=80)
-    ssn = models.CharField(max_length=25)
+    ssn = models.CharField(max_length=40)
     isreviewed = models.BooleanField(default = False, blank=True,null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 
@@ -150,7 +151,7 @@ class ViewHistory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
 
 class CompanyInformation(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=50)
     logo = models.CharField(max_length = 5000)
     backgroundPhoto = models.CharField(max_length = 5000)
     phone = models.CharField(max_length=15)
