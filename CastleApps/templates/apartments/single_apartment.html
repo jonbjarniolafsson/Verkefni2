@@ -41,10 +41,33 @@
             </div>
             <div class="col-md-4">
                 <button class="btn-primary">Buy now</button>
+                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">add key distances</a>
             </div>
         </div>
         <div class="row">
+            {% if listingMisc.id != None %}
             <div class="col-md-6">
+                <div class="distances">
+                    <div class="byCar">
+                        <p>Car</p>
+                        <p>{{ listingMisc.carpreschool }}</p>
+                        <p>{{ listingMisc.carsupermarket }}</p>
+                        <p>{{ listingMisc.carmetro }}</p>
+                    </div>
+                    <div class="onFoot">
+                        <p>Foot</p>
+                        <p>{{ listingMisc.footpreschool }}</p>
+                        <p>{{ listingMisc.footsupermarket }}</p>
+                        <p>{{ listingMisc.footmetro }}</p>
+                    </div>
+                    <div class="distanceName">
+                        <p>Preschool</p>
+                        <p>Supermarket</p>
+                        <p>Metro station</p>
+                    </div>
+
+                </div>
+                {% endif %}
                 <div class="meta">
                     <div class="info">
                         <div class="heading">

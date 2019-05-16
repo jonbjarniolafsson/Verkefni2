@@ -6,6 +6,7 @@ from .forms.buy_now_form import PaymentInfoForm
 from .forms.apartment_form import CastleAppsCreateForm,EditAppForm
 from .forms.location_form import AddressCreateForm
 from .forms.listing_form import ListingForm
+from .forms.listing_misc_form import MiscInfoForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
 # Create your views here.
@@ -105,9 +106,10 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
     aparments = get_object_or_404(Apartments, pk=apartmentID)
-    ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
 
 
+    if user != None:
+        ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
 
 
     #if request.user.is_authenticated == True:
@@ -133,18 +135,32 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
         idOfActiveListing = listings.aggregate(Max('id'))
         listing = Listings.objects.get(id = idOfActiveListing['id__max'])
-
-        #print("PRINTING agentID: ", listing.agentID_id)
         listingAgent = Users.objects.get(id = listing.agent_id)
         user = request.user
-        context = {
+    #Tests if listing has misc information to display
+    try:
+        listingMisc = ListingMiscs.objects.get(listingid_id=listing.id)
+        context1 = {
             'apartment': apartments,
             'images': apartmentImages,
             'agent': listingAgent,
-            'listing' : listing,
-            'user' : user
+            'listing': listing,
+            'user': user,
+            'listingMisc': listingMisc
         }
-        return render(request, 'apartments/single_apartment.html', context)
+        return render(request, 'apartments/single_apartment.html', context1)
+
+    except ListingMiscs.DoesNotExist:
+        listingMisc = None
+        context2 = {
+            'apartment': apartments,
+            'images': apartmentImages,
+            'agent': listingAgent,
+            'listing': listing,
+            'user': user,
+        }
+    return render(request, 'apartments/single_apartment.html', context2)
+
 
 
 
@@ -155,47 +171,26 @@ def allApartments(request):
     context = {
         'apartments' : Apartments.objects.all()[0:6]
     }
-    return render(request, 'apartments/search-results.html', context)
+    return render(request, 'apartments/apartments_list.html', context)
 
-
-
-def addPaymentInfo(request, apartmentID):
-    #get or what??
-    print("addPaymentInfo")
+def addKeyDistances(request, apartmentID):
+    listings = Listings.objects.filter(apartmentid_id=apartmentID)
+    idOfActiveListing = listings.aggregate(Max('id'))
+    listing = Listings.objects.get(id=idOfActiveListing['id__max'])
     if request.method == 'POST':
-        print("IF ")
-        form=PaymentInfoForm(data=request.POST)
+        form = MiscInfoForm(data=request.POST)
         if form.is_valid():
-            print('HANDLING POST REQUEST',request)
-            #færa notanda á review síðu
-            #TODO review.html
-            payment=form.save(commit=False)
-            payment.user = request.user
-            payment.save()
-            print(payment.user, request.user.id)
-            return redirect('review', {{apartmentID}}, request.user.id[-1])
-        #else:
-         #   print("ELSE")
-            #form = PaymentInfoForm()
-    currentUser = request.user.id
-    form = PaymentInfoForm(data=request.GET)
-    print('HANDLING GET REQUEST',request)
-    return render(request, 'apartments/buy_now.html', {
-        'form': form
+            miscData = form.save(commit=False)
+            miscData.listingid_id = listing.id
+            miscData.save()
+            print("REDIRECTING")
+            return redirect(f"/apartments/{apartmentID}")
+    form = MiscInfoForm()
+
+    return render(request, 'apartments/listing_misc.html', {
+        'form': form,
+        'listing': listing
     })
-
-#shows info for user and user confirms payment
-def reviewPayment(request, apartmentID, paymentID):
-    if PaymentInfos.objects.get(id=paymentID).id == paymentID:
-        paymentInfo = PaymentInfos.objects.get(id=paymentID)
-        apartment = Apartments.objects.get(id=apartmentID)
-        context = {
-            'payment': paymentInfo,
-            'apartment': apartment
-        }
-    return render(request, 'apartments/review_payment.html', context)
-
-
 
 
 def createLocation(request):
@@ -244,16 +239,28 @@ def createApartments(request):
 def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
-
-    if searchString == "" and zipCode == "":
-        return render(request, "apartments/search-results.html")
+    sort = request.GET.get("sort")
 
     if zipCode != "":
         apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
-        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
+        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+
     else:
         apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
-        print(apartments)
+
+
+
+    if sort != "":
+        if sort == "price":
+            apartments = apartments.order_by('listings__price')
+        elif sort == "address":
+            apartments = apartments.order_by('address')
+        elif sort == "size":
+            apartments = apartments.order_by('-size')
+        elif sort == "rooms":
+            apartments = apartments.order_by('-rooms')
+        elif sort == "country":
+            apartments = apartments.order_by('-locationid__country_id__country')
     
     apps = {
         'apartments' : apartments

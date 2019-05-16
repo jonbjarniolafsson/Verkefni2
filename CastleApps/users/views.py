@@ -68,6 +68,7 @@ def editProfile(request):
 #
 #
 # # Allows the user to view their own profile
+
 def viewProfile(request, userID=None):
     if userID:
         user = Users.objects.get(pk=userID)
