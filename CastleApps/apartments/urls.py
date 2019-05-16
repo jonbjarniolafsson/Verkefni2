@@ -26,7 +26,7 @@ urlpatterns = [
 
 
      #Admin paths:
-     path('create_apartment', views.createApartments, name="create-apartment"),
+     path('apartments/<int:locationID>/create_apartment', views.createApartments, name="create-apartment"),
      path('create_location', views.createLocation, name="create-location"),
      path('apartments/<int:apartmentID>/edit_apartment', views.editApartment, name="edit-apartment"),
      path('apartments/<int:apartmentID>/add_listing/', views.addListing, name="add-listing"),
