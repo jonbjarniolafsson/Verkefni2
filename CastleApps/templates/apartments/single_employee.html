@@ -4,6 +4,38 @@
 <link rel="stylesheet" href="{% static 'css/agents.css' %}">
 {% endblock css %}
 {% block content%}
+
+<div class="single-agent">
+    <div class="container">
+        <div class="heading">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="agent">
+            <div class="image">
+                <a href="/users/{{user.id}}">
+                <img src=" {{ user.profileimagepath }}"/>
+                </a>
+            </div>
+            <div class="meta">
+                <h2>{{user.first_name}} {{user.last_name}}</h2>
+                <div class="start"><span>Started working on {{user.startDate}}</span></div>
+                <div class="contact">
+                    <div class="email">Email: {{user.email}}</div>
+                    <div class="phone">Phone: {{user.phone}}</div>
+                </div>
+                <div class="desc">
+                    <p>{{user.description}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
 <div class="container">
     <h1> Castle Apartments Agent</h1>
     <h1> {{ user.first_name }} {{ user.last_name }}  </h1>
@@ -68,4 +100,5 @@
         </div>
     </div>
 </div>
+-->
 {% endblock%}

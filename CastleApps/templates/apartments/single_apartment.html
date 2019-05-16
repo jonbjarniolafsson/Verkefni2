@@ -1,63 +1,125 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+<link rel="stylesheet" href="{% static 'css/agents.css' %}">
 {% endblock css %}
 {% block content%}
-<div class="container">
-    <div class="apartment single">
-        <div class="image">
-            <img src="{{apartment.displayimage}}" alt="">
+<div class="apartment single">
+    <div class="container">
+        <div class="heading">
+            <h2>{{apartment.address}}</h2>
         </div>
-{#   Buy apartment     #}
-        <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
-         </a>
-    <a href="/apartments/{{apartment.id}}/edit_apartment" class="btn btn-primary pull right">Edit apartment</a>
-         </a>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="images">
+                    <div class="main-image">
+                        <img src="{{apartment.displayimage}}" alt="">
+                    </div>
+                    <div class="image-list owl-carousel">
+                        <div class="image active">
+                            <img src="{{apartment.displayimage}}">
+                        </div>
+                        {%  for image in images %}
+                            <div class="image">
+                                <img src="{{ image }}" alt="Image here" srcset="">
+                            </div>
+                        {%  endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="description">
+                    <div class="heading">
+                        <h2>About this property</h2>
+                    </div>
+                    <p>{{apartment.listings_set.first.description}}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button class="btn-primary">Buy now</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="location">
-                    <h2>{{apartment.address}}</h2>
-                    <p>{{apartment.zip}}</p>
-                    <p>{{apartment.city}}</p>
-                    <p>{{apartment.country}}</p>
+                <div class="meta">
+                    <div class="info">
+                        <div class="heading">
+                            <h2>Location based information</h2>
+                        </div>
+                        <ul>
+                            <li>{{apartment.address}}</li>
+                            <li>Located in {{apartment.locationid.region}}, {{apartment.locationid.country}}</li>
+                            <li>Year constructed: {{apartment.timeofconstruction}}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="meta">
-                    <p>{{apartment.type}} in {{apartment.location.region}}, {{apartment.location.city}}  </p>
-                    <p>price: {{listing.price}}</p>
-                    <p>Sold on the date: {{listing.price}}</p>
-
-                 Agent: <img src="{{ agent.profileImagePath}}" alt="Image here" srcset="">
-                    <p>AgentUserName: {{agent.username}}</p>
-                    <p>Size: {{apartment.size}}</p>
-                    <p>Rooms: {{apartment.rooms}}</p>
-                    <p>Bathrooms: {{apartment.bathrooms}}</p>
-                    <p>Bathrooms: {{apartment.description}}</
-                    <p>Constructed: {{apartment.timeOfConstruction}}</p>
-                    <p>Registered: {{apartment.timeOfRegistration}}</p>
-                    <p>Country: {{apartment.location.country}}</p>
-                    <p>Zip: {{apartment.location.zip}}</p>
-                <div>
-                    <h2>Feel like you cannot afford it?</h2>
-                    <p>10 year Mortgage: {{ listing.shortMortgage }}€ a month</p>
-                    <p>20 year Mortgage: {{ listing.mediumMortgage }}€ a month</p>
-                    <p>30 year Mortgage: {{ listing.longMortgage }}€ a month</p>
-                    <p id="disclaimer">calculations assume a 15% downpayment*</p>
-
+                    <div class="info">
+                        <div class="heading">
+                            <h2>Detailed information</h2>
+                        </div>
+                        <ul>
+                            <li>Size of property: {{apartment.size}} m&sup2;</li>
+                            <li>Rooms: {{apartment.rooms}}</li>
+                            <li>Bathrooms: {{apartment.bathrooms}}</li>
+                            
+                        </ul>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-
-                    {%  for image in images %}
-                        <img src="{{ image }}" alt="Image here" srcset="">
-                    {%  endfor %}
-
-
-
+        <div class="row">
+            <div class="col-md-6">
+                <div class="agents">
+                    <div class="agents-wrapper">
+                        <div class="heading">
+                            <h2>Agent</h2>
+                        </div>
+                        <div class="agent">
+                            <div class="image">
+                                <a href="/users/{{agent.id}}">
+                                <img src=" {{ agent.profileimagepath }}"/>
+                                </a>
+                            </div>
+                            <div class="meta">
+                                <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+                                <div class="contact">
+                                    <div class="email">Email: {{agent.email}}</div>
+                                    <div class="phone">Phone: {{agent.phone}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="heading">
+                    <h2>Feel like you cannot afford it?</h2>
+                </div>
+                <div class="disclaimer">
+                    <div class="meta">
+                        <ul>
+                            <li>10 year Mortgage: {{ listing.shortMortgage }}€ a month</li>
+                            <li>20 year Mortgage: {{ listing.mediumMortgage }}€ a month</li>
+                            <li>30 year Mortgage: {{ listing.longMortgage }}€ a month</li>
+                            <li>Calculations assume a 15% downpayment*</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock%}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static '/js/sliders.js' %}"></script>
+{% endblock %}

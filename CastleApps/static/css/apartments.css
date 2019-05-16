@@ -107,7 +107,7 @@
 }
 
 
-.apartments .apartments-wrapper.slider .owl-nav button{
+.owl-nav button{
     position: absolute;
     width: 25px;
     height: 25px;
@@ -115,36 +115,110 @@
     border: none;
 }
 
-.apartments .apartments-wrapper.slider .owl-nav button:focus{
+.owl-nav button:focus{
     outline: none;
 }
 
-.apartments .apartments-wrapper.slider .owl-nav button span{
+.owl-nav button span{
     display: none;
 }
 
-.apartments .apartments-wrapper.slider .owl-nav .owl-next{
-    border-bottom: 2px solid #0067BC;
-    border-right: 2px solid #0067BC;
+.owl-nav .owl-next{
+    border-bottom: 2px solid #0067BC !important;
+    border-right: 2px solid #0067BC !important;
     transform: rotate(-45deg) translateY(-50%);
     right: -45px;
 }
 
-.apartments .apartments-wrapper.slider .owl-nav .owl-prev{
-    border-top: 2px solid #0067BC;
-    border-left: 2px solid #0067BC;
+.owl-nav .owl-prev{
+    border-top: 2px solid #0067BC !important;
+    border-left: 2px solid #0067BC !important;
     transform: rotate(-45deg) translateY(-50%);
     left: -45px;
 }
 
-.apartment.single .image{
-    margin-bottom: 30px;
+
+.apartment.single .heading{
+    margin-bottom: 50px;
 }
 
-.apartment.single .image img{
+
+.apartment.single .images{
+    margin-bottom: 50px;
+}
+
+.apartment.single .images .main-image{
+    margin-bottom: 50px;
+}
+
+.apartment.single .images .main-image img{
     width: 100%;
     height: auto;
+    max-width: 800px;
+    max-height: 500px;
 }
+
+.apartment.single .images .image-list{
+    position: relative;
+}
+
+.apartment.single .images .image-list img{
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    height: auto;
+}
+
+.apartment.single .images .image-list img:hover{
+    cursor: pointer;
+}
+
+.apartment.single .images .image-list .image::after{
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 3px;
+    left: 50%;
+    bottom: 0px;
+    transform: translateX(-50%);
+    background: #0067BC;
+    transition: width 0.3s ease;
+}
+
+.apartment.single .images .image-list .image.active::after{
+    width: 100%;
+}
+
+.apartment.single .description{
+    margin-bottom: 50px;
+}
+
+.apartment.single .row{
+    margin-bottom: 50px;
+}
+
+.apartment.single .agents-wrapper{
+    display: block;
+}
+
+
+.apartment.single .agents-wrapper .agent{
+    align-items: flex-start;
+}
+
+.apartment.single .agents-wrapper .agent .meta{
+    padding: 0px 15px;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 .ajax-search{

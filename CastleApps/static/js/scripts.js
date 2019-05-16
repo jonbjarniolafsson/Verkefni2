@@ -14,6 +14,17 @@ $(document).ready(function () {
         }
     })
 
+    if($(".image-list").length){
+        var targetsrc = $(".main-image img")
+        $(".image-list img").on("click", function(){
+            var src = $(this).attr('src') 
+            targetsrc.attr('src', src)
+
+            $(".image-list .image").removeClass('active');
+            $(this).parent('.image').addClass("active");
+        })
+    }
+
     $('.search-toggle').on('click', function(){
         $("#search").focus();
         $(".site-overlay").addClass('active');

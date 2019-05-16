@@ -37,3 +37,7 @@
 .agent .meta .contact{
     margin-bottom: 10px;
 }
+
+.single-agent .agent{
+    margin: 50px 0px;
+}

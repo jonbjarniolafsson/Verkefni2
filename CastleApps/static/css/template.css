@@ -38,6 +38,20 @@ h4{
     font-size: 14px;
 }
 
+.heading h2{
+    position: relative;
+}
+
+.heading h2::after{
+    content: '';
+    position:  absolute;
+    left: -15px;
+    bottom: -10px;
+    width: 75px;
+    height: 3px;
+    background: #0067BC;
+}
+
 .site-overlay{
     position: fixed;
     top: 0%;
