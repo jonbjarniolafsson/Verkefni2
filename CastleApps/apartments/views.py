@@ -105,7 +105,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     user = request.user.id
     print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
-    aparments = get_object_or_404(Apartments, pk=apartmentID)
+    apartments = get_object_or_404(Apartments, pk=apartmentID)
 
 
     if user != None:
@@ -116,8 +116,6 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
     #    apartment = Apartments.objects.get(id=apartmentID)
     #    ViewHistory.objects.create(apartmentid=apartment.pk, user=user)
-
-
     checking = Listings.objects.filter(apartmentid_id =apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
     print(len(checking))
@@ -172,6 +170,7 @@ def allApartments(request):
         'apartments' : Apartments.objects.all()[0:6]
     }
     return render(request, 'apartments/apartments_list.html', context)
+
 
 def addKeyDistances(request, apartmentID):
     listings = Listings.objects.filter(apartmentid_id=apartmentID)

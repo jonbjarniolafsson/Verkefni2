@@ -8,6 +8,6 @@ def getZipCodes(request):
     # zipList = [loc.zip for loc in locations]
     zipCodes = {
         'zip' : zipList
-    } 
+    }
 
     return zipCodes
