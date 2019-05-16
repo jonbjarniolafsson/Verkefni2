@@ -169,7 +169,7 @@ def allApartments(request):
     context = {
         'apartments' : Apartments.objects.all()[0:6]
     }
-    return render(request, 'apartments/search-results.html', context)
+    return render(request, 'apartments/apartments_list.html', context)
 
 
 def addKeyDistances(request, apartmentID):
@@ -193,14 +193,17 @@ def addKeyDistances(request, apartmentID):
 
 
 def createLocation(request):
-    currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
-        return HttpResponse('Unauthorized', status=401)
+    # currentUser = request.user
+    # if currentUser.id == None or currentUser.is_staff == False:
+    #     return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
             addressForm.save() #Saves to the DB
-            return redirect('create-apartment') #Supposed to redirect to create apartment
+            print(Locations.objects.latest('id').id)
+            print(Locations.objects.latest('id').country)
+            print(Locations.objects.latest('id').objects)
+            return render(request, 'apartments/create_apartment.html', context={'locationID': Locations.objects.latest('id').country}) #Supposed to redirect to create apartment
         context = {'address_form': addressForm}
         return render(request, 'apartments/create_location.html', context)
     else:
@@ -211,19 +214,21 @@ def createLocation(request):
 
 
 def createApartments(request):
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-            return HttpResponse('Unauthorized', status=401)
+        # currentUser = request.user
+        # if currentUser.id == None or currentUser.is_staff == False:
+        #     return HttpResponse('Unauthorized', status=401)
+        instance = Locations.objects.latest('id')
+        print(instance)
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            appForm = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            appForm = CastleAppsCreateForm(data=request.POST, instance=instance)
             if appForm.is_valid():
                 appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': appForm}
+            context = {'app_form': appForm, 'locationID': instance}
             return render(request, 'apartments/create_apartment.html', context)
         else:
-            appForm = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            appForm = CastleAppsCreateForm(instance=instance)
             return render(request, 'apartments/create_apartment.html', {
                 'app_form': appForm
             })
@@ -233,16 +238,28 @@ def createApartments(request):
 def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
-
-    if searchString == "" and zipCode == "":
-        return render(request, "apartments/search-results.html")
+    sort = request.GET.get("sort")
 
     if zipCode != "":
         apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
-        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
+        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+
     else:
         apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
-        print(apartments)
+
+
+
+    if sort != "":
+        if sort == "price":
+            apartments = apartments.order_by('listings__price')
+        elif sort == "address":
+            apartments = apartments.order_by('address')
+        elif sort == "size":
+            apartments = apartments.order_by('-size')
+        elif sort == "rooms":
+            apartments = apartments.order_by('-rooms')
+        elif sort == "country":
+            apartments = apartments.order_by('-locationid__country_id__country')
     
     apps = {
         'apartments' : apartments
