@@ -105,9 +105,10 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
     aparments = get_object_or_404(Apartments, pk=apartmentID)
-    ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
 
 
+    if user != None:
+        ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
 
 
     #if request.user.is_authenticated == True:
