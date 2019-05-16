@@ -331,6 +331,7 @@ form.white-background .form-group.focused label{
 
 
 .search-form form{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -345,15 +346,19 @@ form.white-background .form-group.focused label{
 }
 
 .search-form .form-group{
-    width: calc(50% - 15px);
+    width: calc(33% - 15px);
     margin: 0;
 }
 
+
 .search-form .form-group.smaller{
-    width: calc(25% - 15px);
+    /*width: calc(50% - 15px); */
 }
 
 .search-form button{
+    position: absolute;
+    bottom: -75px;
+    right: 0;
     width: calc(25% - 15px);
     text-transform: uppercase;
     font-weight: 600;

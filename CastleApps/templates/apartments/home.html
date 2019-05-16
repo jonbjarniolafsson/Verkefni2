@@ -19,7 +19,7 @@
 
             <div class="apartment">
                 <div class="header">
-                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} <div class="country">{{apartment.locationid.country}}</div></div>
                     <div class="rooms">
                         <div class="room bedroom">
                             <div class="total">
@@ -67,7 +67,7 @@
             {% for apartment in newlyListed %}
             <div class="col-md-4 apartment">
                 <div class="header">
-                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                    <div class="type">{{apartment.type}} in {{apartment.locationid.region}} <div class="country">{{apartment.locationid.country}}</div></div>
                     <div class="rooms">
                         <div class="room bedroom">
                             <div class="total">

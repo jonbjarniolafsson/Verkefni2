@@ -155,7 +155,7 @@ def allApartments(request):
     context = {
         'apartments' : Apartments.objects.all()[0:6]
     }
-    return render(request, 'apartments/search-results.html', context)
+    return render(request, 'apartments/apartments_list.html', context)
 
 
 
@@ -239,16 +239,28 @@ def createApartments(request):
 def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
-
-    if searchString == "" and zipCode == "":
-        return render(request, "apartments/search-results.html")
+    sort = request.GET.get("sort")
 
     if zipCode != "":
         apartments = Apartments.objects.filter(Q(locationid__zip=zipCode))
-        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString))
+        apartments = apartments.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
+
     else:
         apartments = Apartments.objects.filter(Q(address__icontains=searchString) | Q(type__icontains=searchString) | Q(locationid__zip__icontains=searchString) | Q(locationid__city__icontains=searchString) | Q(locationid__region__icontains=searchString) | Q(locationid__country_id__country__icontains=searchString))
-        print(apartments)
+
+
+
+    if sort != "":
+        if sort == "price":
+            apartments = apartments.order_by('listings__price')
+        elif sort == "address":
+            apartments = apartments.order_by('address')
+        elif sort == "size":
+            apartments = apartments.order_by('-size')
+        elif sort == "rooms":
+            apartments = apartments.order_by('-rooms')
+        elif sort == "country":
+            apartments = apartments.order_by('-locationid__country_id__country')
     
     apps = {
         'apartments' : apartments

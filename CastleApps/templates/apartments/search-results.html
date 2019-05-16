@@ -15,7 +15,7 @@
                 {% for apartment in apartments %}
                     <div class="apartment col-md-4">
                         <div class="header">
-                            <div class="type">{{apartment.type}} in {{apartment.locationid.region}} {{apartment.locationid.country}}</div>
+                            <div class="type">{{apartment.type}} in {{apartment.locationid.region}} <div class="country">{{apartment.locationid.country}}</div></div>
                             <div class="rooms">
                                 <div class="room bedroom">
                                     <div class="total">
