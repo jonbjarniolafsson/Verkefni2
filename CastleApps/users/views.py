@@ -158,3 +158,16 @@ def managedApartments(request, userID):
         'listings':listings
     }
     return render(request, 'users/managed_apartments.html', context)
+
+@login_required
+def editProfile(request, userID):
+     userID = request.user
+     if request.method == 'POST':
+         form = EditProfileForm(request.POST, instance=request.user)
+         if form.is_valid():
+             form.save()
+             return redirect('frontpage')
+     else:
+         form = EditProfileForm(instance=request.user)
+         context = {'form': form}
+         return render(request, 'users/edit_profile.html', context)

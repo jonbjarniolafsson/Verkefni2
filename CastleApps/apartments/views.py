@@ -199,14 +199,17 @@ def reviewPayment(request, apartmentID, paymentID):
 
 
 def createLocation(request):
-    currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
-        return HttpResponse('Unauthorized', status=401)
+    # currentUser = request.user
+    # if currentUser.id == None or currentUser.is_staff == False:
+    #     return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
             addressForm.save() #Saves to the DB
-            return redirect('create-apartment') #Supposed to redirect to create apartment
+            print(Locations.objects.latest('id').id)
+            print(Locations.objects.latest('id').country)
+            print(Locations.objects.latest('id').objects)
+            return render(request, 'apartments/create_apartment.html', context={'locationID': Locations.objects.latest('id').country}) #Supposed to redirect to create apartment
         context = {'address_form': addressForm}
         return render(request, 'apartments/create_location.html', context)
     else:
@@ -217,19 +220,21 @@ def createLocation(request):
 
 
 def createApartments(request):
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-            return HttpResponse('Unauthorized', status=401)
+        # currentUser = request.user
+        # if currentUser.id == None or currentUser.is_staff == False:
+        #     return HttpResponse('Unauthorized', status=401)
+        instance = Locations.objects.latest('id')
+        print(instance)
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            appForm = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            appForm = CastleAppsCreateForm(data=request.POST, instance=instance)
             if appForm.is_valid():
                 appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': appForm}
+            context = {'app_form': appForm, 'locationID': instance}
             return render(request, 'apartments/create_apartment.html', context)
         else:
-            appForm = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            appForm = CastleAppsCreateForm(instance=instance)
             return render(request, 'apartments/create_apartment.html', {
                 'app_form': appForm
             })
