@@ -154,9 +154,10 @@ def ownedApartments(request, userID):
     return render(request, 'users/owned_apartments.html', context)
 
 def managedApartments(request, userID):
-    listings = Listings.objects.filter(agent_id=userID)[0:6]
+    listings = Listings.objects.filter(agent_id=userID)
+    apartments = Apartments.objects.filter(id__in = listings)
     context = {
-        'listings':listings
+        'apartments':apartments
     }
     return render(request, 'users/managed_apartments.html', context)
 

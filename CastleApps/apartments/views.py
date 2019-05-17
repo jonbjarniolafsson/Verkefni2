@@ -385,7 +385,7 @@ def employeeAllApartments(request):
     context = {
         'apartments' : Apartments.objects.all()[0:20]
     }
-    return render(request, 'apartments/apartments_list.html', context)
+    return render(request, 'apartments/employee_all_apartments.html', context)
 
 
 #shows info for user and user confirms payment
