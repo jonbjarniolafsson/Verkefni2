@@ -36,70 +36,46 @@
                 <div class="heading">
                     <h2>About this property</h2>
                 </div>
-                <div class="description"
+                <div class="description">
                     <p>{{apartment.listings_set.first.description}}</p>
                 </div>
             </div>
-            <div class="col-md-1">
-                {% if apartment.forsale == True %}
-                    <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
-                {% endif %}
-            </div>
-            {% if user.is_staff == True %}
-
-                <div class="col-md-1">
-                    {% if listingMisc.id == None %}
-                    <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
+            <div class="col-md-4">
+                <div class="button-group">
+                    {% if apartment.forsale == True %}
+                        <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
+                    {% endif %}
+                    {% if user.is_staff == True %}
+                            {% if listingMisc.id == None %}
+                                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
+                            {% endif %}
+                        {% if apartment.forsale == True %}
+                            <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
+        
+                            <a href="/apartments/{{ apartment.id }}/add_image" class="btn btn-primary pull right">Add Image</a>
+        
+                            <a href="/apartments/{{ apartment.id }}/add_open_house" class="btn btn-primary pull right">Add Open House</a>
+                        {% endif %}
                     {% endif %}
                 </div>
-                {% if apartment.forsale == True %}
-                    <div class="col-md-1">
-                        <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
-
-                        <a href="/apartments/{{ apartment.id }}/add_image" class="btn btn-primary pull right">Add Image</a>
-
-                        <a href="/apartments/{{ apartment.id }}/add_open_house" class="btn btn-primary pull right">Add Open House</a>
-                    </div>
-                {% endif %}
-            {% endif %}
+            </div>
         </div>
 
         <div class="row">
-            {% if listingMisc.id != None %}
-                <div class="col-md-6">
-                    <div class="distances">
-                        <div class="byCar">
-                            <p>Car</p>
-                            <p>{{ listingMisc.carpreschool }}</p>
-                            <p>{{ listingMisc.carsupermarket }}</p>
-                            <p>{{ listingMisc.carmetro }}</p>
-                        </div>
-                        <div class="onFoot">
-                            <p>Foot</p>
-                            <p>{{ listingMisc.footpreschool }}</p>
-                            <p>{{ listingMisc.footsupermarket }}</p>
-                            <p>{{ listingMisc.footmetro }}</p>
-                        </div>
-                        <div class="distanceName">
-                            <p>Preschool</p>
-                            <p>Supermarket</p>
-                            <p>Metro station</p>
-                        </div>
-                        <div class="meta">
-                            <div class="info">
-                                <div class="heading">
-                                    <h2>Location based information</h2>
-                                </div>
-                                <ul>
-                                    <li>{{apartment.address}}</li>
-                                    <li>Located in {{apartment.locationid.region}}, {{apartment.locationid.country}}</li>
-                                    <li>Year constructed: {{apartment.timeofconstruction}}</li>
-                                </ul>
-                            </div>
-                        </div>
+            <div class="col-md-6">
+                <div class="heading">
+                    <h2>Location based information</h2>
+                </div>
+                <div class="meta">
+                    <div class="info">
+                        <ul>
+                            <li>{{apartment.address}}</li>
+                            <li>Located in {{apartment.locationid.region}}, {{apartment.locationid.country}}</li>
+                            <li>Year constructed: {{apartment.timeofconstruction}}</li>
+                        </ul>
                     </div>
-                 </div>
-            {% endif %}
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="heading">
                     <h2>Detailed information</h2>
@@ -110,11 +86,45 @@
                             <li>Size of property: {{apartment.size}} m&sup2;</li>
                             <li>Rooms: {{apartment.rooms}}</li>
                             <li>Bathrooms: {{apartment.bathrooms}}</li>
+                            <li>Price: &euro;{{apartment.listings_set.first.price}}</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+        
+        {% if listingMisc.id != None %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="heading">
+                        <h2>Time spent traveling by a car</h2>
+                    </div>
+                    <div class="distances">
+                        <div class="byCar">
+                            <ul>
+                                <li>Preschool {{ listingMisc.carpreschool }} minutes</li>
+                                <li>Supermarket {{ listingMisc.carsupermarket }} minutes </li>
+                                <li>Metro {{ listingMisc.carmetro }} minutes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heading">
+                        <h2>Time spent traveling on foot</h2>
+                    </div>
+                    <div class="distances">
+                        <div class="onfoot">
+                            <ul>
+                                <li>Preschool {{ listingMisc.footpreschool }} minutes</li>
+                                <li>Supermarket {{ listingMisc.footsupermarket }} minutes</li>
+                                <li>Metro {{ listingMisc.footmetro }} minutes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-md-6">
