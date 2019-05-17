@@ -6,6 +6,7 @@
 .agents .agent{
     display: flex;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .agent .image{

@@ -35,18 +35,6 @@ $(document).ready(function () {
         $("body").addClass('no-scroll');
     });
 
-
-    if($(".image-list").length){
-        var targetsrc = $(".main-image img")
-        $(".image-list img").on("click", function(){
-            var src = $(this).attr('src') 
-            targetsrc.attr('src', src)
-
-            $(".image-list .image").removeClass('active');
-            $(this).parent('.image').addClass("active");
-        })
-    }
-
     $('.search-toggle').on('click', function(){
         $("#search").focus();
         $(".site-overlay").addClass('active');
@@ -158,27 +146,21 @@ $(document).ready(function () {
             });
         }
     }
-
-$("#contact-form").submit(function(e) {
-    e.preventDefault();
-    var form = $(this);
-    var url = form.attr('action');
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        success: function(data)
-        {
-            $("#contact-form").hide()
-            $(".thank-you").show()
-        }
+    $("#contact-form").submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data)
+            {
+                $("#contact-form").hide()
+                $(".thank-you").show()
+            }
+        });
     });
-});
-
-
-
-
-
 
     jQuery('img.svg').each(function () {
         var $img = jQuery(this);

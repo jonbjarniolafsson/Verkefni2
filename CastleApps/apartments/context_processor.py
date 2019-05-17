@@ -3,7 +3,7 @@ from users.forms import ContactUs
 
 
 def getZipCodes(request):
-    zipList = Locations.objects.all().values_list("zip", flat=True).distinct()
+    zipList = Apartments.objects.all().filter().values_list("locationid__zip", flat=True).distinct()
     companyInfo = CompanyInformation.objects.get(name='Castle Apartments')
 
     # locations = Locations.objects.all()
