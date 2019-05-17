@@ -344,10 +344,6 @@ def addPaymentInfo(request, apartmentID):
     else:
         return redirect('frontpage')
 
-
-def postComment(request):
-    form = ContactForm(data=request.post)
-
 #shows info for user and user confirms payment
 @login_required
 def reviewPayment(request, apartmentID, listingID, paymentID):
