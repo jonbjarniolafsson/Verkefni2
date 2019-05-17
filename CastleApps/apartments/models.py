@@ -97,13 +97,14 @@ class Listings(models.Model):
         priceAfterDownPayment = price * 0.85  # We assume people put 15% down
         return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
 
-
+# We use this to register the open houses. THese are displayed on the front page.
 class OpenHouse(models.Model):
     openhousestart = models.DateTimeField(default=None, max_length=75)
     openhouseend = models.DateTimeField(default=None, max_length=75)
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
 
-
+# These are small things as the table names suggest. We display this after an apartment has been
+# Listed for sale you can add distance to supermarket etc.
 class ListingMiscs(models.Model):
     footpreschool = models.CharField(max_length=5, blank=True, null=True)
     carpreschool = models.CharField(max_length=5, blank=True, null=True)
@@ -139,7 +140,8 @@ class Transactions(models.Model):
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-
+# The contact form being used on the front page down to the right
+# Sends an AJAX request.
 class ContactForm(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
