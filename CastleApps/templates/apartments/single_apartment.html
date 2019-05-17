@@ -39,9 +39,12 @@
                     <p>{{apartment.listings_set.first.description}}</p>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <button class="btn-primary">Buy now</button>
+                {% if listingMisc.id == None %}
                 <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">add key distances</a>
+                {% endif %}
             </div>
         </div>
         <div class="row">
@@ -124,7 +127,7 @@
             </div>
             <div class="col-md-6">
                 <div class="heading">
-                    <h2>Feel like you cannot afford it?</h2>
+                    <h2>Financing provided</h2>
                 </div>
                 <div class="disclaimer">
                     <div class="meta">

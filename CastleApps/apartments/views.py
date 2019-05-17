@@ -105,7 +105,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     user = request.user.id
     print("PRINTING ID OF USER: ", user)
     print("Print machine :",Locations.objects.filter(country_id= 'Iceland', zip = '108'))
-    aparments = get_object_or_404(Apartments, pk=apartmentID)
+    apartments = get_object_or_404(Apartments, pk=apartmentID)
 
 
     if user != None:
@@ -116,8 +116,6 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
     #    apartment = Apartments.objects.get(id=apartmentID)
     #    ViewHistory.objects.create(apartmentid=apartment.pk, user=user)
-
-
     checking = Listings.objects.filter(apartmentid_id =apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
     print(len(checking))
@@ -173,6 +171,7 @@ def allApartments(request):
     }
     return render(request, 'apartments/apartments_list.html', context)
 
+
 def addKeyDistances(request, apartmentID):
     listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
@@ -184,7 +183,7 @@ def addKeyDistances(request, apartmentID):
             miscData.listingid_id = listing.id
             miscData.save()
             print("REDIRECTING")
-            return redirect(f"/apartments/{apartmentID}")
+            return redirect("/apartments/{apartmentID}")
     form = MiscInfoForm()
 
     return render(request, 'apartments/listing_misc.html', {
@@ -194,14 +193,15 @@ def addKeyDistances(request, apartmentID):
 
 
 def createLocation(request):
-    currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
-        return HttpResponse('Unauthorized', status=401)
+    # currentUser = request.user
+    # if currentUser.id == None or currentUser.is_staff == False:
+    #     return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
             addressForm.save() #Saves to the DB
-            return redirect('create-apartment') #Supposed to redirect to create apartment
+            locationID = Locations.objects.latest('id').id
+            return redirect(reverse("create-apartment",args=[locationID])) #Supposed to redirect to create apartment
         context = {'address_form': addressForm}
         return render(request, 'apartments/create_location.html', context)
     else:
@@ -211,22 +211,26 @@ def createLocation(request):
         })
 
 
-def createApartments(request):
-        currentUser = request.user
-        if currentUser.id == None or currentUser.is_staff == False:
-            return HttpResponse('Unauthorized', status=401)
+def createApartments(request, locationID):
+        # currentUser = request.user
+        # if currentUser.id == None or currentUser.is_staff == False:
+        #     return HttpResponse('Unauthorized', status=401)
+        instance = Locations.objects.latest('id')
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            appForm = CastleAppsCreateForm(data=request.POST, prefix='apartment')
+            appForm = CastleAppsCreateForm(data=request.POST, instance=instance)
             if appForm.is_valid():
                 appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': appForm}
+            context = {'app_form': appForm, 'locationID': locationID}
             return render(request, 'apartments/create_apartment.html', context)
         else:
-            appForm = CastleAppsCreateForm(data=request.GET, prefix='apartment')
+            appForm = CastleAppsCreateForm(instance=instance, initial={'locationid': locationID})
             return render(request, 'apartments/create_apartment.html', {
-                'app_form': appForm
+                'app_form': appForm,
+                'locationID': locationID
+
+
             })
 
 

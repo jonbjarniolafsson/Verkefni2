@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from ..models import Apartments, Locations
+from ..models import Apartments, ApartmentImages
 from django import forms
 
 
