@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="baecf8c4-dbe1-4a8d-8d5b-b11bfe9c3789" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/CastleApps/apartments/forms/apartment_form.py" beforeDir="false" afterPath="$PROJECT_DIR$/CastleApps/apartments/forms/apartment_form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CastleApps/apartments/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/CastleApps/apartments/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CastleApps/apartments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/CastleApps/apartments/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="baecf8c4-dbe1-4a8d-8d5b-b11bfe9c3789" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,7 +334,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4574000" />
+    <option name="totallyTimeSpent" value="4886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="738" extended-state="6" />

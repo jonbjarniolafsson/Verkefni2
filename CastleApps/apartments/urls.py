@@ -33,7 +33,12 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/remove_listing/', views.removeListing, name="add-listing"),
      path('apartments/<int:apartmentID>/remove_apartment/', views.removeApartment, name="remove-apartment"),
      path('apartments/<int:apartmentID>/add_key_distances/', views.addKeyDistances, name="add_key_distances"),
+<<<<<<< HEAD
      path('apartments/<int:apartmentID>/add_image/', views.addImage, name="add-image"),
      path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
+=======
+
+          path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
+>>>>>>> 95211b037457697e1b0e446e48de20e3bbdcbe02
      path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review"),
 ]

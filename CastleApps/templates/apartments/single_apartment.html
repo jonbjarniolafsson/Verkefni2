@@ -40,10 +40,19 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <button class="btn-primary">Buy now</button>
+            <div class="col-md-1">
+                {% if apartment.forsale == True %}
+                <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
+                {% endif %}
+            </div>
+            <div class="col-md-1">
                 {% if listingMisc.id == None %}
-                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">add key distances</a>
+                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
+                {% endif %}
+            </div>
+            <div class="col-md-1">
+                {% if listingMisc.id == None %}
+                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
                 {% endif %}
             </div>
         </div>
