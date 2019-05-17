@@ -252,7 +252,7 @@ def addImage(request, apartmentID):
         })
 
 def openHouseListing(request, apartmentID):
-    listings = Listings.objects.filter(id=apartmentID)
+    listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
     print(listing)

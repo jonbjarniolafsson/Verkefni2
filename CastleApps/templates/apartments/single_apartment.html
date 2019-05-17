@@ -55,10 +55,11 @@
             </div>
             <div class="col-md-1">
                 {% if apartment.forsale == True %}
-                <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
+                    <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
 
-                    <a href="/apartments/{{ apartment.id }}/add_image" class="btn btn-primary pull right">Add an Image</a>
+                    <a href="/apartments/{{ apartment.id }}/add_image" class="btn btn-primary pull right">Add Image</a>
 
+                    <a href="/apartments/{{ apartment.id }}/add_open_house" class="btn btn-primary pull right">Add Open House</a>
                 {% endif %}
             </div>
             {% endif %}
