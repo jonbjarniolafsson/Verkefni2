@@ -168,7 +168,8 @@ def singleApartment(request, apartmentID):  # Need to add error handling
         user = request.user
     # Tests if listing has misc information to display
     try:
-        listingMisc = ListingMiscs.objects.get(listingid_id=listing.id)
+        listingMisc = ListingMiscs.objects.filter(listingid_id=listing.id)
+        listingMisc = listingMisc.last
         context1 = {
             'apartment': apartments,
             'images': apartmentImages,
