@@ -306,12 +306,15 @@ def customhandler404(request, exception, template_name='apartments/404.html'):
 # Inserting a from and to date of an open house
 # This can only be done if they are listed for sale already
 def openHouseListing(request, apartmentID):
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     message = 'not good'
-    # appForSale = Apartments.objects.get(id=apartmentID).forsale
-    # if appForSale == False:
-    #     return render(request, 'apartments/404.html', context={
-    #         '404': message
-    #     })
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    if appForSale == False:
+        return render(request, 'apartments/404.html', context={
+            '404': message
+        })
 
     listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
