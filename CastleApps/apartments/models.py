@@ -1,12 +1,7 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models  # Tells it to map to database
 from django.utils import timezone
 from django.conf import settings
-from datetime import datetime
-
-from django.shortcuts import render
 
 
 # You do not need to specify primary key. It is automatically
@@ -83,7 +78,7 @@ class Listings(models.Model):
     def shortMortgage(self):
         price = int(self.price)
         priceAfterDownPayment = price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 120) + (0.05 / 12 * priceAfterDownPayment))
+        return (priceAfterDownPayment / 120) + (0.05 / 12 * priceAfterDownPayment)
 
     @property
     def mediumMortgage(self):

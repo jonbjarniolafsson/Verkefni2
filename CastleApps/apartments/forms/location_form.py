@@ -1,6 +1,5 @@
 from django.forms import ModelForm, widgets
 from ..models import Locations
-# from django import forms
 
 
 class AddressCreateForm(ModelForm):
