@@ -30,12 +30,14 @@
 {#            {% endif %}#}
 {#        </div>#}
 
-        <form href="add-listing/{{apartment.id}}" class="background-white" method="POST">
+        <form href="add-listing/{{apartment.id}}" class="white-background" method="POST">
             {% csrf_token %}
              {% for item in form %}
                 <div class="form-group">
 
-                    <label>{{item.name}}</label>
+                    {% if item.field.widget.input_type != 'select' %}
+                        <label>{{item.name}}</label>
+                    {% endif %}
                     {{item}}
                 </div>
             {% endfor %}

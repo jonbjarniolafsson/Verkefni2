@@ -30,7 +30,7 @@
 {#            {% endif %}#}
 {#        </div>#}
 
-        <form class="form form-horizontal" action="{% url 'edit-apartment' apartment_id %}" method="POST">
+        <form class="white-background" action="{% url 'edit-apartment' apartment_id %}" method="POST">
             {% csrf_token %}
              {{ form }}
 

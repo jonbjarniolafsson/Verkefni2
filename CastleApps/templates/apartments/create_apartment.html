@@ -7,7 +7,9 @@
             {% csrf_token %}
              {% for item in app_form %}
                 <div class="form-group">
-                    <label>{{item.name}}</label>
+                    {% if item.field.widget.input_type != 'select' %}
+                        <label>{{item.name}}</label>
+                    {% endif %}
                     {{item}}
                 </div>
             {% endfor %}
