@@ -56,6 +56,9 @@
             <div class="col-md-1">
                 {% if apartment.forsale == True %}
                 <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
+
+                    <a href="/apartments/{{ apartment.id }}/add_image" class="btn btn-primary pull right">Add an Image</a>
+
                 {% endif %}
             </div>
             {% endif %}
