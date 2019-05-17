@@ -17,7 +17,7 @@ from django.shortcuts import get_object_or_404,render,redirect, reverse
 
 from django.contrib.auth.decorators import login_required
 
-
+from django.http import HttpResponseNotFound
 from .forms import buy_now_form
 
 from django.db.models import Q
@@ -162,6 +162,8 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     return render(request, 'apartments/single_apartment.html', context2)
 
 
+# This is used for our Ajax request in the search
+
 def allApartments(request):
     context = {
         'apartments' : Apartments.objects.all()[0:6]
@@ -169,7 +171,19 @@ def allApartments(request):
     return render(request, 'apartments/apartments_list.html', context)
 
 
+# Adding key distances (such as busstop distance/grocery store)
+# This can be found by an Agent/Employee on the single apartment page
+# After an apartment has been listed for sale
 def addKeyDistances(request, apartmentID):
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
+    message = 'not good'
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    if appForSale == False:
+        return render(request, 'apartments/404.html', context={
+            '404': message
+        })
     listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
@@ -189,9 +203,9 @@ def addKeyDistances(request, apartmentID):
 
 
 def createLocation(request):
-    # currentUser = request.user
-    # if currentUser.id == None or currentUser.is_staff == False:
-    #     return HttpResponse('Unauthorized', status=401)
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
@@ -208,27 +222,38 @@ def createLocation(request):
 
 
 def createApartments(request, locationID):
-        # currentUser = request.user
-        # if currentUser.id == None or currentUser.is_staff == False:
-        #     return HttpResponse('Unauthorized', status=401)
-        if request.method == 'POST':
-            # Read data from apartments form, and from address form.
-            appForm = CastleAppsCreateForm(data=request.POST)
-            if appForm.is_valid():
-                appForm.save()
-                return redirect(reverse("apartment", args=[Apartments.objects.latest('id').id]))
-            context = {'app_form': appForm, 'locationID': locationID}
-            return render(request, 'apartments/create_apartment.html', context)
-        else:
-            appForm = CastleAppsCreateForm(initial={'locationid': locationID})
-            return render(request, 'apartments/create_apartment.html', {
-                'app_form': appForm,
-                'locationID': locationID
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
+    if request.method == 'POST':
+        # Read data from apartments form, and from address form.
+        appForm = CastleAppsCreateForm(data=request.POST)
+        if appForm.is_valid():
+            appForm.save()
+            return redirect(reverse("apartment", args=[Apartments.objects.latest('id').id]))
+        context = {'app_form': appForm, 'locationID': locationID}
+        return render(request, 'apartments/create_apartment.html', context)
+    else:
+        appForm = CastleAppsCreateForm(initial={'locationid': locationID})
+        return render(request, 'apartments/create_apartment.html', {
+            'app_form': appForm,
+            'locationID': locationID
 
 
-            })
+        })
 
 def addImage(request, apartmentID):
+    message = 'not good'
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
+    if appForSale == False or currentUser.id == None or currentUser.is_staff == False :
+        return render(request, 'apartments/404.html', context={
+            '404': message
+        })
+
+
     if request.method == 'POST':
         form = AddImage(data = request.POST)
         if form.is_valid():
@@ -245,11 +270,22 @@ def addImage(request, apartmentID):
             'apartmentID': apartmentID
         })
 
+def customhandler404(request, exception, template_name='apartments/404.html'):
+    return render(request,template_name)
+# Inserting a from and to date of an open house
+# This can only be done if they are listed for sale already
 def openHouseListing(request, apartmentID):
+    message = 'not good'
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    if  appForSale == False:
+        return render(request, 'apartments/404.html', context= {
+            '404' : message
+        })
+
     listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
-    print(listing)
+
     if request.method == 'POST':
         form = OpenHouseForm(data = request.POST)
         if form.is_valid():
@@ -262,6 +298,9 @@ def openHouseListing(request, apartmentID):
         context = {'form': form, 'apartmentID': listing.id}
         return render(request, 'apartments/add_open_house.html', context)
 
+
+
+# Our main search for apartments. Search by keyword and zip or each one
 def searchApartments(request):
     searchString = request.GET.get("search")
     zipCode = request.GET.get("zip")
@@ -293,7 +332,7 @@ def searchApartments(request):
     }
     return render(request, "apartments/search-results.html", apps)
 
-
+# Edit an apartment after you have already added it to the database
 def editApartment(request, apartmentID=None):
     currentUser = request.user
     if currentUser.id == None or currentUser.is_staff == False:
@@ -311,10 +350,11 @@ def editApartment(request, apartmentID=None):
     print("FORM INVALID")
     return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartmentID})
 
-
+# Add listing. To change the specific listing you delete it and start again
 def addListing(request, apartmentID):
-    print("IN ADD LISTING")
-
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         #currentUser = request.user
         #if currentUser.id == None or currentUser.is_staff:
@@ -332,7 +372,13 @@ def addListing(request, apartmentID):
     form = ListingForm(initial = {'apartmentid': apartmentID, 'agent': request.user})
     return render(request, 'apartments/add_listing.html', {'form': form, 'apartmentID': apartmentID})
 
+# A simple deletition of listing from the database. This is when
+# you want the apartment to be unlisted if it does not get sold
+# or you madea  mistake
 def removeListing(request, apartmentID=None):
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     listings = Listings.objects.filter(apartmentid=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
@@ -342,10 +388,11 @@ def removeListing(request, apartmentID=None):
     apartment.save()
     return redirect(reverse("apartment", args =[apartmentID]))
 
-
-
-
+# Just incase you want to enter the same apartment again.
 def removeApartment(request, apartmentID=None):
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     theApartment = Apartments.objects.get(id=apartmentID)
     apartment = Apartments.objects.get(id=apartmentID).delete()
     return render(request, 'apartments/deleted_apartment.html', {'apartment':theApartment})

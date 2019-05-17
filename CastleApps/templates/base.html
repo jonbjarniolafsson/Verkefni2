@@ -21,7 +21,8 @@
     </div>
     <div class="contact-form">
         <h2>Contact us</h2>
-        <form action="">
+        <form id="contact-form" action="{% url 'contact_us' %}">
+            <!--
             <div class="form-group">
                 <label for="name">Name: </label>
                 <input type="text" name="name" id="name">
@@ -34,7 +35,21 @@
                 <label for="message">Message: </label>
                 <textarea name="message" id="message" cols="30" rows="10"></textarea>
             </div>
+            <button type="submit">Submit</button>
+            -->
+            {% for field in contactForm %}
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{field.name}}">{{field.name}}</label>
+                    {{field}}
+                </div>
+            {% endfor %}
+
+            <button type="submit">Submit</button>
         </form>
+        <div class="thank-you" style="display: none;">
+            <p>Thank you for contacting us, we will answer you as soon a possible</p>
+        </div>
     </div>
     <div class="search-form">
         <div class="container">
