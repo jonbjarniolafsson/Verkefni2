@@ -6,8 +6,14 @@
             {% csrf_token %}
             {% for field in form %}
             <div class="form-group">
-                <label for="{{ field.html_name}}">{{ field.html_name}}</label>
-                <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="text" /> 
+                {% if field.html_name != 'password' %}
+                    <label for="{{ field.html_name}}">{{ field.html_name}}</label>
+                    <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="text" />
+                {% endif %}
+                {% if field.html_name == 'password'%}
+                     <label for="{{ field.html_name}}">{{ field.html_name}}</label>
+                    <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" type="password" />
+                {% endif %}
                 {{ field.errors }}
             </div>
             {% endfor %}
@@ -15,3 +21,4 @@
         </form>
     </div>
 {% endblock %}
+
