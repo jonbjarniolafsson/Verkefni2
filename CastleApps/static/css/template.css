@@ -39,6 +39,16 @@ h4 {
     font-size: 14px;
 }
 
+.button-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-group a{
+    display: block;
+    margin-bottom: 15px;
+}
+
 .heading h2 {
     position: relative;
 }

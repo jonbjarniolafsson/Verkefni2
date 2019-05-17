@@ -27,47 +27,47 @@ from django.utils import timezone
 
 
 def home(request):
-        #print("PRINTING CURRENT DATETIME: ", datetime.now())
-        #apartment = Apartments.objects.get(id=3)
-        #seller = apartment.owner_id
-        #apartment.forsale = False  # change field
-        #apartment.save()
-        #listing = Listings.objects.get(id=1)
-        #print(listing.shortMortgage)
+    #print("PRINTING CURRENT DATETIME: ", datetime.now())
+    #apartment = Apartments.objects.get(id=3)
+    #seller = apartment.owner_id
+    #apartment.forsale = False  # change field
+    #apartment.save()
+    #listing = Listings.objects.get(id=1)
+    #print(listing.shortMortgage)
 
-        
+    
 
-        newUser = request.user.id
-        print(newUser)
+    newUser = request.user.id
+    print(newUser)
 
-        openHouse =  OpenHouse.objects.all()
-        newList = []
-        # Context has to be a dictionary
-        context = {}
-        newApart = ''
-        for x in range(0,len(OpenHouse.objects.all()) +1):
-            # NEed to make sure the filter doesn't return empty or it crashes
-            if len(openHouse.filter(id=x)) != 0:
-                # We are comparing the date in our timezone vs the date coming from the database
-                if timezone.now() < openHouse.get(id = x).openhousestart:
-                    #We know for sure it exists, now we need access to the object
-                    y = OpenHouse.objects.get(id=x)
-                    #Make a new list of all the apartments that have open houses scheduled in the future
-                    newList.append(y.listingid.apartmentid.id)
-                    newList = set(newList)
-                    newList = list(newList)
-                    # We ask the DB to return all the apartments in the list that match
-                    newApart = Apartments.objects.filter(pk__in=newList)
+    openHouse =  OpenHouse.objects.all()
+    newList = []
+    # Context has to be a dictionary
+    context = {}
+    newApart = ''
+    for x in range(0,len(OpenHouse.objects.all()) +1):
+        # NEed to make sure the filter doesn't return empty or it crashes
+        if len(openHouse.filter(id=x)) != 0:
+            # We are comparing the date in our timezone vs the date coming from the database
+            if timezone.now() < openHouse.get(id = x).openhousestart:
+                #We know for sure it exists, now we need access to the object
+                y = OpenHouse.objects.get(id=x)
+                #Make a new list of all the apartments that have open houses scheduled in the future
+                newList.append(y.listingid.apartmentid.id)
+                newList = set(newList)
+                newList = list(newList)
+                # We ask the DB to return all the apartments in the list that match
+                newApart = Apartments.objects.filter(pk__in=newList)
 
-        newlyListed = Listings.objects.all()
-        print("NEWLY LISTED: ",newlyListed)
-        apps = Apartments.objects.filter(forsale=True)
-        #companyInfo = CompanyInformation.objects.all()
-        context = {
-            'apartments': newApart,  # Send all the apartments
-            'newlyListed': apps,
-            'userid': request.user.id
-        }
+    newlyListed = Listings.objects.all()
+    print("NEWLY LISTED: ",newlyListed)
+    apps = Apartments.objects.filter(forsale=True)
+    #companyInfo = CompanyInformation.objects.all()
+    context = {
+        'apartments': newApart,  # Send all the apartments
+        'newlyListed': apps,
+        'userid': request.user.id
+    }
 
     newUser = request.user.id
     print(newUser)
