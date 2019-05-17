@@ -199,8 +199,8 @@ def createLocation(request):
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
-            locationID = Locations.objects.latest('id').id
             addressForm.save() #Saves to the DB
+            locationID = Locations.objects.latest('id').id
             return redirect(reverse("create-apartment",args=[locationID])) #Supposed to redirect to create apartment
         context = {'address_form': addressForm}
         return render(request, 'apartments/create_location.html', context)

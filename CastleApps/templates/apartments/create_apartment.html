@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-    <div>Location id: {{ locationID }}</div>
+{#    <div>Location id: {{ locationID }}</div>#}
         <form action="{% url 'create-apartment' locationID %}" class="background-white" method="POST">
             {% csrf_token %}
              {% for item in app_form %}
