@@ -94,10 +94,10 @@
                             </li>
                             {% if user.is_staff %}
                                 <li class="user">
-                                    Locations
+                                    Real Estate Tools
                                     <ul class="submenu">
-                                        <li><a href="{% url 'create-location' %}" >Add location</a></li>
-                                        <li><a href="{% url 'create-apartment' %}" >Add Apartment</a></li>
+                                        <li><a href="{% url 'create-location' %}" >Add Apartment</a></li>
+
                                         <li><a href="{% url 'managed_apartments' request.user.id %}" >Manage listings</a></li>
                                     </ul>
                                 </li>

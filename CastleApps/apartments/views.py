@@ -178,7 +178,7 @@ def addKeyDistances(request, apartmentID):
             miscData.listingid_id = listing.id
             miscData.save()
             print("REDIRECTING")
-            return redirect(f"/apartments/{apartmentID}")
+            return redirect("/apartments/{apartmentID}")
     form = MiscInfoForm()
 
     return render(request, 'apartments/listing_misc.html', {
@@ -195,10 +195,8 @@ def createLocation(request):
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
             addressForm.save() #Saves to the DB
-            print(Locations.objects.latest('id').id)
-            print(Locations.objects.latest('id').country)
-            print(Locations.objects.latest('id').objects)
-            return render(request, 'apartments/create_apartment.html', context={'locationID': Locations.objects.latest('id').country}) #Supposed to redirect to create apartment
+            locationID = Locations.objects.latest('id').id
+            return redirect(reverse("create-apartment",args=[locationID])) #Supposed to redirect to create apartment
         context = {'address_form': addressForm}
         return render(request, 'apartments/create_location.html', context)
     else:
@@ -208,24 +206,26 @@ def createLocation(request):
         })
 
 
-def createApartments(request):
+def createApartments(request, locationID):
         # currentUser = request.user
         # if currentUser.id == None or currentUser.is_staff == False:
         #     return HttpResponse('Unauthorized', status=401)
         instance = Locations.objects.latest('id')
-        print(instance)
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
             appForm = CastleAppsCreateForm(data=request.POST, instance=instance)
             if appForm.is_valid():
                 appForm.save()
                 return redirect('frontpage')
-            context = {'app_form': appForm, 'locationID': instance}
+            context = {'app_form': appForm, 'locationID': locationID}
             return render(request, 'apartments/create_apartment.html', context)
         else:
-            appForm = CastleAppsCreateForm(instance=instance)
+            appForm = CastleAppsCreateForm(instance=instance, initial={'locationid': locationID})
             return render(request, 'apartments/create_apartment.html', {
-                'app_form': appForm
+                'app_form': appForm,
+                'locationID': locationID
+
+
             })
 
 
