@@ -41,20 +41,25 @@
             </div>
 
             <div class="col-md-1">
+
                 {% if apartment.forsale == True %}
                 <a href="/apartments/{{apartment.id}}/payment_info" class="btn btn-primary pull right">Buy Now</a>
                 {% endif %}
             </div>
+            {% if user.is_staff == True %}
+
             <div class="col-md-1">
                 {% if listingMisc.id == None %}
                 <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
                 {% endif %}
             </div>
             <div class="col-md-1">
-                {% if listingMisc.id == None %}
-                <a href="/apartments/{{apartment.id}}/add_key_distances" class="btn btn-primary pull right">Add Key Distances</a>
+                {% if apartment.forsale == True %}
+                <a href="/apartments/{{ apartment.id }}/remove_listing" class="btn btn-primary pull right">Remove Listing</a>
                 {% endif %}
             </div>
+            {% endif %}
+
         </div>
         <div class="row">
             {% if listingMisc.id != None %}
@@ -103,7 +108,7 @@
                             <li>Size of property: {{apartment.size}} m&sup2;</li>
                             <li>Rooms: {{apartment.rooms}}</li>
                             <li>Bathrooms: {{apartment.bathrooms}}</li>
-                            
+
                         </ul>
                     </div>
                 </div>

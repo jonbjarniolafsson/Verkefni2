@@ -330,7 +330,7 @@ def removeListing(request, apartmentID=None):
     apartment = Apartments.objects.get(id = apartmentID)
     apartment.forsale=False
     apartment.save()
-    return render(request, 'apartments/single_apartment.html')
+    return redirect(reverse("apartment", args =[apartmentID]))
 
 def removeApartment(request, apartmentID=None):
     theApartment = Apartments.objects.get(id=apartmentID)
