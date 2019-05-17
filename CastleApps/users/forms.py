@@ -1,16 +1,9 @@
-# users/forms.py
-# from django import forms
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-# from .models import Users
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Users
 from apartments.models import ContactForm
-# from django.contrib.auth import get_user_model
 from django.forms import ModelForm, widgets
 
-
-# Users = get_user_model()
 
 class UsersCreationForm(UserCreationForm):
     class Meta(UserCreationForm):

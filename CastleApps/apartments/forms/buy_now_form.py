@@ -1,12 +1,6 @@
-from django.forms import ModelForm, widgets, Select
+from django.forms import ModelForm, widgets
 from ..models import PaymentInfos
 
-from django import forms
-
-
-# from django.forms import extras
-
-# from django_month_year_widget.widgets import MonthYearWidget
 
 class PaymentInfoForm(ModelForm):
     # add from foreignkey image
@@ -31,7 +25,7 @@ class PaymentInfoForm(ModelForm):
         ]
         YEARS = [
             ('', 'year of expiration'),
-            ('2019','19'),
+            ('2019', '19'),
             ('2020', '20'),
             ('2021', '21'),
             ('2022', '22'),
@@ -48,7 +42,7 @@ class PaymentInfoForm(ModelForm):
             # nafndálkur er input type text og hafa css klasann form-control
             'cardholder': widgets.TextInput(attrs={'class': 'form-control'}),
             'cardnumber': widgets.TextInput(attrs={'class': 'form-control'}),
-            'expmonth': widgets.Select(choices=MONTHS,attrs={'class': 'form-control'}),
+            'expmonth': widgets.Select(choices=MONTHS, attrs={'class': 'form-control'}),
             'expyear': widgets.Select(choices=YEARS, attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
             'zip': widgets.TextInput(attrs={'class': 'form-control'}),

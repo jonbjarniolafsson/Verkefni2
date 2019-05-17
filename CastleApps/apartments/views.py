@@ -1,5 +1,3 @@
-# from django.shortcuts import render,redirect
-
 # This document will act as our controller in our Apartments app. The main magic happens here.
 
 from .forms.buy_now_form import PaymentInfoForm
@@ -7,18 +5,13 @@ from .forms.apartment_form import CastleAppsCreateForm, EditAppForm, AddImage
 from .forms.location_form import AddressCreateForm
 from .forms.listing_form import ListingForm, OpenHouseForm
 from .forms.listing_misc_form import MiscInfoForm
-# from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
-# Create your views here.
 from apartments.models import *
 from users.models import *
 from django.db.models import Max
 from django.shortcuts import get_object_or_404, render, redirect, reverse
 
 from django.contrib.auth.decorators import login_required
-
-# from django.http import HttpResponseNotFound
-# from .forms import buy_now_form
 
 from django.db.models import Q
 
@@ -27,56 +20,20 @@ from django.utils import timezone
 
 
 def home(request):
-    #print("PRINTING CURRENT DATETIME: ", datetime.now())
-    #apartment = Apartments.objects.get(id=3)
-    #seller = apartment.owner_id
-    #apartment.forsale = False  # change field
-    #apartment.save()
-    #listing = Listings.objects.get(id=1)
-    #print(listing.shortMortgage)
-
-    
-
-    newUser = request.user.id
-    print(newUser)
-
-    openHouse =  OpenHouse.objects.all()
-    newList = []
-    # Context has to be a dictionary
-    context = {}
-    newApart = ''
-    for x in range(0,len(OpenHouse.objects.all()) +1):
-        # NEed to make sure the filter doesn't return empty or it crashes
-        if len(openHouse.filter(id=x)) != 0:
-            # We are comparing the date in our timezone vs the date coming from the database
-            if timezone.now() < openHouse.get(id = x).openhousestart:
-                #We know for sure it exists, now we need access to the object
-                y = OpenHouse.objects.get(id=x)
-                #Make a new list of all the apartments that have open houses scheduled in the future
-                newList.append(y.listingid.apartmentid.id)
-                newList = set(newList)
-                newList = list(newList)
-                # We ask the DB to return all the apartments in the list that match
-                newApart = Apartments.objects.filter(pk__in=newList)
-
-    newlyListed = Listings.objects.all()
-    print("NEWLY LISTED: ",newlyListed)
-    apps = Apartments.objects.filter(forsale=True)
-    #companyInfo = CompanyInformation.objects.all()
-    context = {
-        'apartments': newApart,  # Send all the apartments
-        'newlyListed': apps,
-        'userid': request.user.id
-    }
+    # print("PRINTING CURRENT DATETIME: ", datetime.now())
+    # apartment = Apartments.objects.get(id=3)
+    # seller = apartment.owner_id
+    # apartment.forsale = False  # change field
+    # apartment.save()
+    # listing = Listings.objects.get(id=1)
+    # print(listing.shortMortgage)
 
     newUser = request.user.id
     print(newUser)
 
     openHouse = OpenHouse.objects.all()
-
     newList = []
     # Context has to be a dictionary
-    context = {}
     newApart = ''
     for x in range(0, len(OpenHouse.objects.all()) + 1):
         # NEed to make sure the filter doesn't return empty or it crashes
@@ -95,6 +52,31 @@ def home(request):
     newlyListed = Listings.objects.all()
     print("NEWLY LISTED: ", newlyListed)
     apps = Apartments.objects.filter(forsale=True)
+    # companyInfo = CompanyInformation.objects.all()
+
+    newUser = request.user.id
+    print(newUser)
+    openHouse = OpenHouse.objects.all()
+    newList = []
+    newApart = ''
+    for x in range(0, len(OpenHouse.objects.all()) + 1):
+        # NEed to make sure the filter doesn't return empty or it crashes
+        if len(openHouse.filter(id=x)) != 0:
+            # We are comparing the date in our timezone vs the date coming from the database
+            if timezone.now() < openHouse.get(id=x).openhousestart:
+                # We know for sure it exists, now we need access to the object
+                y = OpenHouse.objects.get(id=x)
+                # Make a new list of all the apartments that have open houses scheduled in the future
+                newList.append(y.listingid.apartmentid.id)
+                newList = set(newList)
+                newList = list(newList)
+                # We ask the DB to return all the apartments in the list that match
+                newApart = Apartments.objects.filter(pk__in=newList)
+
+    newlyListed = Listings.objects.all()
+    print("NEWLY LISTED: ", newlyListed)
+    apps = Apartments.objects.filter(forsale=True)
+
     # companyInfo = CompanyInformation.objects.all()
     context = {
         'apartments': newApart,  # Send all the apartments
@@ -134,13 +116,11 @@ def priceList(request):
 
 # This is the page you are led to when an apartment is clicked on
 def singleApartment(request, apartmentID):  # Need to add error handling
-    context = {}
     user = request.user.id
     print("PRINTING ID OF USER: ", user)
     print("Print machine :", Locations.objects.filter(country_id='Iceland', zip='108'))
-    apartments = get_object_or_404(Apartments, pk=apartmentID)
 
-    if user != None:
+    if user is not None:
         ViewHistory.objects.create(apartmentid_id=apartmentID, user_id=user)
 
     # if request.user.is_authenticated == True:
@@ -150,7 +130,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
     checking = Listings.objects.filter(apartmentid_id=apartmentID)
     apartments = Apartments.objects.get(id=apartmentID)
     print(len(checking))
-    if len(checking) == 0 or apartments.forsale == False:
+    if len(checking) == 0 or apartments.forsale is False:
         context = {
             'apartment': apartments,
         }
@@ -179,7 +159,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'listingMisc': listingMisc
         }
         return render(request, 'apartments/single_apartment.html', context1)
-    #Doesnt add listingmisc to context if it doesn't exist
+    # Doesnt add listingmisc to context if it doesn't exist
     except ListingMiscs.DoesNotExist:
         listingMisc = None
         context2 = {
@@ -207,11 +187,11 @@ def allApartments(request):
 @login_required
 def addKeyDistances(request, apartmentID):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     message = 'not good'
     appForSale = Apartments.objects.get(id=apartmentID).forsale
-    if appForSale == False:
+    if appForSale is False:
         return render(request, 'apartments/404.html', context={
             '404': message
         })
@@ -232,10 +212,11 @@ def addKeyDistances(request, apartmentID):
         'listing': listing
     })
 
+
 @login_required
 def createLocation(request):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
@@ -251,78 +232,11 @@ def createLocation(request):
             'address_form': addressForm
         })
 
-# This is the lengthiest bit of function in the controller
-def home(request):
-    newUser = request.user.id
-    print(newUser)
-    openHouse =  OpenHouse.objects.all()
-    newList = []
-    # Context has to be a dictionary
-    context = {}
-    newApart = ''
-    for x in range(0,len(OpenHouse.objects.all()) +1):
-        # NEed to make sure the filter doesn't return empty or it crashes
-        if len(openHouse.filter(id=x)) != 0:
-            # We are comparing the date in our timezone vs the date coming from the database
-            if timezone.now() < openHouse.get(id = x).openhousestart:
-                #We know for sure it exists, now we need access to the object
-                y = OpenHouse.objects.get(id=x)
-                #Make a new list of all the apartments that have open houses scheduled in the future
-                newList.append(y.listingid.apartmentid.id)
-                newList = set(newList)
-                newList = list(newList)
-                # We ask the DB to return all the apartments in the list that match
-                newApart = Apartments.objects.filter(pk__in=newList)
-
-    newlyListed = Listings.objects.all()
-    print("NEWLY LISTED: ",newlyListed)
-    apps = Apartments.objects.filter(forsale=True)
-    #companyInfo = CompanyInformation.objects.all()
-    context = {
-        'apartments': newApart,  # Send all the apartments
-        'newlyListed': apps,
-        'userid': request.user.id
-    }
-    newUser = request.user.id
-    print(newUser)
-
-    openHouse = OpenHouse.objects.all()
-
-    newList = []
-    # Context has to be a dictionary
-    context = {}
-    newApart = ''
-    for x in range(0, len(OpenHouse.objects.all()) + 1):
-        # NEed to make sure the filter doesn't return empty or it crashes
-        if len(openHouse.filter(id=x)) != 0:
-            # We are comparing the date in our timezone vs the date coming from the database
-            if timezone.now() < openHouse.get(id=x).openhousestart:
-                # We know for sure it exists, now we need access to the object
-                y = OpenHouse.objects.get(id=x)
-                # Make a new list of all the apartments that have open houses scheduled in the future
-                newList.append(y.listingid.apartmentid.id)
-                newList = set(newList)
-                newList = list(newList)
-                # We ask the DB to return all the apartments in the list that match
-                newApart = Apartments.objects.filter(pk__in=newList)
-
-    newlyListed = Listings.objects.all()
-    print("NEWLY LISTED: ", newlyListed)
-    apps = Apartments.objects.filter(forsale=True)
-    # companyInfo = CompanyInformation.objects.all()
-    context = {
-        'apartments': newApart,  # Send all the apartments
-        'newlyListed': apps,
-        'userid': request.user.id
-    }
-
-    return render(request, 'apartments/home.html', context)
-
 
 @login_required
 def createApartments(request, locationID):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         # Read data from apartments form, and from address form.
@@ -340,14 +254,15 @@ def createApartments(request, locationID):
 
         })
 
+
 @login_required
 def addImage(request, apartmentID):
     message = 'not good'
     appForSale = Apartments.objects.get(id=apartmentID).forsale
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
-    if appForSale == False or currentUser.id == None or currentUser.is_staff == False:
+    if appForSale is False or currentUser.id is None or currentUser.is_staff is False:
         return render(request, 'apartments/404.html', context={
             '404': message
         })
@@ -369,7 +284,7 @@ def addImage(request, apartmentID):
         })
 
 
-def customhandler404(request, exception, template_name='apartments/404.html'):
+def customhandler404(request, template_name='apartments/404.html'):
     return render(request, template_name)
 
 
@@ -378,11 +293,11 @@ def customhandler404(request, exception, template_name='apartments/404.html'):
 @login_required
 def openHouseListing(request, apartmentID):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     message = 'not good'
     appForSale = Apartments.objects.get(id=apartmentID).forsale
-    if appForSale == False:
+    if appForSale is False:
         return render(request, 'apartments/404.html', context={
             '404': message
         })
@@ -443,7 +358,7 @@ def searchApartments(request):
 @login_required
 def editApartment(request, apartmentID=None):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     instance = get_object_or_404(Apartments, pk=apartmentID)
     if request.method == 'POST':
@@ -463,7 +378,7 @@ def editApartment(request, apartmentID=None):
 @login_required
 def addListing(request, apartmentID):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         # currentUser = request.user
@@ -489,7 +404,7 @@ def addListing(request, apartmentID):
 @login_required
 def removeListing(request, apartmentID=None):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     listings = Listings.objects.filter(apartmentid=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
@@ -505,7 +420,7 @@ def removeListing(request, apartmentID=None):
 @login_required
 def removeApartment(request, apartmentID=None):
     currentUser = request.user
-    if currentUser.id == None or currentUser.is_staff == False:
+    if currentUser.id is None or currentUser.is_staff is False:
         return HttpResponse('Unauthorized', status=401)
     theApartment = Apartments.objects.get(id=apartmentID)
     apartment = Apartments.objects.get(id=apartmentID).delete()
@@ -514,7 +429,6 @@ def removeApartment(request, apartmentID=None):
 
 @login_required
 def addPaymentInfo(request, apartmentID):
-    # get or what??
     if Apartments.objects.get(id=apartmentID).forsale:
         listings = Listings.objects.filter(apartmentid=apartmentID)
         idOfActiveListing = listings.aggregate(Max('id'))
@@ -542,7 +456,7 @@ def addPaymentInfo(request, apartmentID):
 
 def employeeAllApartments(request):
     context = {
-        'apartments': Apartments.objects.all()[0:20]
+        'apartments': Apartments.objects.filter(forsale=False)[0:20]
     }
     return render(request, 'apartments/employee_all_apartments.html', context)
 

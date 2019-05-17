@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-    <form class="background-white" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
+    <form class="white-background" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Confirm purchase" class="btn btn-primary pull-right" style=""/>
 </form>
