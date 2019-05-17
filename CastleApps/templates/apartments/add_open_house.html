@@ -3,13 +3,11 @@
 {% block content %}
     <div class="container">
 {#    <div>Location id: {{ locationID }}</div>#}
-        <form action="{% url 'create-apartment' locationID %}" class="background-white" method="POST">
+        <form action="{% url 'open_house' apartmentID %}" class="white-background" method="POST">
             {% csrf_token %}
-             {% for item in app_form %}
+             {% for item in form %}
                 <div class="form-group">
-                    {% if item.field.widget.input_type != 'select' %}
-                        <label>{{item.name}}</label>
-                    {% endif %}
+                    <label>{{item.name}}</label>
                     {{item}}
                 </div>
             {% endfor %}

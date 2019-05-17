@@ -67,8 +67,66 @@
             </form>
         </div>
     </div>
+    <div class="mobile-menu">
+        <div class="menu-wrapper">
+            <ul class="menu">
+                <!--li><a href="{% url 'apartment_list' %}">All apartments</a></li-->
+                <li><a href="{% url 'agents' %}">Agents</a></li>
+                <li class="dropdown">
+                    About us
+                    <ul class="submenu">
+                        <li class="editprofile">
+                            <a href="{% url 'companyHistory' %}">Company History</a>
+                        </li>
+                        <li class="viewprofile">
+                            <a href="{% url 'priceList' %}">Price List</a>
+                        </li>
+                    </ul>
+                </li>
+                {% if user.is_staff %}
+                    <li class="dropdown">
+                        Real Estate Tools
+                        <ul class="submenu">
+                            <li><a href="{% url 'create-location' %}" >Add Apartment</a></li>
+
+                            <li><a href="{% url 'managed_apartments' request.user.id %}" >Manage listings</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <li class="dropdown">
+                    Profile
+                    <ul class="submenu">
+                        {% if user.is_authenticated %}
+                            <li class="editprofile">
+                                <a href="{% url 'editProfile' request.user.id %}">Edit Profile</a>
+                            </li>
+                            <li class="viewprofile">
+                                <a href="{% url 'viewProfile' request.user.id %}">View Profile</a>
+                            </li>
+                            <li class="viewHistory">
+                                <a href="{% url 'view_history' request.user.id%}"> Browsing history</a>
+                            </li>
+                            <li class="ownedApartments">
+                                <a href="{% url 'owned_apartments' request.user.id%}"> Owned apartments</a>
+                            </li>
+                            <li class="logout">
+                                <a href="{% url 'logout' %}" >Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="sign-in">
+                                <a href="{% url 'login' %}">Login</a>
+                            </li>
+                            <li class="register">
+                                <a href="{% url 'register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
     <header>
-        <div class="navigation">
+        <div class="navigation main">
             <div class="container">
                 <div class="navbar">
                     <div class="navbar-brand">
@@ -78,7 +136,7 @@
                     </div>
                     <div class="navbar-right">
                         <ul class="nav-links">
-                            <li><a href="{% url 'apartment_list' %}">All apartments</a></li>
+                            <!--li><a href="{% url 'apartment_list' %}">All apartments</a></li-->
                             <li><a href="{% url 'agents' %}">Agents</a></li>
                         <li class="user">
                                 About us
@@ -97,8 +155,8 @@
                                     Real Estate Tools
                                     <ul class="submenu">
                                         <li><a href="{% url 'create-location' %}" >Add Apartment</a></li>
-
                                         <li><a href="{% url 'managed_apartments' request.user.id %}" >Manage listings</a></li>
+                                        <li><a href="{% url 'employee_apartment_list' %}" >Unlisted Apartments</a></li>
                                     </ul>
                                 </li>
                             {% endif %}
@@ -145,6 +203,27 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="navigation mobile">
+            <div class="search-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Desktop-Fraedsluvefur" transform="translate(-1297.000000, -24.000000)" fill="#221F20">
+                            <g id="Header">
+                                <path style="fill: #fff;" d="M1306.997,42 C1304.86,42 1302.851,41.168 1301.34,39.657 C1298.221,36.538 1298.221,31.462 1301.34,28.343 C1302.851,26.832 1304.86,26 1306.997,26 C1309.134,26 1311.143,26.832 1312.654,28.343 C1314.165,29.854 1314.997,31.863 1314.997,34 C1314.997,36.137 1314.165,38.146 1312.654,39.657 C1311.143,41.168 1309.134,42 1306.997,42 M1319.842,45.431 L1314.739,40.328 C1317.958,36.4 1317.735,30.596 1314.068,26.929 C1312.115,24.976 1309.556,24 1306.997,24 C1304.438,24 1301.879,24.976 1299.926,26.929 C1299.177,27.678 1298.574,28.518 1298.113,29.411 C1296.629,32.282 1296.629,35.718 1298.113,38.589 C1298.574,39.482 1299.177,40.322 1299.926,41.071 C1301.879,43.024 1304.438,44 1306.997,44 C1309.243,44 1311.489,43.247 1313.325,41.742 L1318.428,46.845 C1318.818,47.235 1319.451,47.235 1319.842,46.845 C1320.232,46.454 1320.232,45.821 1319.842,45.431" id="Page-1"/>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="brand">
+                <a href="{% url 'frontpage' %}"><img src="https://i.imgur.com/qTn1T47.png" alt="/static/img/log2.png" /></a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span class="bar top"></span>
+                <span class="bar mid"></span>
+                <span class="bar bot"></span>
             </div>
         </div>
     </header>

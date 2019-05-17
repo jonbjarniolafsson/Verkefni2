@@ -1,21 +1,61 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/agents.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="{% static '/css/apartments.css' %}">
+<link rel="stylesheet" href="{% static '/css/banner.css' %}">
 {% endblock css %}
-{% block content%}
-<div class="container">
-    <h1> Your owned apartments (should be displayed same as history)</h1>
-    <div class="agent">
-        <div class="image">
-            <img src="{{user.profileimagepath}}" alt="">
-        </div>
-                    {%  for apartment in apartments %}
-                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
-                    {%  endfor %}
+
+{% block content %}
+
+<div class="apartments">
+    <div class="container">
+        <h2>Your owned apartments</h2>
+        <div class="apartments-wrapper row">
+            {% for apartment in apartments %}
+            <div class="col-md-4">
+                <div class="apartment">
+                    <div class="header">
+                        <div class="type">{{apartment.type}} in {{apartment.locationid.region}} <div class="country">{{apartment.locationid.country}}</div></div>
+                        <div class="rooms">
+                            <div class="room bedroom">
+                                <div class="total">
+                                    {{apartment.rooms}}
+                                </div>
+                                <div class="icon">
+                                    <img src="/static/img/bed.svg" />
+                                </div>
+                            </div>
+                            <div class="room bathroom">
+                                <div class="total">{{apartment.bathrooms}}</div>
+                                <div class="icon">
+                                    <img src="/static/img/bathtub.svg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image">
+                        <a href="/apartments/{{apartment.id}}">
+                            <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                        </a>
+                    </div>
+                    <div class="meta">
+                        <div class="header">
+                            <div class="price">&euro; {{apartment.listings_set.first.price}}</div>
+                            <div class="size">{{apartment.size}} m&sup2;</div>
+                        </div>
+                        <div class="desc">
+                            {{apartment.listings_set.first.description}}
+                        </div>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+{% endblock content %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static '/js/sliders.js' %}"></script>
 {% endblock%}
