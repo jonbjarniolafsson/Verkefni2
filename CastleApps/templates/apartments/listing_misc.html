@@ -1,11 +1,19 @@
 {% extends "base.html" %}
-{#{% load crispy_forms_tags %}#}
 
 {% block content %}
+<<<<<<< HEAD
     <div class="container">
     <form class="background-white" action="{% url 'add_key_distances' listing.apartmentid.id %}" method="post">
     {% csrf_token %}
     <h2 class="heading">Key distances in minutes</h2>
+=======
+<form class="white-background" action="{% url 'add_key_distances' listing.apartmentid.id %}" method="post">
+    {% csrf_token %}
+    <div class="heading">
+            <h2>Add Key Distances </h2>
+            <p>*Numbers are in minutes</p>
+        </div>
+>>>>>>> 0571b77bcc9bedc97639f36ca3c4f5982fec215e
     <p>{{ listing.apartmentid.address }} {% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}, {% endif %}{{ listing.apartmentid.locationid.region }}, {{ listing.apartmentid.locationid.country }}</p>
     {% for field in form %}
         {{ field.errors }}

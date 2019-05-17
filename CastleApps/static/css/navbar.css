@@ -110,7 +110,7 @@ body.subpage header{
     display: inline-block;
     top: -3px;
     left: 0;
-    width: 0px;
+    width: 0;
     height: 3px;
     background: #0067BC;
     transition: all 0.3s ease;
@@ -131,7 +131,7 @@ body.subpage header{
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0px;
+    width: 0;
     height: 3px;
     background: #fff;
     transition: 0.3s ease;
@@ -159,7 +159,7 @@ body.subpage header{
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0px;
+    width: 0;
     height: 3px;
     background: #fff;
     transition: 0.3s ease;
@@ -293,7 +293,7 @@ header.not-on-top .navigation .navbar .nav-links li a::after{
 
 
 .mobile-menu .menu{
-    padding: 0px;
+    padding: 0;
     list-style-type: none;
     margin-top: 50px;
 }
@@ -304,7 +304,7 @@ header.not-on-top .navigation .navbar .nav-links li a::after{
 
 .mobile-menu .menu li.dropdown{
     position: relative;
-    padding: 15px 0px 15px 15px;
+    padding: 15px 0 15px 15px;
 }
 
 .mobile-menu .menu li.dropdown::after{
@@ -327,13 +327,13 @@ header.not-on-top .navigation .navbar .nav-links li a::after{
 .mobile-menu .menu li a {
     display: block;
     color: #0067BC;
-    padding: 10px 0px 10px 15px;
+    padding: 10px 0 10px 15px;
 }
 
 .mobile-menu .menu li .submenu{
     display: none;
     list-style-type: none;
-    padding: 0px;
+    padding: 0;
 }
 
 .mobile-menu .menu li .submenu li{

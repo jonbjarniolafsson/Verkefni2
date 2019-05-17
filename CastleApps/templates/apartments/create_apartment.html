@@ -2,12 +2,14 @@
 
 {% block content %}
     <div class="container">
-{#    <div>Location id: {{ locationID }}</div>#}
+        <div class="heading">
+            <h2>Create Apartment</h2>
+        </div>
         <form action="{% url 'create-apartment' locationID %}" class="white-background" method="POST">
             {% csrf_token %}
              {% for item in app_form %}
                 <div class="form-group">
-                    {% if item.field.widget.input_type != 'select' and item.name != 'owner' and item.name != 'aptsuite' and item.name != 'timeofconstruction' and item.name != 'displayimage'%}
+                    {% if item.field.widget.input_type != 'select' and item.name != 'owner' and item.name != 'aptsuite' and item.name != 'timeofconstruction' and item.name != 'displayimage' and item.name != 'registration'%}
                         <label>{{item.name}}</label>
                     {% endif %}
                     {% if item.html_name == 'owner' %}
@@ -21,6 +23,9 @@
                     {% endif %}
                     {% if item.html_name == 'displayimage' %}
                         <label>{{"Insert path to the image you want to display"}}</label>
+                    {% endif %}
+                    {% if item.html_name == 'registration' %}
+                        <label>{{"Insert Registration - ex: ICE-2912"}}</label>
                     {% endif %}
                     {{item}}
                 </div>

@@ -4,47 +4,31 @@
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
 {% endblock css %}
 {% block content %}
-<div class="employees">
-    <div class="container">
-        <h1> Our Pricelist</h1>
-            </div>
-
-    <p> We try our darnest to provide the best possible service <br>
-        To provide this service we got the best people,  <br>
-        we surround ourselves with only the best and most serious people <br>
-    </p>
-
-    <!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-
-<table id="customers">
-  <tr>
-    <th>Sales Cost</th>
-    <th>Appraisal cost</th>
-    <th>Photo Cost</th>
-      <th>Management cost</th>
-      <th> Photo cost</th>
-  </tr>
-    <td>{{ price.salescost }}</td>
-    <td>{{ price.appraisalcost }}</td>
-    <td>{{ price.managementcost }}</td>
-    <td>{{ price.datacollection }}</td>
-    <td>{{ price.photocost }}</td>
-  </tr>
-
-</table>
-
-</body>
-</html>
-
-
-
-
-
-
-    </div>
+<div class="pricelist">
+	<div class="container">
+		<div class="heading" style="margin-bottom: 50px;">
+			<h2>Price list</h2>
+		</div>
+		<table id="customers" style="margin-bottom: 50px;">
+			<tr>
+				<th>Sales Cost</th>
+				<th>Appraisal cost</th>
+				<th>Photo Cost</th>
+				<th>Management cost</th>
+				<th> Photo cost</th>
+			</tr>
+			<td>{{ price.salescost }}</td>
+			<td>{{ price.appraisalcost }}</td>
+			<td>{{ price.managementcost }}</td>
+			<td>{{ price.datacollection }}</td>
+			<td>{{ price.photocost }}</td>
+		</tr>
+	</table>
+	<div class="row">
+		<div class="col-md-6">
+			<p>We try our darnest to provide the best possible service to provide this service we got the best people, we surround ourselves with only the best and most serious people</p>
+		</div>
+	</div>
+	</div>
 </div>
-{% endblock content %}
+  {% endblock content %}

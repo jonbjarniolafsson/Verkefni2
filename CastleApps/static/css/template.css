@@ -1,50 +1,61 @@
 @import "navbar.css";
 @import "footer.css";
-body{
+
+body {
     padding: 0;
     margin: 0;
     background: #f8f8f8;
     font-family: 'Open Sans'
 }
 
-body.subpage{
+body.subpage {
     padding-top: 170px;
 }
 
-body.no-scroll{
+body.no-scroll {
     overflow: hidden;
 }
 
-main{
+main {
     margin-bottom: 50px;
     min-height: calc(100vh - 291px);
 }
 
-h1{
+h1 {
     font-size: 36px;
     margin-bottom: 30px;
 }
 
-h2{
+h2 {
     font-size: 28px;
     margin-bottom: 15px;
 }
 
-h3{
+h3 {
     font-size: 18px;
 }
 
-h4{
+h4 {
     font-size: 14px;
 }
 
-.heading h2{
+.button-group{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-group a{
+    display: block;
+    margin-bottom: 15px;
+}
+
+.heading h2 {
     position: relative;
 }
 
-.heading h2::after{
+.heading h2::after {
     content: '';
-    position:  absolute;
+    position: absolute;
     left: -15px;
     bottom: -10px;
     width: 75px;
@@ -52,9 +63,9 @@ h4{
     background: #0067BC;
 }
 
-.site-overlay{
+.site-overlay {
     position: fixed;
-    top: 0%;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
@@ -64,26 +75,26 @@ h4{
     transition: all 0.3s ease, z-index 0s;
 }
 
-a{
+a {
     color: #0067BC;
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
 
-.site-overlay.active{
+.site-overlay.active {
     opacity: 0.75;
     z-index: 110;
 }
 
-.site-overlay.active:hover{
+.site-overlay.active:hover {
     cursor: pointer;
 }
 
 
-.login-form{
+.login-form {
     padding: 50px 100px 65px;
     position: fixed;
     top: 50%;
@@ -95,31 +106,31 @@ a:hover{
     z-index: -1;
 }
 
-.login-form h2{
+.login-form h2 {
     color: #fff;
     margin-bottom: 30px;
 }
 
-.login-form.open{
+.login-form.open {
     opacity: 1;
     z-index: 200;
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
 }
 
-form{
+form {
     position: relative;
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
 }
 
-form textarea{
+form textarea {
     width: 100%;
 }
 
-form button{
+form button {
     border: none;
     background: #fff;
     border: 2px solid #0067BC;
@@ -129,27 +140,27 @@ form button{
     font-size: 15px;
 }
 
-form button:hover{
+form button:hover {
     background: #0067BC;
     border-color: #fff;
     color: #fff;
 }
 
-.form-group{
+.form-group {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 5px 0px;
+    padding: 5px 0;
     margin-bottom: 30px;
 }
 
-.form-group label{
+.form-group label {
     position: absolute;
     top: 15px;
     left: 20px;
     margin-right: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     display: block;
     font-size: 15px;
     color: #4c4c4c;
@@ -158,38 +169,38 @@ form button:hover{
     z-index: 10;
 }
 
-.form-group label::first-letter{
+.form-group label::first-letter {
     text-transform: capitalize;
 }
 
-.form-group input, .form-group select{
-    border-radius: 0px;
+.form-group input, .form-group select {
+    border-radius: 0;
     border: 1px solid transparent;
     padding-left: 20px;
     width: 100%;
     height: 45px;
 }
 
-.form-group input:focus, .form-group input:active, .form-group select:focus, .form-group select:active{
+.form-group input:focus, .form-group input:active, .form-group select:focus, .form-group select:active {
     outline: none;
     box-shadow: none;
 }
 
-.form-group.focused input, .form-group.focused select{
+.form-group.focused input, .form-group.focused select {
     border-color: #0067BC;
 }
 
-.form-group.focused label{
+.form-group.focused label {
     top: -25px;
-    left: 0px;
+    left: 0;
     color: #fff;
 }
 
-form.white-background .form-group.focused label{
+form.white-background .form-group.focused label {
     color: #0067BC;
 }
 
-.login-form form .sign-up{
+.login-form form .sign-up {
     color: #fff;
     font-size: 15px;
     position: absolute;
@@ -197,35 +208,35 @@ form.white-background .form-group.focused label{
     bottom: -48px;
 }
 
-.login-form form .sign-up a{
+.login-form form .sign-up a {
     color: #fff;
     font-style: italic;
 }
 
-.login-form{
+.login-form {
     color: #fff;
 }
 
-.login-form .sign-in{
+.login-form .sign-in {
     margin-bottom: 15px;
 }
 
-.login-form .register{
+.login-form .register {
 
 }
 
-.login-form .sign-in a{
+.login-form .sign-in a {
     font-size: 16px;
     color: #fff;
 }
 
-.login-form .register a{
+.login-form .register a {
     font-size: 14px;
     color: #fff;
 }
 
 
-.contact-toggle{
+.contact-toggle {
     position: fixed;
     bottom: -35px;
     padding: 20px 60px;
@@ -235,22 +246,22 @@ form.white-background .form-group.focused label{
     transition: all 0.3s ease;
 }
 
-.contact-toggle.full{
+.contact-toggle.full {
     bottom: 0;
 }
 
-.contact-toggle span{
+.contact-toggle span {
     font-size: 18px;
     color: #fff;
     text-transform: uppercase;
 }
 
-.contact-toggle:hover{
+.contact-toggle:hover {
     cursor: pointer;
     bottom: 0;
 }
 
-.contact-form{
+.contact-form {
     position: fixed;
     right: -400px;
     top: 0;
@@ -260,25 +271,25 @@ form.white-background .form-group.focused label{
     background: #0067BC;
     z-index: 120;
     transition: all 0.3s ease;
-    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.35)
+    box-shadow: -5px 0 5px 0 rgba(0, 0, 0, 0.35)
 }
 
-.contact-form .thank-you{
+.contact-form .thank-you {
     color: #fff;
     font-style: italic;
 }
 
-.contact-form h2{
+.contact-form h2 {
     margin-bottom: 30px;
     color: #fff;
 }
 
-.contact-form.active{
+.contact-form.active {
     right: 0;
 }
 
 
-.spinner{
+.spinner {
     width: 75px;
     height: 75px;
     border: 5px solid transparent;
@@ -288,7 +299,7 @@ form.white-background .form-group.focused label{
     display: none;
 }
 
-.spinner.active{
+.spinner.active {
     display: block;
     animation: infinite-spinning 1s ease infinite;
 }
@@ -304,8 +315,7 @@ form.white-background .form-group.focused label{
 }
 
 
-
-.search-toggle{
+.search-toggle {
     position: absolute;
     top: 14px;
     right: -45px;
@@ -313,11 +323,11 @@ form.white-background .form-group.focused label{
 
 }
 
-.search-toggle:hover{
+.search-toggle:hover {
     cursor: pointer;
 }
 
-.search-form{
+.search-form {
     position: fixed;
     min-height: 300px;
     width: 100%;
@@ -326,16 +336,16 @@ form.white-background .form-group.focused label{
     transition: all 0.3s ease;
     z-index: 110;
     background: #0067BC;
-    padding: 50px 0px 100px 0px;
-    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.35)
+    padding: 50px 0 100px 0;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.35)
 }
 
-.search-form.active{
+.search-form.active {
     top: 0;
 }
 
 
-.search-form form{
+.search-form form {
     position: relative;
     display: flex;
     flex-flow: wrap;
@@ -345,23 +355,23 @@ form.white-background .form-group.focused label{
     max-width: 100%;
 }
 
-.search-form h2{
+.search-form h2 {
     font-size: 36px;
     color: #fff;
 }
 
-.search-form .form-group{
+.search-form .form-group {
     width: calc(33% - 15px);
     min-width: 290px;
     margin: 0;
 }
 
 
-.search-form .form-group.smaller{
+.search-form .form-group.smaller {
     /*width: calc(50% - 15px); */
 }
 
-.search-form button{
+.search-form button {
     position: absolute;
     bottom: -75px;
     right: 0;
@@ -374,21 +384,21 @@ form.white-background .form-group.focused label{
     margin-bottom: 60px;
 }
 
-@media(max-width: 992px){
+@media (max-width: 992px) {
 
-    .contact-toggle{
+    .contact-toggle {
         display: none;
     }
 
-    .search-form{
+    .search-form {
         top: -410px;
     }
 
-    .search-form .form-group{
+    .search-form .form-group {
         width: 100%;
     }
 
-    .search-form button{
+    .search-form button {
         width: initial;
     }
 }

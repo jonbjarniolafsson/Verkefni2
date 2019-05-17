@@ -6,6 +6,7 @@
 .agents .agent{
     display: flex;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .agent .image{
@@ -39,5 +40,5 @@
 }
 
 .single-agent .agent{
-    margin: 50px 0px;
+    margin: 50px 0;
 }

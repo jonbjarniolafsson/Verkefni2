@@ -46,7 +46,12 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <form class="background-white" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
+=======
+</div>
+    <form class="white-background" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
+>>>>>>> 0571b77bcc9bedc97639f36ca3c4f5982fec215e
     {% csrf_token %}
         <div class="button-group">
             <a href="javascript:history.go(-1)" class="btn btn-primary pull right">Back to payment</a>
