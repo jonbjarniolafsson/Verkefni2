@@ -147,7 +147,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'listingMisc': listingMisc
         }
         return render(request, 'apartments/single_apartment.html', context1)
-
+    #Doesnt add listingmisc to context if it doesn't exist
     except ListingMiscs.DoesNotExist:
         listingMisc = None
         context2 = {
@@ -158,11 +158,6 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'user': user,
         }
     return render(request, 'apartments/single_apartment.html', context2)
-
-
-
-
-
 
 
 def allApartments(request):
@@ -354,12 +349,8 @@ def addPaymentInfo(request, apartmentID):
 #shows info for user and user confirms payment
 @login_required
 def reviewPayment(request, apartmentID, listingID, paymentID):
-
-    #hvað á að auðkenna?
-    #vantar aðgengi að context
     listing = Listings.objects.get(id=listingID)
     if request.method == 'POST':
-
         apartment = Apartments.objects.get(id=apartmentID)
         apartment = Apartments.objects.get(id=apartmentID)
         seller = apartment.owner_id
