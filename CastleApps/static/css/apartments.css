@@ -1,14 +1,14 @@
-.apartments{
-    padding: 50px 0px;
+.apartments {
+    padding: 50px 0;
 }
 
-.apartments h2{
+.apartments h2 {
     font-size: 36px;
     margin-bottom: 30px;
     position: relative;
 }
 
-.apartments h2::after{
+.apartments h2::after {
     content: "";
     position: absolute;
     left: -15px;
@@ -18,16 +18,15 @@
     background: #0067BC;
 }
 
-.apartments .apartment{
+.apartments .apartment {
     margin-bottom: 15px;
-    -webkit-box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
-    -moz-box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
-    box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
+    -webkit-box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.33);
+    box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.33);
 }
 
 
-
-.apartment .header{
+.apartment .header {
     display: flex;
     background: #efefef;
     color: #0c0c0c;
@@ -35,42 +34,42 @@
     justify-content: space-between;
 }
 
-.apartment .header .rooms{
+.apartment .header .rooms {
     display: flex;
     justify-content: space-between;
     width: 100px;
 }
 
-.apartment .header .rooms .room{
+.apartment .header .rooms .room {
     display: flex;
     align-items: center;
 }
 
-.apartment .header .rooms .room .total{
+.apartment .header .rooms .room .total {
     margin-right: 5px;
 }
 
-.apartment .header .rooms .room .icon img{
+.apartment .header .rooms .room .icon img {
     position: relative;
     top: -1px;
     width: 20px;
-    height: 20px;   
+    height: 20px;
 }
 
-.apartments .apartment .meta{
+.apartments .apartment .meta {
     background: #efefef;
     color: #efefef;
     padding: 15px;
 }
 
 
-.apartments .apartment .meta .header{
+.apartments .apartment .meta .header {
     display: flex;
     justify-content: space-between;
     padding: 0;
 }
 
-.apartments .apartment .meta .desc{
+.apartments .apartment .meta .desc {
     height: 100px;
     word-break: break-all;
     white-space: normal;
@@ -81,38 +80,38 @@
 }
 
 
-.apartments .apartment .image{
+.apartments .apartment .image {
     overflow: hidden;
     position: relative;
 }
 
-.apartments .apartment .image img{
+.apartments .apartment .image img {
     transition: 3s linear;
     height: 250px;
     width: 100%;
 }
 
-.apartments .apartment .image img:hover{
+.apartments .apartment .image img:hover {
     transform: scale(1.15);
 }
 
-.apartments .apartments-wrapper{
+.apartments .apartments-wrapper {
     position: relative;
 }
 
-.apartments .apartments-wrapper.flexed{
+.apartments .apartments-wrapper.flexed {
     display: flex;
     flex-flow: wrap;
     justify-content: space-between;
 }
 
-.apartments .apartments-wrapper.flexed .apartment{
+.apartments .apartments-wrapper.flexed .apartment {
     width: calc(33% - 15px);
     margin-bottom: 30px;
 }
 
 
-.owl-nav button{
+.owl-nav button {
     position: absolute;
     width: 25px;
     height: 25px;
@@ -120,22 +119,22 @@
     border: none;
 }
 
-.owl-nav button:focus{
+.owl-nav button:focus {
     outline: none;
 }
 
-.owl-nav button span{
+.owl-nav button span {
     display: none;
 }
 
-.owl-nav .owl-next{
+.owl-nav .owl-next {
     border-bottom: 2px solid #0067BC !important;
     border-right: 2px solid #0067BC !important;
     transform: rotate(-45deg) translateY(-50%);
     right: -45px;
 }
 
-.owl-nav .owl-prev{
+.owl-nav .owl-prev {
     border-top: 2px solid #0067BC !important;
     border-left: 2px solid #0067BC !important;
     transform: rotate(-45deg) translateY(-50%);
@@ -143,95 +142,90 @@
 }
 
 
-.apartment.single .heading{
+.apartment.single .heading {
     margin-bottom: 50px;
 }
 
 
-.apartment.single .images{
+.apartment.single .images {
     margin-bottom: 50px;
 }
 
-.apartment.single .images .main-image{
+.apartment.single .images .main-image {
     margin-bottom: 50px;
 }
 
-.apartment.single .images .main-image img{
+.apartment.single .images .main-image img {
     width: 100%;
     height: auto;
     max-width: 800px;
     max-height: 500px;
 }
 
-.apartment.single .images .image-list{
+.apartment.single .images .image-list {
     position: relative;
 }
 
-.apartment.single .images .image-list img{
+.apartment.single .images .image-list img {
     position: relative;
     width: 100%;
     min-height: 150px;
     height: auto;
 }
 
-.apartment.single .images .image-list img:hover{
+.apartment.single .images .image-list img:hover {
     cursor: pointer;
 }
 
-.apartment.single .images .image-list .image::after{
+.apartment.single .images .image-list .image::after {
     content: '';
     position: absolute;
-    width: 0%;
+    width: 0;
     height: 3px;
     left: 50%;
-    bottom: 0px;
+    bottom: 0;
     transform: translateX(-50%);
     background: #0067BC;
     transition: width 0.3s ease;
 }
 
-.apartment.single .images .image-list .image.active::after{
+.apartment.single .images .image-list .image.active::after {
     width: 100%;
 }
 
-.apartment.single .description{
+.apartment.single .description {
     margin-bottom: 50px;
 }
 
-.apartment.single .row{
+.apartment.single .row {
     margin-bottom: 50px;
 }
 
-.apartment.single .agents-wrapper{
+.apartment.single .agents-wrapper {
     display: block;
 }
 
 
-.apartment.single .agents-wrapper .agent{
+.apartment.single .agents-wrapper .agent {
     align-items: flex-start;
 }
 
-.apartment.single .agents-wrapper .agent .meta{
-    padding: 0px 15px;
+.apartment.single .agents-wrapper .agent .meta {
+    padding: 0 15px;
 }
 
 
-
-#unlistedapartment{
-    position:absolute;
-    right:100px;
+#unlistedapartment {
+    position: absolute;
+    right: 100px;
     bottom: 160px;
 }
 
 
-
-
-
-
-.ajax-search{
+.ajax-search {
     margin-top: 100px;
 }
 
-.ajax-search form{
+.ajax-search form {
     padding-top: 50px;
 }

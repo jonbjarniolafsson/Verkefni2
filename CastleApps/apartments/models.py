@@ -89,19 +89,21 @@ class Listings(models.Model):
     def mediumMortgage(self):
         price = int(self.price)
         priceAfterDownPayment = price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment))
+        return (priceAfterDownPayment / 240) + (0.05 / 12 * priceAfterDownPayment)
 
     @property
     def longMortgage(self):
         price = int(self.price)
         priceAfterDownPayment = price * 0.85  # We assume people put 15% down
-        return ((priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment))
+        return (priceAfterDownPayment / 360) + (0.05 / 12 * priceAfterDownPayment)
+
 
 # We use this to register the open houses. THese are displayed on the front page.
 class OpenHouse(models.Model):
     openhousestart = models.DateTimeField(default=None, max_length=75)
     openhouseend = models.DateTimeField(default=None, max_length=75)
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
+
 
 # These are small things as the table names suggest. We display this after an apartment has been
 # Listed for sale you can add distance to supermarket etc.
@@ -139,6 +141,7 @@ class Transactions(models.Model):
     isseller = models.BooleanField()
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 
 # The contact form being used on the front page down to the right
 # Sends an AJAX request.

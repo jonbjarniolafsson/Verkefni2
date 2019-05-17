@@ -1,16 +1,16 @@
-#from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.shortcuts import render, redirect
-from django.urls import reverse
+# from django.shortcuts import render, redirect
+# from django.urls import reverse
 from django.contrib.auth import get_user_model
-Users = get_user_model()
-from apartments.models import *
-from .forms import EditProfileForm
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404,render,redirect, reverse
-from users.forms import UsersCreationForm, EditProfileForm, ContactForm
 
-from django.shortcuts import render,redirect
+# from apartments.models import *
+# from .forms import EditProfileForm
+# from django.contrib.auth.decorators import login_required
+# from django.shortcuts import get_object_or_404, render, redirect, reverse
+from users.forms import UsersCreationForm, EditProfileForm
+
+# from django.shortcuts import render, redirect
 
 # This document will act as our controller in our Apartments app. The main magic happens here.
 
@@ -20,19 +20,19 @@ from django.http import HttpResponse
 # Create your views here.
 from apartments.models import *
 from users.models import *
-from django.db.models import Max
-from django.shortcuts import get_object_or_404,render,redirect, reverse
+# from django.db.models import Max
+from django.shortcuts import get_object_or_404, render, redirect
 
 from django.contrib.auth.decorators import login_required
 
+# from django.db.models import Q
 
+# from datetime import datetime
+# from django.utils import timezone
 
-from django.db.models import Q
-
-from datetime import datetime
-from django.utils import timezone
-
+Users = get_user_model()
 # Create your views here.
+
 
 def register(request):
     if request.method == 'POST':
@@ -45,13 +45,15 @@ def register(request):
         'form': UserCreationForm()
     })
 
+
 @login_required
 def editProfile(request):
     if request.method == 'POST':
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('users/',request.user)
+            return redirect('users/', request.user)
+
 
 # def editProfile(request):
 #     if request.method == 'POST':
@@ -100,17 +102,15 @@ def agents(request):
     return render(request, 'users/agents.html', context)
 
 
-#Here you can display a single users
+# Here you can display a single users
 def singleUser(request, userID):
-
-    #print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
-    #users = Users.objects.get(id = userID)
-    #print("Printing all users: ", users)
+    # print("PRINTINGDSFDSF: ",Locations.objects.all().zip_set)
+    # users = Users.objects.get(id = userID)
+    # print("Printing all users: ", users)
     user = get_object_or_404(Users, pk=userID)
-    #user = Users.objects.get(pk=userID )
+    # user = Users.objects.get(pk=userID )
 
-
-    if user.is_staff == False:
+    if user.is_staff is False:
         apartments = Apartments.objects.filter(owner_id=userID)
         context = {
             'user': user,
@@ -127,44 +127,56 @@ def singleUser(request, userID):
         'user': user,
         'apartments': apartments
     }
-    #Listings.objects.filter(userID)
+    # Listings.objects.filter(userID)
     return render(request, 'users/single_employee.html', context)
 
+
 def viewHistory(request, userID):
+    user = request.user
+    if user.id != userID:
+        return HttpResponse('Unauthorized', status=401)
     hello = ViewHistory.objects.filter(user_id=userID)
-    helloGo = Apartments.objects.filter(id__in = hello)[0:6]
+    helloGo = Apartments.objects.filter(id__in=hello)[0:6]
     context = {
-        'apartments':helloGo
+        'apartments': helloGo
     }
     return render(request, 'users/view_history.html', context)
 
+
 def ownedApartments(request, userID):
+    user = request.user
+    if user.id != userID:
+        return HttpResponse('Unauthorized', status=401)
     apartments = Apartments.objects.filter(owner_id=userID)[0:6]
     context = {
-        'apartments':apartments
+        'apartments': apartments
     }
     return render(request, 'users/owned_apartments.html', context)
 
+
 def managedApartments(request, userID):
     listings = Listings.objects.filter(agent_id=userID)
-    apartments = Apartments.objects.filter(id__in = listings)
+    apartments = Apartments.objects.filter(id__in=listings)
     context = {
-        'apartments':apartments
+        'apartments': apartments
     }
     return render(request, 'users/managed_apartments.html', context)
 
+
 @login_required
 def editProfile(request, userID):
-     userID = request.user
-     if request.method == 'POST':
-         form = EditProfileForm(request.POST, instance=request.user)
-         if form.is_valid():
-             form.save()
-             return redirect('frontpage')
-     else:
-         form = EditProfileForm(instance=request.user)
-         context = {'form': form}
-         return render(request, 'users/edit_profile.html', context)
+    user = request.user
+    if user.id != userID:
+        return HttpResponse('Unauthorized', status=401)
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('frontpage')
+    else:
+        form = EditProfileForm(instance=request.user)
+        context = {'form': form}
+        return render(request, 'users/edit_profile.html', context)
 
 
 def contactUs(request):
@@ -176,5 +188,5 @@ def contactUs(request):
         msg = request.POST.get('description')
         print("PRINTING PARAMS", name, email, msg)
         print("POSTING TO DB")
-        ContactForm.objects.create(name=name,email=email, description=msg)
+        ContactForm.objects.create(name=name, email=email, description=msg)
         return HttpResponse(status=201)
