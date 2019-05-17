@@ -179,6 +179,12 @@ def allApartments(request):
 # This can be found by an Agent/Employee on the single apartment page
 # After an apartment has been listed for sale
 def addKeyDistances(request, apartmentID):
+    message = 'not good'
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    if appForSale == False:
+        return render(request, 'apartments/404.html', context={
+            '404': message
+        })
     listings = Listings.objects.filter(apartmentid_id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
@@ -234,6 +240,12 @@ def createApartments(request, locationID):
             })
 
 def addImage(request, apartmentID):
+    message = 'not good'
+    appForSale = Apartments.objects.get(id=apartmentID).forsale
+    if appForSale == False:
+        return render(request, 'apartments/404.html', context={
+            '404': message
+        })
     if request.method == 'POST':
         form = AddImage(data = request.POST)
         if form.is_valid():
