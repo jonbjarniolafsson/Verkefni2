@@ -8,15 +8,45 @@
 {#{% endblock %}#}
 
 {% extends "base.html" %}
-
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="{% static 'css/apartments.css' %}">
+<link rel="stylesheet" href="{% static 'css/agents.css' %}">
+{% endblock css %}
 {% block content %}
 
+<div class="apartment single">
     <div class="container">
-        <h2>Payment info</h2>
-         <h2>{{listing.apartmentid.address}} in </h2>
-        <p>{{listing.apartmentid.locationid.zip}}</p>
-        <p>{{listing.apartmentid.locationid.city}}</p>
-        <p>{% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}, {% endif %}</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading">
+                    <h2>{{listing.apartmentid.address}} in {% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}{% endif %}, {{listing.apartmentid.locationid.zip}}, {{listing.apartmentid.locationid.country}}</h2>
+                </div>
+                <div class="images">
+                          <div class="image-list owl-carousel">
+                        <div class="image active">
+                            <img src="{{apartment.displayimage}}">
+                        </div>
+                        {%  for image in images %}
+                            <div class="image">
+                                <img src="{{ image }}" alt="Image here" srcset="">
+                            </div>
+                        {%  endfor %}
+                    </div>
+                </div>
+                 <div class="heading">
+                    <h3 style="font-size: 24px; font-weight: 500; font-style: italic; margin-bottom: 15px;">Review</h3>
+            </div>
+         <div class="col-md-6">
+                <div class="meta">
+                    <div class="info">
+                        <p> price: &euro;{{ listing.price }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 {#    <div>Location id: {{ locationID }}</div>#}
         <form action="{% url 'pay_info' listing.apartmentid.id %}" class="white-background" method="POST" autocomplete="on">
             {% csrf_token %}
@@ -30,5 +60,11 @@
             {% endfor %}
             <input type="submit" value="Next" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>
+        </div>
     </div>
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static '/js/sliders.js' %}"></script>
+{% endblock %}
+
 {% endblock %}

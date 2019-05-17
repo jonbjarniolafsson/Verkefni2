@@ -2,15 +2,17 @@
 {#{% load crispy_forms_tags %}#}
 
 {% block content %}
-<form class="background-white" action="{% url 'add_key_distances' listing.apartmentid.id %}" method="post">
+    <div class="container">
+    <form class="background-white" action="{% url 'add_key_distances' listing.apartmentid.id %}" method="post">
     {% csrf_token %}
-    <h2>Key distances in minutes</h2>
+    <h2 class="heading">Key distances in minutes</h2>
     <p>{{ listing.apartmentid.address }} {% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}, {% endif %}{{ listing.apartmentid.locationid.region }}, {{ listing.apartmentid.locationid.country }}</p>
     {% for field in form %}
         {{ field.errors }}
         <p>{{ field.label }}{{ field}}</p>
-        </div>
     {% endfor %}
     <input type="submit" value="Add key distances"  class="btn btn-primary pull-right" style=""/>
 </form>
+    </div>
+
 {% endblock %}

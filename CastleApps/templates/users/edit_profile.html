@@ -1,17 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="container">
-        <h2 class="site-header">Edit profile</h2>
-    <form href="edit-apartments/{{user.id}}" class="white-background" method="POST">
-           {% csrf_token %}
-             {% for item in form %}
-                <div class="form-group">
-                    <label>{{item.name}}</label>
-                    {{item}}
-                </div>
-            {% endfor %}
 
-            <input type="submit" value="Save changes" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
-        </form>
+    <div class="apartment single">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading">
+                        <h2>{{listing.apartmentid.address}}</h2>
+                    </div>
+                    <div class="images">
+                        <div class="main-image">
+                            <img src="{{listing.apartmentid.displayimage}}" alt="">
+                        </div>
+                        <div class="image-list owl-carousel">
+                            <div class="image active">
+                                <img src="{{listingapartmentid.displayimage}}">
+                            </div>
+                            {%  for image in images %}
+                                <div class="image">
+                                    <img src="{{ image }}" alt="Image here" srcset="">
+                                </div>
+                            {%  endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <form href="edit-apartments/{{user.id}}" class="white-background" method="POST">
+               {% csrf_token %}
+                 {% for item in form %}
+                    <div class="form-group">
+                        <label>{{item.name}}</label>
+                        {{item}}
+                    </div>
+                {% endfor %}
+
+                <input type="submit" value="Save changes" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+            </form>
+        </div>
     </div>
 {% endblock %}

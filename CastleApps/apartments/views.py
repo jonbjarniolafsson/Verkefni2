@@ -26,49 +26,37 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-        #print("PRINTING CURRENT DATETIME: ", datetime.now())
-        #apartment = Apartments.objects.get(id=3)
-        #seller = apartment.owner_id
-        #apartment.forsale = False  # change field
-        #apartment.save()
-        #listing = Listings.objects.get(id=1)
-        #print(listing.shortMortgage)
 
-        
+    openHouse =  OpenHouse.objects.all()
+    newList = []
+    # Context has to be a dictionary
+    context = {}
+    newApart = ''
+    for x in range(0,len(OpenHouse.objects.all()) +1):
+        # NEed to make sure the filter doesn't return empty or it crashes
+        if len(openHouse.filter(id=x)) != 0:
+            # We are comparing the date in our timezone vs the date coming from the database
+            if timezone.now() < openHouse.get(id = x).openhousestart:
+                #We know for sure it exists, now we need access to the object
+                y = OpenHouse.objects.get(id=x)
+                #Make a new list of all the apartments that have open houses scheduled in the future
+                newList.append(y.listingid.apartmentid.id)
+                newList = set(newList)
+                newList = list(newList)
+                # We ask the DB to return all the apartments in the list that match
+                newApart = Apartments.objects.filter(pk__in=newList)
 
-        newUser = request.user.id
-        print(newUser)
+    newlyListed = Listings.objects.all()
+    print("NEWLY LISTED: ",newlyListed)
+    apps = Apartments.objects.filter(forsale=True)
+    #companyInfo = CompanyInformation.objects.all()
+    context = {
+        'apartments': newApart,  # Send all the apartments
+        'newlyListed': apps,
+        'userid': request.user.id
+    }
 
-        openHouse =  OpenHouse.objects.all()
-        newList = []
-        # Context has to be a dictionary
-        context = {}
-        newApart = ''
-        for x in range(0,len(OpenHouse.objects.all()) +1):
-            # NEed to make sure the filter doesn't return empty or it crashes
-            if len(openHouse.filter(id=x)) != 0:
-                # We are comparing the date in our timezone vs the date coming from the database
-                if timezone.now() < openHouse.get(id = x).openhousestart:
-                    #We know for sure it exists, now we need access to the object
-                    y = OpenHouse.objects.get(id=x)
-                    #Make a new list of all the apartments that have open houses scheduled in the future
-                    newList.append(y.listingid.apartmentid.id)
-                    newList = set(newList)
-                    newList = list(newList)
-                    # We ask the DB to return all the apartments in the list that match
-                    newApart = Apartments.objects.filter(pk__in=newList)
-
-        newlyListed = Listings.objects.all()
-        print("NEWLY LISTED: ",newlyListed)
-        apps = Apartments.objects.filter(forsale=True)
-        #companyInfo = CompanyInformation.objects.all()
-        context = {
-            'apartments': newApart,  # Send all the apartments
-            'newlyListed': apps,
-            'userid': request.user.id
-        }
-
-        return render(request, 'apartments/home.html', context)
+    return render(request, 'apartments/home.html', context)
 
 
 
@@ -415,12 +403,15 @@ def addPaymentInfo(request, apartmentID):
                 payment.save()
                 return redirect(reverse("review", args=[apartmentID, listing.id, payment.id]))
         form = PaymentInfoForm()
+        apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
+        apartmentImages = apartmentImages.all()
         print('HANDLING GET REQUEST',request)
         apartment = Apartments.objects.get(id=apartmentID)
         return render(request, 'apartments/buy_now.html', {
             'form': form,
             'listing': listing,
-            'apartment': apartment
+            'apartment': apartment,
+            'images': apartmentImages
         })
     else:
         return redirect('frontpage')
@@ -437,9 +428,8 @@ def employeeAllApartments(request):
 @login_required
 def reviewPayment(request, apartmentID, listingID, paymentID):
     listing = Listings.objects.get(id=listingID)
+    apartment = Apartments.objects.get(id=apartmentID)
     if request.method == 'POST':
-        apartment = Apartments.objects.get(id=apartmentID)
-        apartment = Apartments.objects.get(id=apartmentID)
         seller = apartment.owner_id
         apartment.forsale = False  # change field
         apartment.owner_id = request.user.id
@@ -457,9 +447,13 @@ def reviewPayment(request, apartmentID, listingID, paymentID):
         #SELLER TRANSACTION
         sellerTransaction = Transactions.objects.create(price=priceSeller, date=datetime.now(), isseller=True, listingid_id=listingID, user_id=seller)
         return redirect('frontpage')
+    apartmentImages = Apartments.objects.get(pk=apartmentID).apartmentimages_set.all()
+    apartmentImages = apartmentImages.all()
     context = {
         'listing': listing,
         'payment': PaymentInfos.objects.get(id=paymentID),
+        'images': apartmentImages,
+        'apartment': apartment
     }
     return render(request, 'apartments/review_payment.html', context)
 

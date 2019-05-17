@@ -1,47 +1,60 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="{% static 'css/apartments.css' %}">
 {% endblock css %}
 {% block content%}
-<div class="container">
-    <div class="review payment">
-
-        <div class="image">
-            <img src="{{listing.apartmentid.displayimage}}" href="apartments/{{ listing.apartmentid.id }}"alt="">
-        </div>
-        <a href="javascript:history.go(-1)" class="btn btn-primary pull right">Back to payment</a>
-         </a>
-    <div class="review info">
-        <h2>Review</h2>
-        <h3>{{listing.apartmentid.type}} in {{listing.apartmentid.locationid.region}}, {{listing.apartmentid.locationid.city}}  </h3>
-        <div class="payment info">
-            <p>Cardholder name: {{ payment.cardholder }}</p>
-            <p>Cardnumber: {{ payment.cardnumber }}</p>
-            <p>Time of expiration: Year: {{ payment.expmonth }} Month: {{ payment.expyear }}</p>
-            <p>Cardholder address: {{ payment.address }} apt/suite: {{ payment.aptsuite }} </p>
-            <p>SSN: {{ payment.ssn }}</p>
-            <p>€ {{ listing.price }}</p>
-        </div>
-    </div>
-    <h2>Apartment info:</h2>
+    <div class="apartment single">
+    <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="location">
-                    <h2>{{listing.apartmentid.address}}</h2>
-                    <p>{{listing.apartmentid.locationid.zip}}</p>
-                    <p>{{listing.apartmentid.locationid.city}}</p>
-                    <p>{{listing.apartmentid.locationid.country}}</p>
+            <div class="col-md-12">
+                <div class="heading">
+                    <h2>{{listing.apartmentid.address}} in {% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}{% endif %}, {{listing.apartmentid.locationid.zip}}, {{listing.apartmentid.locationid.country}}</h2>
                 </div>
-            </div>
-
+                <div class="images">
+                          <div class="image-list owl-carousel">
+                        <div class="image active">
+                            <img src="{{apartment.displayimage}}">
+                        </div>
+                        {%  for image in images %}
+                            <div class="image">
+                                <img src="{{ image }}" alt="Image here" srcset="">
+                            </div>
+                        {%  endfor %}
+                    </div>
                 </div>
             </div>
         </div>
+             <div class="review info">
+                <div class="heading">
+                    <h3 style="font-size: 24px; font-weight: 500; font-style: italic; margin-bottom: 15px;">Review</h3>
+                </div>
+                <h3>{{listing.apartmentid.type}} in {{listing.apartmentid.locationid.region}}, {{listing.apartmentid.locationid.city}}  </h3>
+                <div class="payment info">
+                    <p>Cardholder name: {{ payment.cardholder }}</p>
+                    <p>Cardnumber: {{ payment.cardnumber }}</p>
+                    <p>Time of expiration: Year: {{ payment.expmonth }} Month: {{ payment.expyear }}</p>
+                    <p>Cardholder address: {{ payment.address }} {% if payment.aptsuite %}apt/suite: {{ payment.aptsuite }} {% endif %}</p>
+                    <p>SSN: {{ payment.ssn }}</p>
+                    <p>€ {{ listing.price }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            </div>
+        </div>
     </div>
-</div>
     <form class="background-white" action="{% url 'review' listing.apartmentid.id listing.id payment.id %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="Confirm purchase" class="btn btn-primary pull-right" style=""/>
+        <div class="button-group">
+            <a href="javascript:history.go(-1)" class="btn btn-primary pull right">Back to payment</a>
+            <input type="submit" value="Confirm purchase" class="btn btn-primary pull-right" style=""/>
+        </div>
 </form>
+    {% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="{% static '/js/sliders.js' %}"></script>
+    {% endblock %}
 {% endblock%}
