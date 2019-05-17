@@ -55,21 +55,6 @@ def editProfile(request):
             return redirect('users/', request.user)
 
 
-# def editProfile(request):
-#     if request.method == 'POST':
-#         form = EditProfileForm(request.POST, instance=request.user)
-#
-#         if form.is_valid():
-#             form.save()
-#             return redirect('apartments/1')
-#     else:
-#         form = EditProfileForm(instance=request.user)
-#         context = {'form': form}
-#         return render(request, 'users/edit_profile.html', context)
-#
-#
-# # Allows the user to view their own profile
-
 def viewProfile(request, userID=None):
     if userID:
         user = Users.objects.get(pk=userID)
@@ -80,16 +65,7 @@ def viewProfile(request, userID=None):
     return render(request, 'users/user_profile.html', context)
 
 
-# def editProfile(request, userID):
-#     if request.method == 'POST':
-#         form = EditProfileForm(data=request.POST)
-#         if form.is_valid():
-#             print("FORM IS VALID")
-#             form.save()
-#             print("FORM IS SAVED")
-#             return redirect('frontpage')
-#     form = EditProfileForm(data=request.GET)
-#     return render(request, 'users/edit_profile.html', {'form': form})
+
 #
 def agents(request):
     # Checks if the person in the Users table is staff
@@ -135,8 +111,8 @@ def viewHistory(request, userID):
     user = request.user
     if user.id != userID:
         return HttpResponse('Unauthorized', status=401)
-    hello = ViewHistory.objects.filter(user_id=userID)
-    helloGo = Apartments.objects.filter(id__in=hello)[0:6]
+    history = ViewHistory.objects.filter(user_id=userID)
+    helloGo = Apartments.objects.filter(id__in=history)[0:6]
     context = {
         'apartments': helloGo
     }
@@ -155,11 +131,18 @@ def ownedApartments(request, userID):
 
 
 def managedApartments(request, userID):
-    listings = Listings.objects.filter(agent_id=userID)
-    apartments = Apartments.objects.filter(id__in=listings)
+    #listings = Listings.objects.filter(agent_id=userID)
+    listingsOfApartments = Listings.objects.filter(agent_id=userID)
+    pkOfApps = []
+    for x in listingsOfApartments:
+        print(x.apartmentid_id)
+        pkOfApps.append(x.apartmentid_id)
+    apartments = Apartments.objects.filter(id__in=pkOfApps, forsale=True)
+
     context = {
         'apartments': apartments
     }
+    print("DSKFDSJFJDSFJDSFJDSF", apartments)
     return render(request, 'users/managed_apartments.html', context)
 
 
