@@ -255,11 +255,12 @@ def openHouseListing(request, apartmentID):
     listings = Listings.objects.filter(id=apartmentID)
     idOfActiveListing = listings.aggregate(Max('id'))
     listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+    print(listing)
     if request.method == 'POST':
         form = OpenHouseForm(data = request.POST)
         if form.is_valid():
             openhouse = form.save(commit=False)
-            openhouse.listingid_id = listing
+            openhouse.listingid_id = listing.id
             form.save()
             return redirect(reverse("apartment", args=[apartmentID]))
     else:

@@ -17,7 +17,7 @@ class ListingForm(ModelForm):
 class OpenHouseForm(ModelForm):
     class Meta:
         model = OpenHouse
-        exclude = ['id']
+        exclude = ['id', 'listingid']
         widgets = {
             'openhousestart' : widgets.DateTimeInput(attrs={'type': 'date'}),
             'openhouseend': widgets.DateTimeInput(attrs={'type': 'date'}),
