@@ -320,12 +320,16 @@ def editApartment(request, apartmentID=None):
 
 def addListing(request, apartmentID):
     print("IN ADD LISTING")
+
     if request.method == 'POST':
         #currentUser = request.user
         #if currentUser.id == None or currentUser.is_staff:
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
+            apartment = Apartments.objects.get(id=apartmentID)
+            apartment.forsale = True
+            apartment.save()
             lis = form.save(commit=False)
             lis.apartmentid_id = apartmentID
             form.save()
