@@ -1,104 +1,95 @@
 {% extends "base.html" %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/agents.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="{% static '/css/apartments.css' %}">
+<link rel="stylesheet" href="{% static '/css/banner.css' %}">
 {% endblock css %}
-{% block content%}
 
-<div class="single-agent">
-    <div class="container">
-        <div class="heading">
-            <h2>{{user.first_name}} {{user.last_name}}</h2>
-        </div>
-    </div>
-    <div class="container">
-        <div class="agent">
-            <div class="image">
-                <a href="/users/{{user.id}}">
-                <img src=" {{ user.profileimagepath }}"/>
-                </a>
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="heading">
+                <h2>A seller</h2>
             </div>
+            <div class="image">
+                <img src="{{user.profileimagepath}}" alt="">
+            </div>
+            <div class="location">
+                <h2>{{apartment.address}}</h2>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="meta">
-                <h2>{{user.first_name}} {{user.last_name}}</h2>
-                <div class="start"><span>Started working on {{user.startDate}}</span></div>
-                <div class="contact">
-                    <div class="email">Email: {{user.email}}</div>
-                    <div class="phone">Phone: {{user.phone}}</div>
-                </div>
-                <div class="desc">
-                    <p>{{user.description}}</p>
+                <p>Username: {{ user.username }}</p>
+                <p>First name: {{user.first_name}}</p>
+                <p>Last name: {{user.last_name}}</p>
+                <p>Last Login: {{user.last_login}}</p>
 
-                </div>
+                {%  for image in images %}
+                    <img src="{{ image }}" alt="Image here" srcset="">
+                {%  endfor %}
             </div>
         </div>
     </div>
 </div>
 
 
-<!--
-<div class="container">
-    <h1> Castle Apartments Agent</h1>
-    <h1> {{ user.first_name }} {{ user.last_name }}  </h1>
-    <div class="agent">
-        <div class="image">
-            <img src="{{user.profileimagepath}}" alt="">
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="location">
-                    <h2>{{apartment.address}}</h2>
 
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="meta">
-                    <p>First name: {{user.first_name}}</p>
-                    <p>Last name: {{user.last_name}}</p>
-                    <p>Last Login: {{user.last_login}}</p>
 
-                    {%  for image in images %}
-                        <img src="{{ image }}" alt="Image here" srcset="">
-                    {%  endfor %}
 
-                        <h2>{{ user.first_name }} {{ user.last_name }} is currently managing these listings: </h2>
-        <div class="apartments-wrapper slider owl-carousel">
+<div class="apartments">
+    <div class="container">
+        <h2>Your managed apartments</h2>
+        <div class="apartments-wrapper row">
             {% for apartment in apartments %}
-
-            <div class="apartment">
-                <div class="image">
-                    <a href="/apartments/{{apartment.id}}">
-
-
-                        <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
-                    </a>
-                    <div>
-                            {{ apartment.listings_set.last.openhouse_set.last.openhousestart }} -
-                            {{ apartment.listings_set.last.openhouse_set.last.openhouseend }}
+            <div class="col-md-4">
+                <div class="apartment">
+                    <div class="header">
+                        <div class="type">{{apartment.type}} in {{apartment.locationid.region}} <div class="country">{{apartment.locationid.country}}</div></div>
+                        <div class="rooms">
+                            <div class="room bedroom">
+                                <div class="total">
+                                    {{apartment.rooms}}
+                                </div>
+                                <div class="icon">
+                                    <img src="/static/img/bed.svg" />
+                                </div>
+                            </div>
+                            <div class="room bathroom">
+                                <div class="total">{{apartment.bathrooms}}</div>
+                                <div class="icon">
+                                    <img src="/static/img/bathtub.svg" />
+                                </div>
+                            </div>
                         </div>
-                </div>
-                <div class="meta">
-                    <div class="address">
-                        {{apartment.address}}
                     </div>
-                    <div class="postdata">
-                        Zip: {{apartment.locationid.zip}}
-                        City: {{apartment.locationid.city}} <br>
-                        {{apartment.locationid.country.country}}
+                    <div class="image">
+                        <a href="/apartments/{{apartment.id}}">
+                            <img src="{{ apartment.displayimage }}" alt="Image here" srcset="">
+                        </a>
                     </div>
-                    <div class="size">
-                        {{apartment.size}} m2.
-                    </div>
-                    <div class="price">
-                        $ {{apartment.listings.price}} .
+                    <div class="meta">
+                        <div class="header">
+                            <div class="price">&euro; {{apartment.listings_set.first.price}}</div>
+                            <div class="size">{{apartment.size}} m&sup2;</div>
+                        </div>
+                        <div class="desc">
+                            {{apartment.listings_set.first.description}}
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-
-                </div>
-            </div>
         </div>
     </div>
 </div>
--->
+{% endblock content %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{% static '/js/sliders.js' %}"></script>
 {% endblock%}

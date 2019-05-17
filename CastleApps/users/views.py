@@ -87,7 +87,7 @@ def singleUser(request, userID):
     # user = Users.objects.get(pk=userID )
 
     if user.is_staff is False:
-        apartments = Apartments.objects.filter(owner_id=userID)
+        apartments = Apartments.objects.filter(owner_id=userID, forsale=True)
         context = {
             'user': user,
             'apartments': apartments
@@ -98,7 +98,7 @@ def singleUser(request, userID):
     for x in listingsOfApartments:
         print(x.apartmentid_id)
         pkOfApps.append(x.apartmentid_id)
-    apartments = Apartments.objects.filter(id__in=pkOfApps)
+    apartments = Apartments.objects.filter(id__in=pkOfApps, forsale =True)
     context = {
         'user': user,
         'apartments': apartments
