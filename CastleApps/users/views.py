@@ -147,14 +147,14 @@ def viewHistory(request, userID):
     return render(request, 'users/view_history.html', context)
 
 def ownedApartments(request, userID):
-    apartments = Apartments.objects.filter(owner_id=userID)
+    apartments = Apartments.objects.filter(owner_id=userID)[0:6]
     context = {
         'apartments':apartments
     }
     return render(request, 'users/owned_apartments.html', context)
 
 def managedApartments(request, userID):
-    listings = Listings.objects.filter(agent_id=userID)
+    listings = Listings.objects.filter(agent_id=userID)[0:6]
     context = {
         'listings':listings
     }
