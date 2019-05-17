@@ -21,7 +21,8 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/',
           views.singleApartment, name="apartment"),
 
-
+     path('employee_all_apartments/',
+          views.employeeAllApartments, name="employee_apartment_list"),
 
 
 

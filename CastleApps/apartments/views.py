@@ -364,6 +364,14 @@ def addPaymentInfo(request, apartmentID):
     else:
         return redirect('frontpage')
 
+
+def employeeAllApartments(request):
+    context = {
+        'apartments' : Apartments.objects.all()[0:20]
+    }
+    return render(request, 'apartments/apartments_list.html', context)
+
+
 #shows info for user and user confirms payment
 @login_required
 def reviewPayment(request, apartmentID, listingID, paymentID):
