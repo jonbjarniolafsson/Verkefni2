@@ -42,5 +42,5 @@ class EditAppForm(ModelForm):
 class AddImage(ModelForm):
     class Meta:
         model = ApartmentImages
-        exclude = ['id']
+        exclude = ['id','aid']
         image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))

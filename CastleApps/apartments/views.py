@@ -5,7 +5,7 @@ from django.shortcuts import render,redirect
 from .forms.buy_now_form import PaymentInfoForm
 from .forms.apartment_form import CastleAppsCreateForm,EditAppForm, AddImage
 from .forms.location_form import AddressCreateForm
-from .forms.listing_form import ListingForm
+from .forms.listing_form import ListingForm, OpenHouseForm
 from .forms.listing_misc_form import MiscInfoForm
 # from .forms.signup_form import CastleAppsSignupForm
 from django.http import HttpResponse
@@ -236,6 +236,8 @@ def addImage(request, apartmentID):
     if request.method == 'POST':
         form = AddImage(data = request.POST)
         if form.is_valid():
+            img = form.save(commit=False)
+            img.aid_id = apartmentID
             form.save()
             return redirect(reverse("add-image",args=[apartmentID]))
         context = {'form': form, 'apartmentID': apartmentID}
@@ -247,7 +249,21 @@ def addImage(request, apartmentID):
             'apartmentID': apartmentID
         })
 
-
+def openHouseListing(request, apartmentID):
+    listings = Listings.objects.filter(id=apartmentID)
+    idOfActiveListing = listings.aggregate(Max('id'))
+    listing = Listings.objects.get(id=idOfActiveListing['id__max'])
+    if request.method == 'POST':
+        form = OpenHouseForm(data = request.POST)
+        if form.is_valid():
+            openhouse = form.save(commit=False)
+            openhouse.listingid_id = listing
+            form.save()
+            return redirect(reverse("apartment", args=[apartmentID]))
+    else:
+        form = OpenHouseForm(initial={'listingid': listing.id})
+        context = {'form': form, 'apartmentID': listing.id}
+        return render(request, 'apartments/add_open_house.html', context)
 
 def searchApartments(request):
     searchString = request.GET.get("search")
@@ -299,28 +315,21 @@ def editApartment(request, apartmentID=None):
     return render(request, 'apartments/edit-apartment.html', {"form": form, "apartment_id": apartmentID})
 
 
-def addListing(request, apartmentID=None):
+def addListing(request, apartmentID):
     print("IN ADD LISTING")
-    print("PRINTING APARTMENT ID: ", apartmentID)
-    apartment = Apartments.objects.get(id=apartmentID)
-
     if request.method == 'POST':
         #currentUser = request.user
         #if currentUser.id == None or currentUser.is_staff:
             #return HttpResponse('Unauthorized', status=401)
         form = ListingForm(data=request.POST)
         if form.is_valid():
-            t = Apartments.objects.get(id=apartmentID)
-            t.forsale = True  # change field
-            t.save()  # this will update only
-            print("FORM VALID")
+            lis = form.save(commit=False)
+            lis.apartmentid_id = apartmentID
             form.save()
-            print("Form saved")
-            return redirect('frontpage')
+            return redirect(reverse('apartment', args=[apartmentID]))
 
-    form = ListingForm(data=request.GET)
-
-    return render(request, 'apartments/add_listing.html', {'form': form})
+    form = ListingForm(initial = {'apartmentid': apartmentID, 'agent': request.user})
+    return render(request, 'apartments/add_listing.html', {'form': form, 'apartmentID': apartmentID})
 
 def removeListing(request, apartmentID=None):
     listings = Listings.objects.filter(apartmentid=apartmentID)
@@ -331,6 +340,9 @@ def removeListing(request, apartmentID=None):
     apartment.forsale=False
     apartment.save()
     return render(request, 'apartments/single_apartment.html')
+
+
+
 
 def removeApartment(request, apartmentID=None):
     theApartment = Apartments.objects.get(id=apartmentID)
