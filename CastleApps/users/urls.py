@@ -13,6 +13,7 @@ urlpatterns = [
     path('agents/', views.agents, name='agents'),
     # Path leads to a single users in our system
     path('<int:userID>/', views.singleUser, name="users"),
+    path('contact-us', views.contactUs, name="contact_us"),
     #path('users', include('users.urls')),
     #path('users', include('django.contrib.auth.urls')),
     path('<int:userID>/owned_apartments', views.ownedApartments , name="owned_apartments"),

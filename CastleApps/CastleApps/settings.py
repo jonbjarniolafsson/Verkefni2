@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apartments.context_processor.getZipCodes',
+                'apartments.context_processor.contactForm',
             ],
         },
     },

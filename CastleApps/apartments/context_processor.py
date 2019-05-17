@@ -1,5 +1,5 @@
 from apartments.models import *
-
+from users.forms import ContactUs
 
 def getZipCodes(request):
     zipList = Locations.objects.all().values_list("zip", flat=True).distinct()
@@ -12,3 +12,9 @@ def getZipCodes(request):
     }
 
     return zipCodes
+
+
+def contactForm(request):
+    return {
+        'contactForm' : ContactUs()
+    }

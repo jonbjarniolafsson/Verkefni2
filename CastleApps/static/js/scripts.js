@@ -149,6 +149,22 @@ $(document).ready(function () {
         }
     }
 
+$("#contact-form").submit(function(e) {
+    e.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function(data)
+        {
+            $("#contact-form").hide()
+            $(".thank-you").show()
+        }
+    });
+});
+
 
 
 

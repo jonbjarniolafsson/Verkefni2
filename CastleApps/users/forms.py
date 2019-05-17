@@ -5,6 +5,7 @@ from .models import Users
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Users
+from apartments.models import ContactForm
 #from django.contrib.auth import get_user_model
 from django.forms import ModelForm, widgets
 #Users = get_user_model()
@@ -16,6 +17,16 @@ class UsersCreationForm(UserCreationForm):
         fields = ('username', 'email') #etc etc, other fields you want displayed on the form)
 
 
+
+class ContactUs(ModelForm):
+    class Meta(UserCreationForm):
+        model = ContactForm
+        exclude = ['id']
+        widgets = {
+            'name' : widgets.TextInput(attrs={'class': 'form-control'}),
+            'email' : widgets.EmailInput(attrs={'class': 'form-control'}),
+            'message' : widgets.Textarea(attrs={'class': 'form-control'})
+        }
 
 class EditProfileForm(ModelForm):
     class Meta:

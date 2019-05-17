@@ -8,8 +8,7 @@ from apartments.models import *
 from .forms import EditProfileForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404,render,redirect, reverse
-
-from users.forms import UsersCreationForm, EditProfileForm
+from users.forms import UsersCreationForm, EditProfileForm, ContactForm
 
 from django.shortcuts import render,redirect
 
@@ -172,3 +171,16 @@ def editProfile(request, userID):
          form = EditProfileForm(instance=request.user)
          context = {'form': form}
          return render(request, 'users/edit_profile.html', context)
+
+
+def contactUs(request):
+    print("START OF CONTACTUS VIEW FUNCTION")
+    if request.method == "POST":
+        print("GETTING PARAMS")
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        msg = request.POST.get('description')
+        print("PRINTING PARAMS", name, email, msg)
+        print("POSTING TO DB")
+        ContactForm.objects.create(name=name,email=email, description=msg)
+        return HttpResponse(status=201)
