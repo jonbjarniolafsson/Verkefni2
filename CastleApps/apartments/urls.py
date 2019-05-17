@@ -4,6 +4,7 @@ from django.urls import path
 urlpatterns = [
      #Our mainpage
      path('',views.home, name='frontpage'),
+path('/send_comment',views.postComment, name='contact'),
 
 
      #Paths below are available to everyone

@@ -37,7 +37,6 @@ def home(request):
         print(newUser)
 
         openHouse =  OpenHouse.objects.all()
-
         newList = []
         # Context has to be a dictionary
         context = {}
@@ -344,6 +343,10 @@ def addPaymentInfo(request, apartmentID):
         })
     else:
         return redirect('frontpage')
+
+
+def postComment(request):
+    form = ContactForm(data=request.post)
 
 #shows info for user and user confirms payment
 @login_required
