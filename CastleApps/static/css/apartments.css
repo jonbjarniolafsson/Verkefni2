@@ -155,7 +155,6 @@
     margin-bottom: 50px;
 }
 
-<<<<<<< HEAD
 
 .apartment.single .images .buy-image img{
     width: 80%;
@@ -163,10 +162,8 @@
     max-height: 400px;
 
 }
-.apartment.single .images .main-image img{
-=======
+
 .apartment.single .images .main-image img {
->>>>>>> 0571b77bcc9bedc97639f36ca3c4f5982fec215e
     width: 100%;
     height: auto;
     max-width: 800px;
