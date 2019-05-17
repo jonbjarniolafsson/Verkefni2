@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from ..models import Apartments
+from ..models import Apartments, ApartmentImages
 from django import forms
 
 
@@ -38,3 +38,9 @@ class EditAppForm(ModelForm):
             'type': widgets.TextInput(attrs={'class': 'form-control'}),
             'owner': widgets.TextInput(attrs={'class': 'form-control'})
         }
+
+class AddImage(ModelForm):
+    class Meta:
+        model = ApartmentImages
+        exclude = ['id']
+        image = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))

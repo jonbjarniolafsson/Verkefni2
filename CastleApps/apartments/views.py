@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 # This document will act as our controller in our Apartments app. The main magic happens here.
 
 from .forms.buy_now_form import PaymentInfoForm
-from .forms.apartment_form import CastleAppsCreateForm,EditAppForm
+from .forms.apartment_form import CastleAppsCreateForm,EditAppForm, AddImage
 from .forms.location_form import AddressCreateForm
 from .forms.listing_form import ListingForm
 from .forms.listing_misc_form import MiscInfoForm
@@ -220,7 +220,7 @@ def createApartments(request, locationID):
             appForm = CastleAppsCreateForm(data=request.POST)
             if appForm.is_valid():
                 appForm.save()
-                return redirect('frontpage')
+                return redirect(reverse("apartment", args=[Apartments.objects.latest('id').id]))
             context = {'app_form': appForm, 'locationID': locationID}
             return render(request, 'apartments/create_apartment.html', context)
         else:
@@ -231,6 +231,21 @@ def createApartments(request, locationID):
 
 
             })
+
+def addImage(request, apartmentID):
+    if request.method == 'POST':
+        form = AddImage(data = request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("add-image",args=[apartmentID]))
+        context = {'form': form, 'apartmentID': apartmentID}
+        return render(request, 'apartments/add_image.html', context)
+    else:
+        form = AddImage(initial={'aid': apartmentID})
+        return render(request, 'apartments/add_image.html', {
+            'form': form,
+            'apartmentID': apartmentID
+        })
 
 
 
