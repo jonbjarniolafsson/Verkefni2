@@ -33,6 +33,9 @@ def home(request):
         #apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
+
+        
+
         newUser = request.user.id
         print(newUser)
 
@@ -183,9 +186,8 @@ def addKeyDistances(request, apartmentID):
             miscData.listingid_id = listing.id
             miscData.save()
             print("REDIRECTING")
-            return redirect("/apartments/{apartmentID}")
+            return redirect(reverse("apartment", args=[apartmentID]))
     form = MiscInfoForm()
-
     return render(request, 'apartments/listing_misc.html', {
         'form': form,
         'listing': listing
@@ -339,7 +341,7 @@ def removeListing(request, apartmentID=None):
     apartment = Apartments.objects.get(id = apartmentID)
     apartment.forsale=False
     apartment.save()
-    return render(request, 'apartments/single_apartment.html')
+    return redirect(reverse("apartment", args =[apartmentID]))
 
 
 
@@ -376,6 +378,14 @@ def addPaymentInfo(request, apartmentID):
         })
     else:
         return redirect('frontpage')
+
+
+def employeeAllApartments(request):
+    context = {
+        'apartments' : Apartments.objects.all()[0:20]
+    }
+    return render(request, 'apartments/apartments_list.html', context)
+
 
 #shows info for user and user confirms payment
 @login_required
