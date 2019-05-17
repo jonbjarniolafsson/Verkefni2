@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock css %}
+{% block content %}
+<div class="employees">
+    <div class="container">
+        <h1> Apartment does not have listing!</h1>
+        {{ 404 }}
+
+    </div>
+</div>
+{% endblock content %}
