@@ -29,11 +29,13 @@
                 </ul>
             {% endif %}
         </div>
-         <form action="{% url 'create-location' %}" class="background-white" method="POST">
+         <form action="{% url 'create-location' %}" class="white-background" method="POST">
              {% csrf_token %}
                 {% for item in address_form %}
                  <div class="form-group">
-                     <label>{{item.name}}</label>
+                    {% if item.field.widget.input_type != 'select' %}
+                        <label>{{item.name}}</label>
+                    {% endif %}
                     {{item}}
                 </div>
             {% endfor %}

@@ -333,7 +333,7 @@ form.white-background .form-group.focused label{
 .search-form form{
     position: relative;
     display: flex;
-    flex-direction: row;
+    flex-flow: wrap;
     justify-content: space-between;
     margin-top: 50px;
     width: 100%;
@@ -347,6 +347,7 @@ form.white-background .form-group.focused label{
 
 .search-form .form-group{
     width: calc(33% - 15px);
+    min-width: 290px;
     margin: 0;
 }
 
@@ -363,4 +364,23 @@ form.white-background .form-group.focused label{
     text-transform: uppercase;
     font-weight: 600;
     font-size: 18px;
+}
+
+@media(max-width: 992px){
+
+    .contact-toggle{
+        display: none;
+    }
+
+    .search-form{
+        top: -410px;
+    }
+
+    .search-form .form-group{
+        width: 100%;
+    }
+
+    .search-form button{
+        width: initial;
+    }
 }

@@ -14,6 +14,18 @@ $(document).ready(function () {
         }
     })
 
+    $(".dropdown").on("click tap", function(){
+        $(this).toggleClass('open')
+        $(this).find('.submenu').slideToggle()
+    });
+
+    $(".mobile-menu-toggle").on('click tap', function(){
+        $(this).addClass('active');
+        $(".mobile-menu").addClass('active');
+        $(".site-overlay").addClass('active');
+        $("body").addClass('no-scroll');
+    });
+
     if($(".image-list").length){
         var targetsrc = $(".main-image img")
         $(".image-list img").on("click", function(){
@@ -55,6 +67,8 @@ $(document).ready(function () {
         $("body").removeClass('no-scroll');
         $(".contact-form").removeClass('active');
         $(".search-form").removeClass("active");
+        $(".mobile-menu-toggle").removeClass('active');
+        $(".mobile-menu").removeClass('active');
     }
 
     $(".form-group input, .form-group textarea").focus(function () {
