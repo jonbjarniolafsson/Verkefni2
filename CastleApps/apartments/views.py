@@ -183,9 +183,8 @@ def addKeyDistances(request, apartmentID):
             miscData.listingid_id = listing.id
             miscData.save()
             print("REDIRECTING")
-            return redirect("/apartments/{apartmentID}")
+            return redirect(reverse("apartment", args=[apartmentID]))
     form = MiscInfoForm()
-
     return render(request, 'apartments/listing_misc.html', {
         'form': form,
         'listing': listing
