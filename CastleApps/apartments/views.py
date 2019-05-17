@@ -164,9 +164,6 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
 
 
-
-
-
 # This is used for our Ajax request in the search
 def allApartments(request):
     context = {
@@ -207,7 +204,9 @@ def addKeyDistances(request, apartmentID):
 
 
 def createLocation(request):
-
+    currentUser = request.user
+    if currentUser.id == None or currentUser.is_staff == False:
+        return HttpResponse('Unauthorized', status=401)
     if request.method == 'POST':
         addressForm = AddressCreateForm(data=request.POST, prefix='location')
         if addressForm.is_valid(): #Built in to check if valid
