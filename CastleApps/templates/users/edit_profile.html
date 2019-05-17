@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-    <form href="edit-apartments/{{user.id}}" class="background-white" method="POST">
+        <h2 class="site-header">Edit profile</h2>
+    <form href="edit-apartments/{{user.id}}" class="white-background" method="POST">
            {% csrf_token %}
              {% for item in form %}
                 <div class="form-group">
@@ -10,10 +11,7 @@
                 </div>
             {% endfor %}
 
-            <input type="submit" value="Confirm" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
+            <input type="submit" value="Save changes" class="btn btn-primary pull-right" style="clear:both; margin : 10px 0" />
         </form>
-
     </div>
-
-
 {% endblock %}

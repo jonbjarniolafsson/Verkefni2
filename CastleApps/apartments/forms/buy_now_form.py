@@ -46,9 +46,9 @@ class PaymentInfoForm(ModelForm):
             # hvernig fields líta út í html
             # attributes on name
             # nafndálkur er input type text og hafa css klasann form-control
-            'cardholder': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'name'}),
-            'cardnumber': widgets.TextInput(attrs={'class': 'form-control', 'placeholder': '0000 0000 0000 0000'}),
-            'expmonth': widgets.Select(choices=MONTHS,attrs={'class': 'form-control', 'placeholder': '0000 0000 0000 0000'}),
+            'cardholder': widgets.TextInput(attrs={'class': 'form-control'}),
+            'cardnumber': widgets.TextInput(attrs={'class': 'form-control'}),
+            'expmonth': widgets.Select(choices=MONTHS,attrs={'class': 'form-control'}),
             'expyear': widgets.Select(choices=YEARS, attrs={'class': 'form-control'}),
             'city': widgets.TextInput(attrs={'class': 'form-control'}),
             'zip': widgets.TextInput(attrs={'class': 'form-control'}),

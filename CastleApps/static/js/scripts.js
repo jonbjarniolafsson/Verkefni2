@@ -4,6 +4,13 @@ $(document).ready(function () {
         $('.contact-toggle').addClass('full');
     }
 
+    if($("form").length) {
+        $("form input").each(function(){
+        if ($(this).val() != ''){
+                $(this).parent('.form-group').addClass('focused')
+            }
+        })
+    }
 
     $(window).scroll(function () {
         if ($("body").hasClass('on-top')) {

@@ -10,19 +10,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Payment info</h2>
-                     <h2>{{listing.apartmentid.address}} in </h2>
-                    <p>{{listing.apartmentid.locationid.zip}}</p>
-                    <p>{{listing.apartmentid.locationid.city}}</p>
-                    <p>{{listing.apartmentid.locationid.country}}</p>
-    <br>
+
     <div class="container">
+        <h2>Payment info</h2>
+         <h2>{{listing.apartmentid.address}} in </h2>
+        <p>{{listing.apartmentid.locationid.zip}}</p>
+        <p>{{listing.apartmentid.locationid.city}}</p>
+        <p>{% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}, {% endif %}</p>
 {#    <div>Location id: {{ locationID }}</div>#}
         <form action="{% url 'pay_info' listing.apartmentid.id %}" class="white-background" method="POST" autocomplete="on">
             {% csrf_token %}
              {% for item in form %}
                 <div class="form-group">
-                    <label>{{item.name}}</label>
+                    {% if item.field.widget.input_type != 'select' %}
+                        <label>{{item.name}}</label>
+                    {% endif %}
                     {{item}}
                 </div>
             {% endfor %}

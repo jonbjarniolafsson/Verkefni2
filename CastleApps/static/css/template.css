@@ -365,6 +365,9 @@ form.white-background .form-group.focused label{
     font-weight: 600;
     font-size: 18px;
 }
+.site-header {
+    margin-bottom: 60px;
+}
 
 @media(max-width: 992px){
 
