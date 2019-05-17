@@ -20,15 +20,17 @@
 
 .apartments .apartment{
     margin-bottom: 15px;
-
+    -webkit-box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
+    -moz-box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
+    box-shadow: 0px 2px 4px 2px rgba(0,0,0,0.33);
 }
 
 
 
 .apartment .header{
     display: flex;
-    background: #0067BC;
-    color: #fff;
+    background: #efefef;
+    color: #0c0c0c;
     padding: 5px 15px;
     justify-content: space-between;
 }
@@ -56,8 +58,8 @@
 }
 
 .apartments .apartment .meta{
-    background: #0067BC;
-    color: #fff;
+    background: #efefef;
+    color: #efefef;
     padding: 15px;
 }
 
@@ -75,6 +77,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 10px;
+    color: #0c0c0c;
 }
 
 
