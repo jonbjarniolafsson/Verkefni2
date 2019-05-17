@@ -50,6 +50,7 @@ def viewProfile(request, userID=None):
 
 
 
+#
 def agents(request):
     # Checks if the person in the Users table is staff
     users = Users.objects.filter(is_staff=True)
@@ -67,7 +68,7 @@ def singleUser(request, userID):
     user = get_object_or_404(Users, pk=userID)
 
     if user.is_staff is False:
-        apartments = Apartments.objects.filter(owner_id=userID)
+        apartments = Apartments.objects.filter(owner_id=userID, forsale=True)
         context = {
             'user': user,
             'apartments': apartments
@@ -78,7 +79,7 @@ def singleUser(request, userID):
     for x in listingsOfApartments:
         print(x.apartmentid_id)
         pkOfApps.append(x.apartmentid_id)
-    apartments = Apartments.objects.filter(id__in=pkOfApps)
+    apartments = Apartments.objects.filter(id__in=pkOfApps, forsale =True)
     context = {
         'user': user,
         'apartments': apartments
@@ -90,8 +91,8 @@ def viewHistory(request, userID):
     user = request.user
     if user.id != userID:
         return HttpResponse('Unauthorized', status=401)
-    hello = ViewHistory.objects.filter(user_id=userID)
-    helloGo = Apartments.objects.filter(id__in=hello)[0:6]
+    history = ViewHistory.objects.filter(user_id=userID)
+    helloGo = Apartments.objects.filter(id__in=history)[0:6]
     context = {
         'apartments': helloGo
     }
@@ -110,11 +111,18 @@ def ownedApartments(request, userID):
 
 
 def managedApartments(request, userID):
-    listings = Listings.objects.filter(agent_id=userID)
-    apartments = Apartments.objects.filter(id__in=listings)
+    #listings = Listings.objects.filter(agent_id=userID)
+    listingsOfApartments = Listings.objects.filter(agent_id=userID)
+    pkOfApps = []
+    for x in listingsOfApartments:
+        print(x.apartmentid_id)
+        pkOfApps.append(x.apartmentid_id)
+    apartments = Apartments.objects.filter(id__in=pkOfApps, forsale=True)
+
     context = {
         'apartments': apartments
     }
+    print("DSKFDSJFJDSFJDSFJDSF", apartments)
     return render(request, 'users/managed_apartments.html', context)
 
 

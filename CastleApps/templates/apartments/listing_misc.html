@@ -3,7 +3,10 @@
 {% block content %}
 <form class="white-background" action="{% url 'add_key_distances' listing.apartmentid.id %}" method="post">
     {% csrf_token %}
-    <h2>Key distances in minutes</h2>
+    <div class="heading">
+            <h2>Add Key Distances </h2>
+            <p>*Numbers are in minutes</p>
+        </div>
     <p>{{ listing.apartmentid.address }} {% if listing.apartmentid.locationid.city %}{{ listing.apartmentid.locationid.city }}, {% endif %}{{ listing.apartmentid.locationid.region }}, {{ listing.apartmentid.locationid.country }}</p>
     {% for field in form %}
         {{ field.errors }}

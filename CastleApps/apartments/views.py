@@ -76,6 +76,7 @@ def home(request):
     newlyListed = Listings.objects.all()
     print("NEWLY LISTED: ", newlyListed)
     apps = Apartments.objects.filter(forsale=True)
+
     # companyInfo = CompanyInformation.objects.all()
     context = {
         'apartments': newApart,  # Send all the apartments
@@ -455,7 +456,7 @@ def addPaymentInfo(request, apartmentID):
 
 def employeeAllApartments(request):
     context = {
-        'apartments': Apartments.objects.all()[0:20]
+        'apartments': Apartments.objects.filter(forsale=False)[0:20]
     }
     return render(request, 'apartments/employee_all_apartments.html', context)
 
