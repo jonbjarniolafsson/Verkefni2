@@ -27,13 +27,47 @@ from django.utils import timezone
 
 
 def home(request):
-    # print("PRINTING CURRENT DATETIME: ", datetime.now())
-    # apartment = Apartments.objects.get(id=3)
-    # seller = apartment.owner_id
-    # apartment.forsale = False  # change field
-    # apartment.save()
-    # listing = Listings.objects.get(id=1)
-    # print(listing.shortMortgage)
+        #print("PRINTING CURRENT DATETIME: ", datetime.now())
+        #apartment = Apartments.objects.get(id=3)
+        #seller = apartment.owner_id
+        #apartment.forsale = False  # change field
+        #apartment.save()
+        #listing = Listings.objects.get(id=1)
+        #print(listing.shortMortgage)
+
+        
+
+        newUser = request.user.id
+        print(newUser)
+
+        openHouse =  OpenHouse.objects.all()
+        newList = []
+        # Context has to be a dictionary
+        context = {}
+        newApart = ''
+        for x in range(0,len(OpenHouse.objects.all()) +1):
+            # NEed to make sure the filter doesn't return empty or it crashes
+            if len(openHouse.filter(id=x)) != 0:
+                # We are comparing the date in our timezone vs the date coming from the database
+                if timezone.now() < openHouse.get(id = x).openhousestart:
+                    #We know for sure it exists, now we need access to the object
+                    y = OpenHouse.objects.get(id=x)
+                    #Make a new list of all the apartments that have open houses scheduled in the future
+                    newList.append(y.listingid.apartmentid.id)
+                    newList = set(newList)
+                    newList = list(newList)
+                    # We ask the DB to return all the apartments in the list that match
+                    newApart = Apartments.objects.filter(pk__in=newList)
+
+        newlyListed = Listings.objects.all()
+        print("NEWLY LISTED: ",newlyListed)
+        apps = Apartments.objects.filter(forsale=True)
+        #companyInfo = CompanyInformation.objects.all()
+        context = {
+            'apartments': newApart,  # Send all the apartments
+            'newlyListed': apps,
+            'userid': request.user.id
+        }
 
     newUser = request.user.id
     print(newUser)
@@ -144,7 +178,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
             'listingMisc': listingMisc
         }
         return render(request, 'apartments/single_apartment.html', context1)
-
+    #Doesnt add listingmisc to context if it doesn't exist
     except ListingMiscs.DoesNotExist:
         listingMisc = None
         context2 = {
@@ -158,6 +192,7 @@ def singleApartment(request, apartmentID):  # Need to add error handling
 
 
 # This is used for our Ajax request in the search
+
 def allApartments(request):
     context = {
         'apartments': Apartments.objects.all()[0:6]
@@ -437,8 +472,6 @@ def employeeAllApartments(request):
 # shows info for user and user confirms payment
 @login_required
 def reviewPayment(request, apartmentID, listingID, paymentID):
-    # hvað á að auðkenna?
-    # vantar aðgengi að context
     listing = Listings.objects.get(id=listingID)
     if request.method == 'POST':
         apartment = Apartments.objects.get(id=apartmentID)
