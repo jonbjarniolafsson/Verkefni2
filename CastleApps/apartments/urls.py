@@ -21,7 +21,8 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/',
           views.singleApartment, name="apartment"),
 
-
+     path('employee_all_apartments/',
+          views.employeeAllApartments, name="employee_apartment_list"),
 
 
 
@@ -33,7 +34,8 @@ urlpatterns = [
      path('apartments/<int:apartmentID>/remove_listing/', views.removeListing, name="add-listing"),
      path('apartments/<int:apartmentID>/remove_apartment/', views.removeApartment, name="remove-apartment"),
      path('apartments/<int:apartmentID>/add_key_distances/', views.addKeyDistances, name="add_key_distances"),
-
+     path('apartments/<int:apartmentID>/add_image/', views.addImage, name="add-image"),
      path('apartments/<int:apartmentID>/payment_info', views.addPaymentInfo, name="pay_info"),
      path('apartments/<int:apartmentID>/payment_info/<listingID>/<int:paymentID>/review', views.reviewPayment, name="review"),
+     path('apartments/<int:apartmentID>/add_open_house/', views.openHouseListing, name="open_house")
 ]
