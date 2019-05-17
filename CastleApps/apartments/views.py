@@ -215,17 +215,16 @@ def createApartments(request, locationID):
         # currentUser = request.user
         # if currentUser.id == None or currentUser.is_staff == False:
         #     return HttpResponse('Unauthorized', status=401)
-        instance = Locations.objects.latest('id')
         if request.method == 'POST':
             # Read data from apartments form, and from address form.
-            appForm = CastleAppsCreateForm(data=request.POST, instance=instance)
+            appForm = CastleAppsCreateForm(data=request.POST)
             if appForm.is_valid():
                 appForm.save()
                 return redirect('frontpage')
             context = {'app_form': appForm, 'locationID': locationID}
             return render(request, 'apartments/create_apartment.html', context)
         else:
-            appForm = CastleAppsCreateForm(instance=instance, initial={'locationid': locationID})
+            appForm = CastleAppsCreateForm(initial={'locationid': locationID})
             return render(request, 'apartments/create_apartment.html', {
                 'app_form': appForm,
                 'locationID': locationID
