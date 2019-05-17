@@ -33,6 +33,9 @@ def home(request):
         #apartment.save()
         #listing = Listings.objects.get(id=1)
         #print(listing.shortMortgage)
+
+        
+
         newUser = request.user.id
         print(newUser)
 
