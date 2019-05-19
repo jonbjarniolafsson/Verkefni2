@@ -21,23 +21,18 @@ from django.conf import settings
 # In the model.py we decided to break our own rules when it comes to variables
 # We did this to make it easier for us to access the Database through the Django code
 # So we did not have to worry about capitalization
-
 class Country(models.Model):
     country = models.CharField(primary_key=True, max_length=100)
-
     def __str__(self):
         return self.country
-
 
 class Locations(models.Model):
     city = models.CharField(max_length=100, blank=True, null=True)
     region = models.CharField(max_length=50)
     zip = models.CharField(max_length=15)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-
     def __str__(self):
         return str(self.country)
-
 
 # Apartments is general information about the apartment that is only inserted once
 class Apartments(models.Model):
@@ -59,10 +54,8 @@ class Apartments(models.Model):
 class ApartmentImages(models.Model):
     image = models.CharField(max_length=5000)
     aid = models.ForeignKey(Apartments, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.image
-
 
 # Each apartments has a listing. It can have many listings.
 # Same apartment can only have one listing up at a time though!
@@ -137,15 +130,6 @@ class Transactions(models.Model):
     listingid = models.ForeignKey(Listings, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-
-# The contact form being used on the front page down to the right
-# Sends an AJAX request.
-class ContactForm(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    description = models.TextField(max_length=1000)
-
-
 # All the information necessary to make a purchase on our platform
 class PaymentInfos(models.Model):
     cardnumber = models.CharField(max_length=30)
@@ -159,6 +143,16 @@ class PaymentInfos(models.Model):
     ssn = models.CharField(max_length=40)
     isreviewed = models.BooleanField(default=False, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+# The contact form being used on the front page down to the right
+# Sends an AJAX request.
+class ContactForm(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    description = models.TextField(max_length=1000)
+
+
 
 
 class ViewHistory(models.Model):

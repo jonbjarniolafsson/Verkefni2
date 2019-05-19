@@ -19,7 +19,6 @@ from datetime import datetime
 from django.utils import timezone
 
 def home(request):
-
     openHouse =  OpenHouse.objects.all()
     newList = []
     # Context has to be a dictionary
@@ -29,7 +28,7 @@ def home(request):
         # NEed to make sure the filter doesn't return empty or it crashes
         if len(openHouse.filter(id=x)) != 0:
             # We are comparing the date in our timezone vs the date coming from the database
-            if timezone.now() < openHouse.get(id = x).openhousestart:
+            if timezone.now() < openHouse.get(id = x).openhouseend:
                 #We know for sure it exists, now we need access to the object
                 y = OpenHouse.objects.get(id=x)
                 #Make a new list of all the apartments that have open houses scheduled in the future
@@ -48,6 +47,9 @@ def home(request):
         'newlyListed': apps,
         'userid': request.user.id
     }
+
+
+    #user = user.
 
     return render(request, 'apartments/home.html', context)
 

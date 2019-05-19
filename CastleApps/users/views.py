@@ -91,8 +91,11 @@ def viewHistory(request, userID):
     user = request.user
     if user.id != userID:
         return HttpResponse('Unauthorized', status=401)
+    newList = []
     history = ViewHistory.objects.filter(user_id=userID)
-    helloGo = Apartments.objects.filter(id__in=history)[0:6]
+    for x in history:
+        newList.append(x.apartmentid_id)
+    helloGo = Apartments.objects.filter(id__in=newList)[0:6]
     context = {
         'apartments': helloGo
     }
@@ -103,7 +106,7 @@ def ownedApartments(request, userID):
     user = request.user
     if user.id != userID:
         return HttpResponse('Unauthorized', status=401)
-    apartments = Apartments.objects.filter(owner_id=userID)[0:6]
+    apartments = Apartments.objects.filter(owner_id=userID)
     context = {
         'apartments': apartments
     }
